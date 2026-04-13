@@ -1,0 +1,92 @@
+services:
+  # ─── PHP Application ───────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
+    container_name: webze_app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9001:9000"   # Expose PHP-FPM to host Nginx only (localhost)
+    env_file:
+      - .env.production
+    volumes:
+      - app_storage:/var/www/html/storage
+      - ./public:/var/www/html/public   # Host Nginx needs to serve static files
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - webze_network
+
+  # ─── MySQL Database ────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: webze_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-webze_db}
+      MYSQL_USER: ${DB_USERNAME:-webze_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - webze_network
+
+  # ─── Queue Worker ──────────────────────────────────────────
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
+    container_name: webze_queue
+    restart: unless-stopped
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600"]
+    env_file:
+      - .env.production
+    volumes:
+      - app_storage:/var/www/html/storage
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - webze_network
+
+  # ─── Scheduler (Laravel Cron) ──────────────────────────────
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
+    container_name: webze_scheduler
+    restart: unless-stopped
+    command: ["php", "artisan", "schedule:work"]
+    env_file:
+      - .env.production
+    volumes:
+      - app_storage:/var/www/html/storage
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - webze_network
+
+# ─── Volumes ──────────────────────────────────────────────────
+volumes:
+  mysql_data:
+    driver: local
+  app_storage:
+    driver: local
+
+# ─── Networks ──────────────────────────────────────────────────
+networks:
+  webze_network:
+    driver: bridge
