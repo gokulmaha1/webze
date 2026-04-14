@@ -2,90 +2,157 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{business.name}} | Catering & Dining</title>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<title>{{business.name}} | Premium Dining & Catering</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+:root{--dark:#0a0808;--darker:#050404;--gold:#e2a856;--gold-dim:#8c6a3a;--light:#f9f5f0;--grey:#88837e}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Open Sans',sans-serif;color:#333;background:#fdfcfb}
-nav{background:#1a0a00;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
-.logo{font-family:'Merriweather',serif;font-size:1.5rem;color:#f4a261;font-weight:700}
-nav ul{list-style:none;display:flex;gap:24px}
-nav ul li a{text-decoration:none;color:#f4d9c0;font-size:.95rem;transition:.3s}
-nav ul li a:hover{color:#f4a261}
-.hero{background:linear-gradient(rgba(26,10,0,.7),rgba(26,10,0,.7)),url('https://images.unsplash.com/photo-1555244162-803834f70033?w=1400') center/cover;padding:120px 5%;text-align:center;color:#fff;min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
-.hero h1{font-family:'Merriweather',serif;font-size:3.5rem;line-height:1.2;margin-bottom:20px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-.hero p{font-size:1.15rem;opacity:.9;max-width:700px;margin:0 auto 36px;line-height:1.6}
-.btn{display:inline-block;padding:14px 38px;background:#f4a261;color:#1a0a00;border-radius:4px;text-decoration:none;font-weight:700;transition:.3s;font-size:1rem}
-.btn:hover{background:#e76f51;color:#fff}
-.reputation-bar{background:#e76f51;color:#fff;padding:16px;text-align:center;font-weight:600;font-size:1rem;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
-.menu{padding:80px 5%;}
-.menu h2{font-family:'Merriweather',serif;text-align:center;font-size:2.4rem;color:#1a0a00;margin-bottom:12px}
-.subtitle{text-align:center;color:#666;margin-bottom:48px;font-size:1.1rem}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px}
-.menu-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.06);transition:.3s;border:1px solid #f0f0f0}
-.menu-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(244,162,97,.15)}
-.menu-body{padding:30px}
-.menu-icon{font-size:2.5rem;margin-bottom:16px}
-.menu-body h3{font-family:'Merriweather',serif;color:#1a0a00;margin-bottom:12px;font-size:1.3rem}
-.menu-body p{color:#666;line-height:1.6}
-.review-section{background:#1a0a00;padding:80px 5%;color:#fff;text-align:center}
-.review-section h2{font-family:'Merriweather',serif;font-size:2rem;color:#f4a261;margin-bottom:30px}
-.review-box{background:rgba(255,255,255,.05);border:1px solid rgba(244,162,97,.3);border-radius:12px;padding:40px;max-width:800px;margin:0 auto}
-.stars{color:#f4a261;font-size:1.5rem;margin-bottom:16px;letter-spacing:4px}
-.review-box p{font-size:1.2rem;line-height:1.7;font-style:italic;color:#f4d9c0}
-.contact{padding:80px 5%;background:#fff;text-align:center}
-.contact h2{font-family:'Merriweather',serif;font-size:2.4rem;color:#1a0a00;margin-bottom:40px}
-.contact-cards{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
-.contact-card{background:#fdfcfb;border-radius:12px;padding:32px 40px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid #f0f0f0;min-width:260px}
-.contact-card h4{color:#888;font-size:.9rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
-.contact-card p{color:#1a0a00;font-weight:700;font-size:1.15rem}
-footer{background:#1a0a00;color:#d4b896;text-align:center;padding:24px;font-size:.9rem}
+body{font-family:'Jost',sans-serif;color:var(--light);background:var(--dark);overflow-x:hidden}
+
+.reveal{opacity:0;transform:translateY(50px) scale(0.98);transition:all 1s cubic-bezier(0.2, 1, 0.2, 1)}
+.reveal.appear{opacity:1;transform:translateY(0) scale(1)}
+.delay-1{transition-delay:0.15s}
+.delay-2{transition-delay:0.3s}
+.reveal.fade-img{transform:scale(1.05);filter:brightness(0)}
+.reveal.fade-img.appear{transform:scale(1);filter:brightness(1)}
+
+/* Fire Particles Background */
+.embers{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.6;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><circle cx="200" cy="200" r="1" fill="%23e2a856" opacity="0.3"/><circle cx="50" cy="100" r="1.5" fill="%23e2a856" opacity="0.5"/><circle cx="300" cy="350" r="0.5" fill="%23e2a856" opacity="0.4"/></svg>') repeat;animation:rise 60s linear infinite}
+@keyframes rise { from{background-position:0 0} to{background-position:0 -1000px} }
+
+nav{padding:30px 6%;display:flex;justify-content:space-between;align-items:center;position:fixed;width:100%;top:0;z-index:100;transition:all 0.5s}
+nav.scrolled{background:rgba(5,4,4,0.95);padding:20px 6%;backdrop-filter:blur(10px);border-bottom:1px solid rgba(226,168,86,0.1)}
+.logo{font-family:'Bodoni Moda',serif;font-size:2rem;color:var(--light);font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.logo span{color:var(--gold);font-style:italic}
+nav ul{list-style:none;display:flex;gap:40px}
+nav ul li a{text-decoration:none;color:var(--light);font-size:.85rem;text-transform:uppercase;letter-spacing:3px;transition:.3s;position:relative}
+nav ul li a::after{content:'';position:absolute;bottom:-6px;left:0;width:0;height:1px;background:var(--gold);transition:.3s}
+nav ul li a:hover::after{width:100%}
+.nav-btn{padding:14px 35px;border:1px solid var(--gold);color:var(--gold);border-radius:0;font-size:.85rem;text-transform:uppercase;letter-spacing:3px;text-decoration:none;transition:all 0.4s}
+.nav-btn:hover{background:var(--gold);color:var(--darker)}
+
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:url('https://images.unsplash.com/photo-1555244162-803834f70033?w=2000&q=90&auto=format&fit=crop') center/cover;background-attachment:fixed}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle, rgba(5,4,4,0.4) 0%, rgba(5,4,4,0.9) 100%)}
+.hero-content{position:relative;z-index:2;max-width:900px;padding:0 20px}
+.hero-tag{font-size:.9rem;text-transform:uppercase;letter-spacing:6px;color:var(--gold);margin-bottom:20px;display:block}
+.hero h1{font-family:'Bodoni Moda',serif;font-size:5.5rem;font-weight:400;line-height:1.1;margin-bottom:30px}
+.hero p{font-size:1.2rem;color:#ccc;margin-bottom:50px;font-weight:300;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.6}
+.info-bar{position:absolute;bottom:0;left:0;width:100%;display:flex;background:rgba(5,4,4,0.8);backdrop-filter:blur(10px);border-top:1px solid rgba(226,168,86,0.15);z-index:2}
+.info-item{flex:1;padding:25px;text-align:center;border-right:1px solid rgba(226,168,86,0.1)}
+.info-item:last-child{border-right:none}
+.info-item h4{color:var(--gold);font-family:'Bodoni Moda',serif;font-size:1.5rem;font-style:italic}
+.info-item p{font-size:.8rem;text-transform:uppercase;letter-spacing:2px;color:var(--grey);margin-top:5px}
+
+.about{padding:150px 6%;display:flex;align-items:center;gap:8%;position:relative;z-index:2}
+.about-img{flex:1;position:relative}
+.about-img img{width:100%;height:600px;object-fit:cover;filter:brightness(0.8)}
+.about-badge{position:absolute;bottom:-30px;right:-30px;background:var(--gold);color:var(--dark);padding:40px;text-align:center;border-radius:50%;width:180px;height:180px;display:flex;flex-direction:column;justify-content:center}
+.about-badge h2{font-family:'Bodoni Moda',serif;font-size:3rem;line-height:1}
+.about-badge p{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;font-weight:600}
+.about-text{flex:1}
+.section-title{font-family:'Bodoni Moda',serif;font-size:3.5rem;margin-bottom:30px;font-weight:400}
+.section-title span{font-style:italic;color:var(--gold)}
+.about-text p{color:var(--grey);font-size:1.1rem;line-height:1.8;margin-bottom:40px;font-weight:300}
+.about-text ul{list-style:none}
+.about-text ul li{margin-bottom:15px;display:flex;align-items:center;gap:15px;font-size:1.1rem}
+.about-text ul li i{color:var(--gold);font-size:1.5rem}
+
+.gallery-grid{display:grid;grid-template-columns:repeat(4, 1fr);width:100%;position:relative;z-index:2}
+.g-item{aspect-ratio:1;background-size:cover;background-position:center;position:relative;overflow:hidden}
+.g-item::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.5);opacity:0;transition:1s ease;backdrop-filter:blur(5px)}
+.g-item:hover::after{opacity:1}
+.g-item .g-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:2;opacity:0;transform:scale(1.1);transition:1s ease;text-align:center;padding:20px}
+.g-item:hover .g-text{opacity:1;transform:scale(1)}
+.g-text h3{font-family:'Bodoni Moda',serif;font-size:2rem;color:var(--gold)}
+
+.review-sec{padding:150px 6%;text-align:center;background:linear-gradient(rgba(5,4,4,0.9), rgba(5,4,4,0.9)),url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=2000&q=80') center/cover fixed;position:relative;z-index:2}
+.stars-lg{color:var(--gold);font-size:2.5rem;letter-spacing:10px;margin-bottom:40px}
+.p-review{font-family:'Bodoni Moda',serif;font-size:3rem;line-height:1.4;font-style:italic;max-width:1000px;margin:0 auto;color:var(--light)}
+.p-author{margin-top:40px;font-size:.9rem;text-transform:uppercase;letter-spacing:4px;color:var(--grey)}
+
+.contact{padding:150px 6%;display:grid;grid-template-columns:1fr 1fr;gap:10%;background:var(--darker);position:relative;z-index:2}
+.c-box{background:var(--dark);padding:60px;border:1px solid rgba(226,168,86,0.15)}
+.c-row{display:flex;flex-direction:column;gap:30px;margin-top:40px}
+.c-item{display:flex;align-items:center;gap:25px}
+.c-icon{width:60px;height:60px;border:1px solid var(--gold-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem}
+.c-item h4{font-size:.8rem;text-transform:uppercase;letter-spacing:2px;color:var(--grey);margin-bottom:5px}
+.c-item p{font-family:'Bodoni Moda',serif;font-size:1.5rem}
+
+footer{background:var(--darker);padding:40px;text-align:center;border-top:1px solid rgba(255,255,255,0.05);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--grey);position:relative;z-index:2}
 </style>
 </head>
 <body>
-<nav>
-  <div class="logo">{{business.name}}</div>
-  <ul><li><a href="#services">Services</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li></ul>
+<div class="embers"></div>
+
+<nav id="navbar">
+  <div class="logo">{{business.name}}<span>.</span></div>
+  <ul><li><a href="#about">Story</a></li><li><a href="#gallery">Cuisine</a></li><li><a href="#reviews">Praise</a></li></ul>
+  <a href="#contact" class="nav-btn">Inquire Now</a>
 </nav>
 
 <section class="hero">
-  <h1>Exceptional Food & Service</h1>
-  <p>Welcome to {{business.name}}. We specialize in premium {{business.category}} offering memorable culinary experiences with the finest ingredients and authentic flavors.</p>
-  <a href="#contact" class="btn">Order / Inquire Now</a>
-</section>
-
-<div class="reputation-bar">
-  <span>⭐ Trusted by {{count}} customers</span>
-  <span>•</span>
-  <span>Outstanding {{rating}}/5.0 Rating</span>
-</div>
-
-<section class="menu" id="services">
-  <h2>What We Offer</h2>
-  <p class="subtitle">Crafted with passion and served with perfection.</p>
-  <div class="menu-grid">
-    <div class="menu-card"><div class="menu-body"><div class="menu-icon">🍽️</div><h3>Corporate Events</h3><p>Professional catering solutions designed to impress your guests and colleagues.</p></div></div>
-    <div class="menu-card"><div class="menu-body"><div class="menu-icon">🎉</div><h3>Weddings & Parties</h3><p>Custom menus to make your special celebrations totally unforgettable.</p></div></div>
-    <div class="menu-card"><div class="menu-body"><div class="menu-icon">🍱</div><h3>Personalized Menu</h3><p>Tailored dietary options and custom dishes prepared by our expert chefs.</p></div></div>
+  <div class="hero-content reveal">
+    <span class="hero-tag">Exquisite {{business.category}}</span>
+    <h1>Culinary <span>Perfection</span></h1>
+    <p>A symphony of flavor, fire, and elegance. {{business.name}} delivers breathtaking catering experiences engineered to absolutely mesmerize your guests.</p>
+    <a href="#contact" class="nav-btn" style="padding:18px 45px;background:var(--gold);color:var(--darker)">Plan Your Event</a>
+  </div>
+  <div class="info-bar reveal delay-2">
+    <div class="info-item"><h4>{{rating}} ★</h4><p>Excellence Rating</p></div>
+    <div class="info-item"><h4>{{count}}+</h4><p>5-Star Reviews</p></div>
+    <div class="info-item"><h4>Bespoke</h4><p>Tailored Menus</p></div>
   </div>
 </section>
 
-<section class="review-section" id="reviews">
-  <h2>What Our Clients Say</h2>
-  <div class="review-box">
-    <div class="stars">★★★★★</div>
-    <p>"{{review}}"</p>
+<section class="about" id="about">
+  <div class="about-img reveal left fade-img">
+    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=800&q=80" alt="Chef">
+    <div class="about-badge"><h2>{{rating}}</h2><p>Average Rating</p></div>
   </div>
+  <div class="about-text reveal right delay-1">
+    <h2 class="section-title">The Art of <span>Plating</span></h2>
+    <p>At {{business.name}}, we do not merely serve food—we sculpt experiences. Every ingredient is deliberately sourced, and every plate is a masterful expression of high-end gastronomy.</p>
+    <ul>
+      <li><i>✦</i> Unmatched Event Catering</li>
+      <li><i>✦</i> Expert Private Chefs</li>
+      <li><i>✦</i> Curated Wine Pairings</li>
+    </ul>
+  </div>
+</section>
+
+<section class="gallery-grid" id="gallery">
+  <div class="g-item reveal fade-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80')"><div class="g-text"><h3>Appetizers</h3></div></div>
+  <div class="g-item reveal fade-img delay-1" style="background-image:url('https://images.unsplash.com/photo-1551218808-94e220e084d1?w=600&q=80')"><div class="g-text"><h3>Entrees</h3></div></div>
+  <div class="g-item reveal fade-img delay-2" style="background-image:url('https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&q=80')"><div class="g-text"><h3>Meat</h3></div></div>
+  <div class="g-item reveal fade-img delay-3" style="background-image:url('https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?w=600&q=80')"><div class="g-text"><h3>Desserts</h3></div></div>
+</section>
+
+<section class="review-sec" id="reviews">
+  <div class="stars-lg reveal">★★★★★</div>
+  <p class="p-review reveal delay-1">"{{review}}"</p>
+  <p class="p-author reveal delay-2">— Backed by {{count}} Verifed Tastemakers.</p>
 </section>
 
 <section class="contact" id="contact">
-  <h2>Get In Touch</h2>
-  <div class="contact-cards">
-    <div class="contact-card"><h4>Call / WhatsApp</h4><p>📞 {{business.phone}}</p></div>
-    <div class="contact-card"><h4>Location</h4><p>📍 {{business.address}}</p></div>
-    <div class="contact-card"><h4>Specialty</h4><p>🍽 {{business.category}}</p></div>
+  <div class="about-text reveal left">
+    <h2 class="section-title">Secure Your <span>Date</span></h2>
+    <p>Dates for our highly exclusive {{business.category}} services secure months in advance. Reach out immediately to guarantee availability for your prestigious event.</p>
+  </div>
+  <div class="c-box reveal right delay-1">
+    <div class="c-row">
+      <div class="c-item"><div class="c-icon">📞</div><div><h4>Direct Line</h4><p>{{business.phone}}</p></div></div>
+      <div class="c-item"><div class="c-icon">🏢</div><div><h4>Headquarters</h4><p>{{business.address}}</p></div></div>
+      <div class="c-item"><div class="c-icon">🍽</div><div><h4>Specialty Focus</h4><p>{{business.category}}</p></div></div>
+    </div>
   </div>
 </section>
-<footer><p>© 2025 {{business.name}} · Powered by Webze</p></footer>
+
+<footer>© 2025 {{business.name}} — Precision Crafted by Webze</footer>
+
+<script>
+window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 100); });
+const observer = new IntersectionObserver(e => { e.forEach(en => { if(en.isIntersecting) { en.target.classList.add('appear'); observer.unobserve(en.target); } }); }, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
