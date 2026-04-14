@@ -164,7 +164,17 @@ class WebsiteResource extends Resource
                     ->icon('heroicon-o-arrow-path')
                     ->color('warning')
                     ->requiresConfirmation()
-                    ->action(fn (Website $record) => $record->generateStaticSite()),
+                    ->action(function (Website $record) {
+                        // Re-guess the template before regenerating, in case the category changed or logic was updated
+                        if ($record->category) {
+                            $guessedId = $record->guessTemplateId($record->category);
+                            if ($guessedId && $record->template_id != $guessedId) {
+                                $record->template_id = $guessedId;
+                                $record->save();
+                            }
+                        }
+                        $record->generateStaticSite();
+                    }),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

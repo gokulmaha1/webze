@@ -55,7 +55,7 @@ class Website extends Model
         });
     }
 
-    protected static function guessTemplateId($category)
+    public static function guessTemplateId($category)
     {
         $cat = strtolower($category);
         
