@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{business.name}} | Luxury Hotel & Resort</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c49a45;--dark:#1a1a1a;--light:#f9f8f6;--sand:#e8e1d7;--white:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--dark);overflow-x:hidden}
+html{scroll-behavior:smooth}
+
+.reveal{opacity:0;transform:translateY(40px);transition:all 1s cubic-bezier(0.16, 1, 0.3, 1)}
+.reveal.appear{opacity:1;transform:translateY(0)}
+.reveal.left{transform:translateX(-40px)}
+.reveal.right{transform:translateX(40px)}
+.reveal.left.appear, .reveal.right.appear{transform:translateX(0)}
+.delay-1{transition-delay:0.15s}
+.delay-2{transition-delay:0.3s}
+
+nav{position:fixed;width:100%;top:0;z-index:999;padding:25px 5%;display:flex;justify-content:space-between;align-items:center;transition:0.4s;border-bottom:1px solid rgba(255,255,255,0.1)}
+nav.scrolled{background:rgba(255,255,255,0.98);backdrop-filter:blur(20px);padding:15px 5%;box-shadow:0 10px 40px rgba(0,0,0,0.05);border-bottom:none}
+.logo{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--white);letter-spacing:2px;text-transform:uppercase;transition:color 0.4s}
+nav.scrolled .logo{color:var(--dark)}
+nav ul{list-style:none;display:flex;gap:40px}
+nav ul li a{text-decoration:none;color:var(--white);font-size:.8rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;transition:0.3s}
+nav.scrolled ul li a{color:var(--dark)}
+nav ul li a:hover{color:var(--gold)}
+.booking-btn{padding:12px 30px;background:var(--gold);color:var(--white);font-size:.8rem;text-transform:uppercase;letter-spacing:2px;font-weight:600;text-decoration:none;transition:0.3s}
+.booking-btn:hover{background:var(--dark);color:var(--white)}
+
+.hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1542314831-c6a4d27ece50?w=1600&q=80') center/cover;z-index:1;animation:zoomIn 20s infinite alternate}
+@keyframes zoomIn { from{transform:scale(1)} to{transform:scale(1.1)} }
+.hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.4);z-index:2}
+.hero-content{position:relative;z-index:3;color:var(--white);max-width:800px;padding:0 20px}
+.hero-stars{color:var(--gold);font-size:1.5rem;letter-spacing:8px;margin-bottom:20px}
+.hero h1{font-family:'Playfair Display',serif;font-size:5.5rem;font-weight:400;line-height:1.1;margin-bottom:25px}
+.hero p{font-size:1.1rem;font-weight:300;letter-spacing:1px;margin-bottom:40px;line-height:1.8}
+
+.search-bar{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);z-index:4;background:var(--white);display:flex;box-shadow:0 20px 50px rgba(0,0,0,0.1);width:90%;max-width:1000px}
+.sb-item{flex:1;padding:25px;border-right:1px solid var(--sand)}
+.sb-item:last-child{border-right:none;background:var(--gold);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:0.3s}
+.sb-item:last-child:hover{background:var(--dark)}
+.sb-item h4{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:#888;margin-bottom:8px}
+.sb-item p{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--dark)}
+
+.about{padding:150px 5% 100px;display:flex;align-items:center;gap:8%}
+.a-text{flex:1}
+.tag{color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:4px;font-weight:600;margin-bottom:15px;display:inline-block}
+.sec-title{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:400;color:var(--dark);margin-bottom:25px;line-height:1.1}
+.a-text p{color:#666;line-height:1.8;font-size:1.1rem;margin-bottom:30px}
+.a-img{flex:1;height:600px;background:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1000&q=80') center/cover;position:relative}
+.a-img::after{content:'';position:absolute;top:30px;left:-30px;width:100%;height:100%;border:1px solid var(--gold);z-index:-1}
+
+.amenities{padding:100px 5%;background:var(--sand);text-align:center}
+.am-grid{display:grid;grid-template-columns:repeat(4, 1fr);gap:40px;margin-top:60px}
+.am-card{background:var(--white);padding:50px 30px;transition:0.4s}
+.am-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.05)}
+.am-icon{font-size:2.5rem;color:var(--gold);margin-bottom:20px}
+.am-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--dark);margin-bottom:10px}
+.am-card p{color:#666;font-size:.9rem;line-height:1.6}
+
+.experiences{padding:120px 5%}
+.exp-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:30px}
+.exp-card{position:relative;height:500px;background-size:cover;background-position:center;overflow:hidden}
+.exp-card::before{content:'';position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);opacity:0;transition:0.4s}
+.exp-card:hover::before{opacity:1}
+.exp-text{position:absolute;bottom:0;left:0;padding:40px;width:100%;color:var(--white);transform:translateY(20px);opacity:0;transition:0.5s}
+.exp-card:hover .exp-text{transform:translateY(0);opacity:1}
+.exp-text h3{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:10px;font-style:italic}
+
+.reviews{padding:120px 5%;background:var(--dark);color:var(--white);text-align:center}
+.r-box{max-width:900px;margin:0 auto}
+.r-quote{font-family:'Playfair Display',serif;font-size:2.5rem;font-style:italic;line-height:1.4;margin-bottom:30px;color:var(--white)}
+.r-author{font-size:.85rem;text-transform:uppercase;letter-spacing:3px;color:var(--gold)}
+
+.contact{padding:120px 5%;background:var(--white);display:flex;justify-content:center}
+.c-wrap{background:var(--light);padding:80px;max-width:1000px;width:100%;border:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between}
+.c-info h2{font-family:'Playfair Display',serif;font-size:3rem;margin-bottom:20px}
+.c-info p{color:#666;margin-bottom:10px;font-size:1.1rem}
+
+footer{padding:40px 5%;background:var(--dark);color:#666;text-align:center;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;border-top:1px solid rgba(255,255,255,0.05)}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="logo">{{business.name}}</div>
+  <ul><li><a href="#about">The Resort</a></li><li><a href="#experiences">Experiences</a></li><li><a href="#reviews">Guestbook</a></li></ul>
+  <a href="#contact" class="booking-btn">Reserve</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-content reveal">
+    <div class="hero-stars">★★★★★</div>
+    <h1>A Sanctuary of<br>Elegance.</h1>
+    <p>Discover an unparalleled {{business.category}} experience where bespoke service and breathtaking luxury completely redefine your concept of hospitality.</p>
+  </div>
+  <div class="search-bar reveal delay-2">
+    <div class="sb-item"><h4>Check-in</h4><p>Select Date</p></div>
+    <div class="sb-item"><h4>Check-out</h4><p>Select Date</p></div>
+    <div class="sb-item"><h4>Guests</h4><p>2 Adults</p></div>
+    <div class="sb-item"><h4 style="color:#fff;font-size:1rem;margin:0">Check Availability</h4></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="a-text reveal left">
+    <span class="tag">Unrivaled Hospitality</span>
+    <h2 class="sec-title">Escape to Pure<br>Tranquility.</h2>
+    <p>Nestled in a prime location, {{business.name}} offers luxury accommodations equipped with state-of-the-art facilities, fine dining, and highly exclusive private access.</p>
+    <a href="#contact" class="booking-btn" style="background:var(--dark);display:inline-block">Discover Suites</a>
+  </div>
+  <div class="a-img reveal right delay-1"></div>
+</section>
+
+<section class="amenities reveal">
+  <span class="tag">Resort Features</span>
+  <h2 class="sec-title" style="margin-bottom:0">World-Class Facilities</h2>
+  <div class="am-grid">
+    <div class="am-card reveal"><div class="am-icon">💧</div><h3>Infinity Pool</h3><p>Climate-controlled sweeping pools offering unobstructed panoramic views.</p></div>
+    <div class="am-card reveal delay-1"><div class="am-icon">💆‍♀️</div><h3>Wellness Spa</h3><p>Award-winning holistic treatments and deep therapeutic massage services.</p></div>
+    <div class="am-card reveal delay-2"><div class="am-icon">🍽</div><h3>Fine Dining</h3><p>Michelin-star rated culinary journeys meticulously crafted daily.</p></div>
+    <div class="am-card reveal delay-3"><div class="am-icon">🛎</div><h3>Concierge</h3><p>24/7 dedicated private butler and personalized luxury arrangements.</p></div>
+  </div>
+</section>
+
+<section class="experiences" id="experiences">
+  <span class="tag reveal" style="text-align:center;display:block">Curated Stays</span>
+  <h2 class="sec-title reveal" style="text-align:center">The Collections</h2>
+  <div class="exp-grid">
+    <div class="exp-card reveal" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80')">
+      <div class="exp-text"><h3>Presidential Suite</h3><p>Ultimate privacy with sweeping penthouse vistas.</p></div>
+    </div>
+    <div class="exp-card reveal delay-1" style="background-image:url('https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=800&q=80')">
+      <div class="exp-text"><h3>Ocean Villa</h3><p>Direct beachfront access and private plunge pools.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="r-box reveal zoom">
+    <div class="hero-stars" style="margin-bottom:20px;font-size:2rem">★★★★★</div>
+    <p class="r-quote">"{{review}}"</p>
+    <p class="r-author">— Recognized by {{count}} Satisfied Guests</p>
+    <p style="margin-top:20px;color:var(--gold);font-family:'Playfair Display',serif;font-size:1.5rem">Rated {{rating}} / 5.0</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="c-wrap reveal">
+    <div class="c-info">
+      <span class="tag">Get in touch</span>
+      <h2>Contact Us</h2>
+      <p><strong>Phone:</strong> {{business.phone}}</p>
+      <p><strong>Location:</strong> {{business.address}}</p>
+      <p><strong>Property Type:</strong> {{business.category}}</p>
+    </div>
+    <a href="tel:{{business.phone}}" class="booking-btn" style="padding:20px 40px;font-size:1rem">Call Reception</a>
+  </div>
+</section>
+
+<footer>© 2025 {{business.name}} — Luxury Accommodations Powered by Webze.</footer>
+
+<script>
+window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+const observer = new IntersectionObserver(e => { e.forEach(en => { if(en.isIntersecting) { en.target.classList.add('appear'); observer.unobserve(en.target); } }); }, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

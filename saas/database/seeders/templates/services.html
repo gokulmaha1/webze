@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{business.name}} | Trusted Local Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#023e8a;--secondary:#f77f00;--bg:#f8f9fa;--text:#212529}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text)}
+html{scroll-behavior:smooth}
+
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.8s ease}
+.reveal.appear{opacity:1;transform:translateY(0)}
+
+.top-bar{background:var(--primary);color:#fff;padding:10px 5%;display:flex;justify-content:space-between;font-size:.85rem;font-weight:500}
+.top-bar div{display:flex;gap:20px}
+.top-bar a{color:#fff;text-decoration:none;font-weight:700;background:var(--secondary);padding:3px 10px;border-radius:4px}
+
+nav{background:#fff;padding:20px 5%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.05);position:sticky;top:0;z-index:100}
+.logo{font-size:1.8rem;font-weight:900;color:var(--primary);letter-spacing:-1px}
+nav ul{list-style:none;display:flex;gap:30px}
+nav ul li a{text-decoration:none;color:#555;font-weight:700;transition:0.2s}
+nav ul li a:hover{color:var(--secondary)}
+.btn-main{padding:14px 28px;background:var(--secondary);color:#fff;font-weight:900;text-transform:uppercase;border-radius:6px;text-decoration:none;box-shadow:0 4px 10px rgba(247,127,0,0.3);transition:0.3s;display:inline-block}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(247,127,0,0.4)}
+
+.hero{display:flex;align-items:center;padding:80px 5%;background:linear-gradient(135deg, #fff 0%, #e9ecef 100%)}
+.hero-text{flex:1;padding-right:40px}
+.badge{display:inline-block;background:rgba(2,62,138,0.1);color:var(--primary);padding:8px 16px;border-radius:30px;font-weight:700;font-size:.85rem;margin-bottom:20px}
+.hero h1{font-size:3.8rem;font-weight:900;line-height:1.1;margin-bottom:20px;color:var(--primary)}
+.hero h1 span{color:var(--secondary)}
+.hero p{font-size:1.2rem;color:#555;margin-bottom:30px;line-height:1.6;font-weight:500}
+.hero-features{display:flex;gap:20px;margin-bottom:40px}
+.hf-item{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--primary)}
+.hf-item i{color:var(--secondary);font-style:normal;font-size:1.2rem}
+.hero-img{flex:1;height:500px;background:url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80') center/cover;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,0.1)}
+
+.trust-strip{background:var(--primary);color:#fff;padding:40px 5%;display:flex;justify-content:space-around;text-align:center}
+.ts-item h3{font-size:2.5rem;font-weight:900;color:var(--secondary);margin-bottom:5px}
+.ts-item p{font-weight:700;text-transform:uppercase;font-size:.85rem;letter-spacing:1px}
+
+.services{padding:100px 5%}
+.sec-title{text-align:center;font-size:2.8rem;font-weight:900;color:var(--primary);margin-bottom:15px}
+.sec-sub{text-align:center;color:#555;font-size:1.1rem;font-weight:500;margin-bottom:60px}
+.s-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:30px}
+.s-card{background:#fff;border-radius:12px;padding:40px;box-shadow:0 10px 30px rgba(0,0,0,0.05);border-top:5px solid var(--secondary);transition:0.3s}
+.s-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.08)}
+.s-icon{width:60px;height:60px;background:rgba(2,62,138,0.1);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:1.8rem;border-radius:12px;margin-bottom:20px;font-weight:900}
+.s-card h3{font-size:1.5rem;font-weight:900;margin-bottom:15px;color:var(--primary)}
+.s-card p{color:#666;line-height:1.6;font-weight:500}
+
+.testimonials{padding:100px 5%;background:#fff}
+.review-box{max-width:800px;margin:0 auto;background:var(--bg);padding:50px;border-radius:20px;text-align:center;border:1px solid #e9ecef}
+.stars{color:var(--secondary);font-size:2rem;margin-bottom:20px}
+.quote{font-size:1.4rem;font-weight:700;color:var(--primary);line-height:1.5;margin-bottom:20px;font-style:italic}
+.author{font-weight:900;color:#555;text-transform:uppercase}
+
+.cta-section{background:var(--primary);padding:80px 5%;display:flex;align-items:center;justify-content:space-between;color:#fff;border-radius:20px;margin:0 5% 100px}
+.cta-text h2{font-size:3rem;font-weight:900;margin-bottom:15px}
+.cta-text p{font-size:1.2rem;font-weight:500;opacity:0.9}
+.cta-box{background:#fff;padding:40px;border-radius:16px;text-align:center;color:var(--text);min-width:350px}
+.cta-box h3{color:var(--primary);font-size:1.5rem;font-weight:900;margin-bottom:15px}
+.c-phone{font-size:2.5rem;font-weight:900;color:var(--secondary);margin-bottom:5px;display:block}
+.cta-box p{color:#666;font-weight:500;margin-bottom:25px}
+
+footer{background:#212529;color:#aaa;padding:40px 5%;display:flex;justify-content:space-between;align-items:center;font-weight:500}
+footer strong{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div><span>⏰ 24/7 Emergency Service Available</span></div>
+  <div>
+    <span>📍 {{business.address}}</span>
+    <a href="tel:{{business.phone}}">📞 Call Now</a>
+  </div>
+</div>
+
+<nav>
+  <div class="logo">{{business.name}}</div>
+  <ul><li><a href="#services">Our Services</a></li><li><a href="#reviews">Testimonials</a></li></ul>
+  <a href="#contact" class="btn-main">Get a Free Quote</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-text reveal">
+    <div class="badge">Trusted {{business.category}} Professionals</div>
+    <h1>Fast, Reliable<br><span>{{business.category}}</span> Solutions.</h1>
+    <p>We are a fully licensed and insured {{business.category}} team committed to providing absolutely exceptional service, transparent pricing, and guaranteed high-quality results.</p>
+    <div class="hero-features">
+      <div class="hf-item"><i>✓</i> Upfront Pricing</div>
+      <div class="hf-item"><i>✓</i> Expert Technicians</div>
+    </div>
+    <a href="#contact" class="btn-main" style="padding:18px 40px;font-size:1.1rem">Request Service Today</a>
+  </div>
+  <div class="hero-img reveal"></div>
+</section>
+
+<div class="trust-strip reveal">
+  <div class="ts-item"><h3>{{rating}}</h3><p>Average Rating</p></div>
+  <div class="ts-item"><h3>{{count}}+</h3><p>Jobs Completed</p></div>
+  <div class="ts-item"><h3>100%</h3><p>Satisfaction Guarantee</p></div>
+</div>
+
+<section class="services" id="services">
+  <h2 class="sec-title reveal">Professional Services</h2>
+  <p class="sec-sub reveal">We strictly handle all {{business.category}} requirements with total precision.</p>
+  <div class="s-grid">
+    <div class="s-card reveal"><div class="s-icon">⚙️</div><h3>Maintenance & Repair</h3><p>Rapid diagnostics and immediate lasting repairs to fully restore your systems instantly.</p></div>
+    <div class="s-card reveal"><div class="s-icon">🛠</div><h3>Installations</h3><p>Highly professional, strictly code-compliant installations using only premium parts.</p></div>
+    <div class="s-card reveal"><div class="s-icon">🚨</div><h3>Emergency Response</h3><p>24/7 priority emergency dispatch immediately ready to resolve critical situations.</p></div>
+  </div>
+</section>
+
+<section class="testimonials" id="reviews">
+  <div class="review-box reveal">
+    <div class="stars">★★★★★</div>
+    <p class="quote">"{{review}}"</p>
+    <p class="author">Backed by {{count}} Local Reviews</p>
+  </div>
+</section>
+
+<section class="cta-section reveal" id="contact">
+  <div class="cta-text">
+    <h2>Need a Professional?</h2>
+    <p>Do not wait. Call our {{business.category}} specialists right now to get it resolved correctly the first time.</p>
+  </div>
+  <div class="cta-box">
+    <h3>Call Direct Now</h3>
+    <a href="tel:{{business.phone}}" class="c-phone" style="text-decoration:none">{{business.phone}}</a>
+    <p>Available 24/7 for your convenience</p>
+    <a href="tel:{{business.phone}}" class="btn-main" style="width:100%;display:block">Call {{business.phone}}</a>
+  </div>
+</section>
+
+<footer>
+  <p><strong>{{business.name}}</strong> © 2025 All Rights Reserved.</p>
+  <p>Powered by Webze</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(e => { e.forEach(en => { if(en.isIntersecting) { en.target.classList.add('appear'); observer.unobserve(en.target); } }); }, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

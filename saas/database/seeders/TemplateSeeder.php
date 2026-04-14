@@ -53,6 +53,27 @@ class TemplateSeeder extends Seeder
                 'is_premium'  => false,
                 'file'        => 'restaurant.html',
             ],
+            [
+                'name'        => 'Hotel & Resort',
+                'slug'        => 'hotel-resort',
+                'description' => 'Luxury template for hotels, resorts and accommodations',
+                'is_premium'  => true,
+                'file'        => 'hotel.html',
+            ],
+            [
+                'name'        => 'Portfolio & Creative',
+                'slug'        => 'portfolio-creative',
+                'description' => 'Modern portfolio for graphic designers and agencies',
+                'is_premium'  => true,
+                'file'        => 'portfolio.html',
+            ],
+            [
+                'name'        => 'Local Services',
+                'slug'        => 'local-services',
+                'description' => 'Trustworthy template for plumbers, electricians and trades',
+                'is_premium'  => false,
+                'file'        => 'services.html',
+            ],
         ];
 
         foreach ($templates as $t) {
@@ -70,6 +91,6 @@ class TemplateSeeder extends Seeder
             );
         }
 
-        $this->command->info('✅ 6 templates seeded successfully!');
+        $this->command->info('✅ 9 templates seeded successfully!');
     }
 }
