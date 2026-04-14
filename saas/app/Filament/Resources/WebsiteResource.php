@@ -114,7 +114,8 @@ class WebsiteResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('phone')
-                    ->label('Phone'),
+                    ->label('Phone')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('whatsappLogs_count')
                     ->counts('whatsappLogs')
                     ->label('Clicks')
@@ -129,8 +130,9 @@ class WebsiteResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('url')
                     ->label('Live URL')
-                    ->url(fn ($record) => $record->url)
-                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-link')
+                    ->color('primary')
+                    ->url(fn ($record) => $record->url, shouldOpenInNewTab: true)
                     ->copyable()
                     ->limit(30),
                 Tables\Columns\TextColumn::make('created_at')

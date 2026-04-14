@@ -14,6 +14,11 @@ class GenerateSiteController extends Controller
     {
         // Support both nested and flat JSON payloads
         $payload = $request->all();
+
+        // If payload is an array, take the first item (handles list-wrapped scrapers)
+        if (count($payload) > 0 && array_key_exists(0, $payload)) {
+            $payload = $payload[0];
+        }
         
         if (isset($payload['business_name']) && !isset($payload['business'])) {
             $payload['business'] = [
@@ -23,12 +28,18 @@ class GenerateSiteController extends Controller
                 'address' => $payload['address'] ?? '',
             ];
             
-            $payload['ai_content'] = [
-                'rating' => $payload['rating'] ?? '5.0',
-                'count' => $payload['reviews'] ?? '100+',
-                // Optional: map the ai_content review if they passed it, or fallback
-                'review' => 'Excellent and highly professional output.' 
+            $payload['ai_content']['contact'] = [
+                'phone' => $payload['phone'] ?? '',
+                'address' => $payload['address'] ?? '',
             ];
+            
+            // Map other fields into ai_content as well
+            if (!isset($payload['ai_content']['hero'])) {
+                $payload['ai_content']['hero'] = [
+                    'headline' => "Welcome to {$payload['business_name']}",
+                    'subheadline' => "Professional services for {$payload['category']}",
+                ];
+            }
         }
 
         $request->replace($payload);
