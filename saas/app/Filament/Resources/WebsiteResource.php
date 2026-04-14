@@ -89,8 +89,11 @@ class WebsiteResource extends Resource
 
                 Forms\Components\Section::make('AI Content')
                     ->schema([
-                        Forms\Components\KeyValue::make('ai_content')
-                            ->label('Content Key-Value Pairs')
+                        Forms\Components\Textarea::make('ai_content')
+                            ->label('Raw AI Content (JSON)')
+                            ->formatStateUsing(fn ($state) => is_array($state) ? json_encode($state, JSON_PRETTY_PRINT) : $state)
+                            ->dehydrateStateUsing(fn ($state) => is_string($state) ? json_decode($state, true) : $state)
+                            ->rows(15)
                             ->nullable()
                             ->columnSpanFull(),
                     ]),
