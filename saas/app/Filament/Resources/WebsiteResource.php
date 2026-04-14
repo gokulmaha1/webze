@@ -155,7 +155,7 @@ class WebsiteResource extends Resource
                     ->label('Notify')
                     ->icon('heroicon-o-chat-bubble-oval-left-ellipsis')
                     ->color('success')
-                    ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready!\n\nCheck it out here: {$record->url}\n\nLet us know what you think!"))
+                    ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready!\n\nCheck it out here: https://app.webze.site/visit/{$record->slug}\n\nLet us know what you think!"))
                     ->openUrlInNewTab(),
                 Tables\Actions\Action::make('regenerate')
                     ->label('Regenerate')

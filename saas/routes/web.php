@@ -8,6 +8,7 @@ Route::get('/', function () {
 
 Route::post('/api/generate-site', [\App\Http\Controllers\GenerateSiteController::class, 'generate']);
 Route::get('/track/whatsapp/{slug}', [\App\Http\Controllers\TrackingController::class, 'trackWhatsapp'])->name('track.whatsapp');
+Route::get('/visit/{slug}', [\App\Http\Controllers\TrackingController::class, 'trackVisit'])->name('track.visit');
 
 Route::get('/preview/{slug}', function($slug) {
     $website = \App\Models\Website::where('slug', $slug)->firstOrFail();

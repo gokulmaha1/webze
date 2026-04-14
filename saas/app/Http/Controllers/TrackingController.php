@@ -34,4 +34,25 @@ class TrackingController extends Controller
         
         return redirect()->away($whatsappUrl);
     }
+
+    /**
+     * Track an inbound visit (e.g. from WhatsApp shares) then redirect to the actual site
+     */
+    public function trackVisit($slug, Request $request)
+    {
+        $website = Website::where('slug', $slug)->firstOrFail();
+
+        \App\Models\AnalyticsLog::create([
+            'website_id' => $website->id,
+            'page_url' => $website->url,
+            'is_admin_visit' => auth()->check(),
+            'metadata' => [
+                'source' => $request->query('source', 'whatsapp_notification'),
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent()
+            ]
+        ]);
+
+        return redirect()->away($website->url);
+    }
 }
