@@ -60,10 +60,10 @@ class Website extends Model
         $cat = strtolower($category);
         
         $map = [
-            'salon' => ['salon', 'beauty', 'spa', 'hair', 'barber', 'nails', 'massage', 'wellness', 'makeup', 'style'],
-            'restaurant' => ['Restaurant supply store','restaurant', 'food', 'cafe', 'dining', 'bistro', 'eatery', 'pizza', 'burger', 'bakery', 'pub', 'bar', 'grill'],
-            'catering' => ['catering', 'caterer', 'banquet', 'event', 'wedding', 'party', 'venue', 'planner'],
-            'clinic' => ['clinic', 'health', 'medical', 'hospital', 'doctor', 'dental', 'care', 'therapy', 'pharmacy', 'vet', 'gym', 'fitness'],
+            'salon-beauty' => ['salon', 'beauty', 'spa', 'hair', 'barber', 'nails', 'massage', 'wellness', 'makeup', 'style'],
+            'restaurant' => ['restaurant supply store', 'restaurant', 'food', 'cafe', 'dining', 'bistro', 'eatery', 'pizza', 'burger', 'bakery', 'pub', 'bar', 'grill'],
+            'catering-cafe' => ['catering', 'caterer', 'banquet', 'event', 'wedding', 'party', 'venue', 'planner'],
+            'clinic-healthcare' => ['clinic', 'health', 'medical', 'hospital', 'doctor', 'dental', 'care', 'therapy', 'pharmacy', 'vet', 'gym', 'fitness'],
             'real-estate' => ['real estate', 'property', 'realtor', 'broker', 'housing', 'estate', 'homes', 'hotel', 'resort', 'inn', 'hostel', 'airbnb', 'accommodation'],
             'corporate' => [
                 'corporate', 'business', 'agency', 'consulting', 'tech', 'software', 'enterprise', 'finance', 'marketing', 
@@ -74,7 +74,7 @@ class Website extends Model
 
         foreach ($map as $slug => $keywords) {
             foreach ($keywords as $keyword) {
-                if (str_contains($cat, $keyword)) {
+                if (str_contains($cat, strtolower($keyword))) {
                     $template = Template::where('slug', $slug)->first();
                     if ($template) return $template->id;
                 }
