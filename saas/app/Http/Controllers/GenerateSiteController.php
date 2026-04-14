@@ -44,15 +44,19 @@ class GenerateSiteController extends Controller
         $slug         = Str::slug($businessName) . '-' . time();
         $url          = 'https://' . $slug . '.webze.site';
 
+        // Extract phone/address from ai_content if missing in top-level business
+        $phone   = $data['business']['phone'] ?? ($data['ai_content']['contact']['phone'] ?? ($data['ai_content']['phone'] ?? null));
+        $address = $data['business']['address'] ?? ($data['ai_content']['contact']['address'] ?? ($data['ai_content']['address'] ?? null));
+
         // Store in database. The Model's `creating` and `saved` observers 
         // will automatically detect the specific template and generate the HTML files!
         $website = Website::create([
             'business_name' => $businessName,
             'slug'          => $slug,
             'url'           => $url,
-            'category'      => $data['business']['category'] ?? null,
-            'phone'         => $data['business']['phone'] ?? null,
-            'address'       => $data['business']['address'] ?? null,
+            'category'      => $data['business']['category'] ?? ($data['ai_content']['category'] ?? null),
+            'phone'         => $phone,
+            'address'       => $address,
             'ai_content'    => $data['ai_content'],
             'status'        => 'live',
         ]);
@@ -62,6 +66,7 @@ class GenerateSiteController extends Controller
             'url'            => $url,
             'slug'           => $slug,
             'website_id'     => $website->id,
+            'phone'          => $phone, 
         ]);
     }
 }
