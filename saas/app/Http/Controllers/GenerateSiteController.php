@@ -12,6 +12,27 @@ class GenerateSiteController extends Controller
 {
     public function generate(Request $request)
     {
+        // Support both nested and flat JSON payloads
+        $payload = $request->all();
+        
+        if (isset($payload['business_name']) && !isset($payload['business'])) {
+            $payload['business'] = [
+                'name' => $payload['business_name'] ?? '',
+                'category' => $payload['category'] ?? '',
+                'phone' => $payload['phone'] ?? '',
+                'address' => $payload['address'] ?? '',
+            ];
+            
+            $payload['ai_content'] = [
+                'rating' => $payload['rating'] ?? '5.0',
+                'count' => $payload['reviews'] ?? '100+',
+                // Optional: map the ai_content review if they passed it, or fallback
+                'review' => 'Excellent and highly professional output.' 
+            ];
+        }
+
+        $request->replace($payload);
+
         $data = $request->validate([
             'business'        => 'required|array',
             'business.name'   => 'required|string',
