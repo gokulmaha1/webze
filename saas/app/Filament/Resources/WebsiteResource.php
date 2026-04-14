@@ -28,9 +28,11 @@ class WebsiteResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn ($state, Forms\Set $set) =>
-                                $set('slug', Str::slug($state) . '-' . time())
-                            ),
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                $slug = Str::slug($state) . '-' . time();
+                                $set('slug', $slug);
+                                $set('url', 'https://' . $slug . '.webze.site');
+                            }),
 
                         Forms\Components\TextInput::make('owner_name')
                             ->nullable()
@@ -57,7 +59,11 @@ class WebsiteResource extends Resource
                         Forms\Components\TextInput::make('slug')
                             ->required()
                             ->unique(ignoreRecord: true)
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn ($state, Forms\Set $set) => 
+                                $set('url', 'https://' . $state . '.webze.site')
+                            ),
 
                         Forms\Components\Select::make('status')
                             ->options([
