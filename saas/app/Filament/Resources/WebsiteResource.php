@@ -134,7 +134,6 @@ class WebsiteResource extends Resource
                     ->color('primary')
                     ->url(fn ($record) => $record->url)
                     ->openUrlInNewTab()
-                    ->copyable()
                     ->limit(30),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
