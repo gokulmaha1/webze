@@ -132,7 +132,8 @@ class WebsiteResource extends Resource
                     ->label('Live URL')
                     ->icon('heroicon-o-link')
                     ->color('primary')
-                    ->url(fn ($record) => $record->url, shouldOpenInNewTab: true)
+                    ->url(fn ($record) => $record->url)
+                    ->openUrlInNewTab()
                     ->copyable()
                     ->limit(30),
                 Tables\Columns\TextColumn::make('created_at')
