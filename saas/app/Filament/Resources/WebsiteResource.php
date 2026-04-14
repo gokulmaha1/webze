@@ -175,13 +175,11 @@ class WebsiteResource extends Resource
                         }
 
                         // 2. Re-guess the template before regenerating
-                        if ($record->category) {
-                            $guessedId = $record->guessTemplateId($record->category);
-                            if ($guessedId && $record->template_id != $guessedId) {
-                                $record->template_id = $guessedId;
-                                $record->save();
-                                $record->refresh(); // Ensure relations are reloaded
-                            }
+                        $guessedId = $record->guessTemplateId($record->category, $record->business_name, $record->ai_content);
+                        if ($guessedId && $record->template_id != $guessedId) {
+                            $record->template_id = $guessedId;
+                            $record->save();
+                            $record->refresh(); // Ensure relations are reloaded
                         }
                         
                         $record->generateStaticSite();

@@ -40,8 +40,8 @@ class Website extends Model
     protected static function booted()
     {
         static::creating(function ($website) {
-            if (!$website->template_id && $website->category) {
-                $website->template_id = self::guessTemplateId($website->category);
+            if (!$website->template_id) {
+                $website->template_id = self::guessTemplateId($website->category, $website->business_name, $website->ai_content);
             }
             // Absolute fallback
             if (!$website->template_id) {
@@ -55,9 +55,16 @@ class Website extends Model
         });
     }
 
-    public static function guessTemplateId($category)
+    public static function guessTemplateId($category, $businessName = null, $aiContent = null)
     {
-        $cat = strtolower($category);
+        // 1. Try to get category from AI content if $category is null
+        if (!$category && $aiContent) {
+            $category = $aiContent['category'] ?? ($aiContent['seo']['title'] ?? ($aiContent['hero']['subheadline'] ?? null));
+        }
+
+        // 2. Prepare clues (Priority: Category > Business Name)
+        $clues = strtolower(($category ?? '') . ' ' . ($businessName ?? ''));
+        if (empty(trim($clues))) return null;
         
         $map = [
             'salon-beauty' => ['salon', 'beauty', 'spa', 'hair', 'barber', 'nails', 'massage', 'wellness', 'makeup', 'style'],
@@ -74,7 +81,7 @@ class Website extends Model
 
         foreach ($map as $slug => $keywords) {
             foreach ($keywords as $keyword) {
-                if (str_contains($cat, strtolower($keyword))) {
+                if (str_contains($clues, strtolower($keyword))) {
                     $template = Template::where('slug', $slug)->first();
                     if ($template) return $template->id;
                 }
