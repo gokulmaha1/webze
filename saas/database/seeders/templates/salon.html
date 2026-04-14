@@ -2,86 +2,190 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{business.name}} | Beauty & Care</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<title>{{business.name}} | Premium Salon</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
+:root{--p:#d18298;--p-dark:#8e485a;--bg:#fafafa;--text:#2a2a2a;--glass:rgba(255,255,255,0.7);--glass-border:rgba(255,255,255,0.4)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Lato',sans-serif;color:#333;background:#fafafa}
-nav{background:#fff;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.04);position:sticky;top:0;z-index:100}
-.logo{font-family:'Playfair Display',serif;font-size:1.6rem;color:#c8597a}
-nav ul{list-style:none;display:flex;gap:24px}
-nav ul li a{text-decoration:none;color:#555;font-size:.95rem;transition:.3s}
-nav ul li a:hover{color:#c8597a}
-.hero{background:linear-gradient(135deg,#fce4ec 0%,#f8bbd9 50%,#fce4ec 100%);padding:100px 5%;text-align:center}
-.hero h1{font-family:'Playfair Display',serif;font-size:3.2rem;color:#880e4f;line-height:1.2;margin-bottom:16px}
-.hero p{font-size:1.2rem;color:#ad1457;max-width:600px;margin:0 auto 32px}
-.btn{display:inline-block;padding:14px 36px;background:#c8597a;color:#fff;border-radius:30px;text-decoration:none;font-weight:700;transition:.3s;font-size:1rem}
-.btn:hover{background:#880e4f;transform:translateY(-2px)}
-.reviews-banner{background:#fff;padding:24px 5%;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.03);margin-top:-20px;border-radius:12px;max-width:800px;margin-left:auto;margin-right:auto;position:relative;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
-.stars{color:#f59e0b;font-size:1.2rem;letter-spacing:2px}
-.rating-text{font-weight:700;color:#333}
-.services{padding:80px 5%;background:#fff;margin-top:40px}
-.services h2{font-family:'Playfair Display',serif;text-align:center;font-size:2.2rem;color:#880e4f;margin-bottom:12px}
-.subtitle{text-align:center;color:#888;margin-bottom:48px;font-size:1rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
-.card{background:#fce4ec;border-radius:16px;padding:32px 24px;text-align:center;transition:.3s}
-.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(200,89,122,.2)}
-.card .icon{font-size:2.4rem;margin-bottom:14px}
-.card h3{font-family:'Playfair Display',serif;color:#880e4f;margin-bottom:8px}
-.card p{color:#777;font-size:.9rem}
-.testimonial{padding:80px 5%;background:#fff9fb;text-align:center}
-.quote-icon{font-size:3rem;color:#c8597a;opacity:.3;margin-bottom:10px}
-.review-text{font-size:1.4rem;font-family:'Playfair Display',serif;color:#555;font-style:italic;max-width:800px;margin:0 auto 20px;line-height:1.6}
-.contact{padding:80px 5%;background:linear-gradient(135deg,#880e4f,#c8597a);color:#fff;text-align:center}
-.contact h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:32px}
-.contact-info{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
-.contact-info div{background:rgba(255,255,255,.15);border-radius:16px;padding:24px 32px;min-width:240px}
-.contact-info h4{margin-bottom:8px;font-size:1rem;opacity:.8;text-transform:uppercase;letter-spacing:1px}
-.contact-info p{font-size:1.1rem;font-weight:700}
-footer{background:#3e0019;color:#f8bbd9;text-align:center;padding:20px;font-size:.9rem}
+body{font-family:'Lato',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
+html{scroll-behavior:smooth}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.zoom { transform: translateY(0) scale(0.92); }
+.reveal.left { transform: translateX(-40px); }
+.reveal.right { transform: translateX(40px); }
+.reveal.appear { opacity: 1; transform: translateY(0) scale(1) translateX(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+/* Dynamic Background Orbs */
+.bg-orb{position:fixed;border-radius:50%;filter:blur(100px);z-index:-1;animation:float 10s infinite ease-in-out alternate}
+.orb-1{top:-10%;left:-10%;width:50vw;height:50vw;background:rgba(209,130,152,0.15)}
+.orb-2{bottom:-10%;right:-10%;width:40vw;height:40vw;background:rgba(142,72,90,0.1)}
+@keyframes float { 0%{transform:translate(0,0)} 100%{transform:translate(30px,40px)} }
+
+nav{background:var(--glass);backdrop-filter:blur(20px);padding:24px 6%;display:flex;justify-content:space-between;align-items:center;position:fixed;width:100%;top:0;z-index:100;border-bottom:1px solid var(--glass-border);transition:all 0.4s}
+nav.scrolled{padding:16px 6%;background:rgba(255,255,255,0.9)}
+.logo{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--p-dark);font-weight:700;letter-spacing:1px}
+nav ul{list-style:none;display:flex;gap:35px}
+nav ul li a{text-decoration:none;color:#555;font-size:.9rem;text-transform:uppercase;letter-spacing:2px;font-weight:700;transition:.3s}
+nav ul li a:hover{color:var(--p)}
+.nav-btn{padding:12px 28px;background:var(--p-dark);color:#fff;border-radius:30px;font-size:.8rem;text-transform:uppercase;letter-spacing:2px;text-decoration:none;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1)}
+.nav-btn:hover{background:var(--text);transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+
+.hero{height:100vh;display:flex;align-items:center;padding:0 6%;background:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80') center/cover;position:relative}
+.hero::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;max-width:600px}
+.hero h1{font-family:'Playfair Display',serif;font-size:4.5rem;color:var(--p-dark);line-height:1.1;margin-bottom:24px}
+.hero h1 i{display:block;font-weight:400;color:var(--p)}
+.hero p{font-size:1.2rem;color:#555;margin-bottom:40px;line-height:1.8}
+.btn-primary{display:inline-block;padding:18px 45px;background:var(--p-dark);color:#fff;border-radius:40px;text-decoration:none;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:.9rem;transition:.4s}
+.btn-primary:hover{background:var(--text);box-shadow:0 15px 30px rgba(0,0,0,0.15);transform:translateY(-3px)}
+
+.trust-badge{position:absolute;bottom:40px;left:6%;z-index:2;background:var(--glass);backdrop-filter:blur(15px);padding:16px 24px;border-radius:20px;border:1px solid var(--glass-border);box-shadow:0 15px 35px rgba(0,0,0,0.05);display:flex;align-items:center;gap:16px}
+.stars{color:#f59e0b;font-size:1.2rem;letter-spacing:3px}
+.trust-badge p{margin:0;font-size:.9rem;font-weight:700;color:var(--text)}
+
+.gallery{padding:120px 6%;max-width:1400px;margin:0 auto}
+.gallery-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:30px}
+.img-card{height:450px;border-radius:20px;background-size:cover;background-position:center;position:relative;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.08);transition:.5s}
+.img-card:hover{transform:translateY(-10px);box-shadow:0 30px 50px rgba(209,130,152,0.2)}
+.img-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:50%;background:linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 100%);opacity:0;transition:.4s}
+.img-card:hover::after{opacity:1}
+.img-card h3{position:absolute;bottom:30px;left:30px;color:#fff;font-family:'Playfair Display',serif;font-size:1.8rem;z-index:2;opacity:0;transform:translateY(20px);transition:.4s;transition-delay:.1s}
+.img-card:hover h3{opacity:1;transform:translateY(0)}
+
+.services{padding:120px 6%;background:url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1.5" fill="rgba(209,130,152,0.15)"/></svg>');}
+.sec-header{text-align:center;margin-bottom:80px;max-width:700px;margin-left:auto;margin-right:auto}
+.sec-header h2{font-family:'Playfair Display',serif;font-size:3.5rem;color:var(--p-dark);margin-bottom:16px}
+.sec-header p{color:#666;font-size:1.1rem;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;max-width:1400px;margin:0 auto}
+.card{background:#fff;border-radius:24px;padding:50px 40px;text-align:center;box-shadow:0 15px 40px rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.02);position:relative;overflow:hidden;transition:.5s}
+.card::before{content:'';position:absolute;top:0;left:0;width:100%;height:0;background:linear-gradient(180deg, var(--p) 0%, transparent 100%);opacity:0.05;transition:.5s}
+.card:hover{transform:translateY(-15px);box-shadow:0 30px 60px rgba(209,130,152,0.15)}
+.card:hover::before{height:100%}
+.card img{width:80px;height:80px;object-fit:cover;border-radius:50%;margin-bottom:24px;border:3px solid var(--p)}
+.card h3{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--text);margin-bottom:12px}
+.card p{color:#666;font-size:.95rem;line-height:1.6}
+
+.review-sec{padding:120px 6%;background:var(--p-dark);color:#fff;text-align:center;position:relative;overflow:hidden}
+.review-sec::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);animation:spin 30s linear infinite}
+@keyframes spin{ 100%{transform:rotate(360deg)} }
+.quote{font-size:6rem;font-family:'Playfair Display',serif;line-height:0;color:var(--p);opacity:0.5;margin-bottom:40px}
+.review-text{font-size:2.2rem;font-family:'Playfair Display',serif;font-style:italic;max-width:900px;margin:0 auto 30px;line-height:1.4;position:relative;z-index:2}
+.reviewer{font-size:.9rem;text-transform:uppercase;letter-spacing:3px;font-weight:700;color:var(--p);position:relative;z-index:2}
+
+.contact{padding:120px 6%;display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:1400px;margin:0 auto;align-items:center}
+.contact-card{background:var(--glass);backdrop-filter:blur(20px);padding:50px;border-radius:30px;border:1px solid var(--glass-border);box-shadow:0 20px 50px rgba(0,0,0,0.05)}
+.c-item{margin-bottom:30px;display:flex;align-items:flex-start;gap:20px}
+.c-icon{width:50px;height:50px;background:var(--p-dark);color:#fff;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.c-text h4{font-size:.8rem;text-transform:uppercase;letter-spacing:2px;color:#888;margin-bottom:6px}
+.c-text p{font-size:1.2rem;font-weight:700;color:var(--text)}
+.contact-img{border-radius:30px;height:600px;background:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80') center/cover;position:relative;box-shadow:0 20px 50px rgba(0,0,0,0.1)}
+.contact-img::after{content:'';position:absolute;inset:20px;border:2px solid rgba(255,255,255,0.5);border-radius:15px}
+
+footer{background:#1a1a1a;color:#888;text-align:center;padding:40px;font-size:.9rem;border-top:5px solid var(--p-dark)}
 </style>
 </head>
 <body>
-<nav>
+<div class="bg-orb orb-1"></div>
+<div class="bg-orb orb-2"></div>
+
+<nav id="navbar">
   <div class="logo">{{business.name}}</div>
-  <ul><li><a href="#services">Services</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li></ul>
+  <ul><li><a href="#services">Services</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#reviews">Reviews</a></li></ul>
+  <a href="#contact" class="nav-btn">Reserve</a>
 </nav>
+
 <section class="hero">
-  <h1>Welcome to {{business.name}}</h1>
-  <p>Experience the finest {{business.category}} services tailored specifically for you. Let our experts bring out your natural beauty in a relaxing, luxurious environment.</p>
-  <a href="#contact" class="btn">Book Appointment</a>
-</section>
-
-<div class="reviews-banner" id="reviews">
-  <div class="stars">★★★★★</div>
-  <div class="rating-text">{{rating}} / 5.0 Rating based on {{count}} Reviews</div>
-</div>
-
-<section class="services" id="services">
-  <h2>Premium Services</h2>
-  <p class="subtitle">Indulge in our carefully curated beauty treatments.</p>
-  <div class="grid">
-    <div class="card"><div class="icon">💇‍♀️</div><h3>Hair Styling</h3><p>Precision cuts, vibrant coloring, and styling for any occasion.</p></div>
-    <div class="card"><div class="icon">💅</div><h3>Nail Care</h3><p>Luxurious manicures and pedicures with premium polishes.</p></div>
-    <div class="card"><div class="icon">💆‍♀️</div><h3>Spa Treatments</h3><p>Relaxing massages and rejuvenating facials for your glow.</p></div>
-    <div class="card"><div class="icon">✨</div><h3>Bridal Packages</h3><p>Complete beauty preparation for your special day.</p></div>
+  <div class="hero-content reveal">
+    <h1>Elegance <i>&amp; Detail</i></h1>
+    <p>Welcome to {{business.name}}. Experience the pinnacle of luxury {{business.category}} treatments. Relax, unwind, and let our master stylists reveal your true radiance.</p>
+    <a href="#contact" class="btn-primary">Book Your Session</a>
+  </div>
+  <div class="trust-badge reveal delay-2 left">
+    <div class="stars">★★★★★</div>
+    <div>
+      <p>{{rating}} / 5 Star Rating</p>
+      <p style="font-size:0.75rem;color:#888;font-weight:400">Loved by {{count}} Clients</p>
+    </div>
   </div>
 </section>
 
-<section class="testimonial">
-  <div class="quote-icon">❝</div>
-  <p class="review-text">"{{review}}"</p>
-  <p>— Verified Customer</p>
+<section class="gallery" id="gallery">
+  <div class="gallery-grid">
+    <div class="img-card reveal zoom" style="background-image:url('https://images.unsplash.com/photo-1595476108010-b4d1f10d5e43?auto=format&fit=crop&w=600&q=80')"><h3>Styling</h3></div>
+    <div class="img-card reveal zoom delay-1" style="background-image:url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=600&q=80')"><h3>Spa Care</h3></div>
+    <div class="img-card reveal zoom delay-2" style="background-image:url('https://images.unsplash.com/photo-1516975080661-460d96d9da4e?auto=format&fit=crop&w=600&q=80')"><h3>Coloring</h3></div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="sec-header reveal">
+    <h2>Our Signature Services</h2>
+    <p>Using only the world's most prestigious products, we bring a couture approach to {{business.category}} tailored uniquely to your profile.</p>
+  </div>
+  <div class="grid">
+    <div class="card reveal">
+      <img src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=150&q=80" alt="Hair">
+      <h3>Premium Cuts</h3><p>Consultative styling designed to frame your features perfectly.</p>
+    </div>
+    <div class="card reveal delay-1">
+      <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=150&q=80" alt="Skin">
+      <h3>Advanced Aesthetics</h3><p>Rejuvenating treatments targeting deep tissue and cellular glow.</p>
+    </div>
+    <div class="card reveal delay-2">
+      <img src="https://images.unsplash.com/photo-1519014816548-bf5fe459e98b?auto=format&fit=crop&w=150&q=80" alt="Nails">
+      <h3>Luxe Manicure</h3><p>High-end detailing using exclusively vegan and organic polishes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="review-sec" id="reviews">
+  <div class="quote reveal">❝</div>
+  <p class="review-text reveal delay-1">"{{review}}"</p>
+  <p class="reviewer reveal delay-2">— One of our {{count}} absolutely thrilled clients.</p>
 </section>
 
 <section class="contact" id="contact">
-  <h2>Visit Us Today</h2>
-  <div class="contact-info">
-    <div><h4>Call to Book</h4><p>📞 {{business.phone}}</p></div>
-    <div><h4>Location</h4><p>📍 {{business.address}}</p></div>
-    <div><h4>Specialty</h4><p>🌸 {{business.category}}</p></div>
+  <div class="contact-card reveal left">
+    <div class="sec-header" style="text-align:left;margin-bottom:40px">
+      <h2 style="font-size:2.5rem;margin-bottom:10px">Visit Our Sanctuary</h2>
+      <p style="font-size:1rem">Reach out today to secure your preferred time with our specialists.</p>
+    </div>
+    <div class="c-item">
+      <div class="c-icon">📞</div>
+      <div class="c-text"><h4>Call to Reserve</h4><p>{{business.phone}}</p></div>
+    </div>
+    <div class="c-item">
+      <div class="c-icon">📍</div>
+      <div class="c-text"><h4>Our Location</h4><p>{{business.address}}</p></div>
+    </div>
+    <div class="c-item">
+      <div class="c-icon">✨</div>
+      <div class="c-text"><h4>Expertise</h4><p>{{business.category}}</p></div>
+    </div>
   </div>
+  <div class="contact-img reveal right delay-1"></div>
 </section>
-<footer><p>© 2025 {{business.name}} · All rights reserved · Powered by Webze</p></footer>
+
+<footer><p>© 2025 {{business.name}} · Crafted by Webze ✦</p></footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('appear');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
