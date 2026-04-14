@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{business.name}} | Corporate Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;color:#1a1a2e;background:#fff}
+nav{background:rgba(10,10,30,.98);padding:20px 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.05)}
+.logo{font-size:1.6rem;font-weight:800;color:#fff;letter-spacing:-1px}
+.logo span{color:#f59e0b}
+nav ul{list-style:none;display:flex;gap:32px}
+nav ul li a{text-decoration:none;color:rgba(255,255,255,.7);font-size:.9rem;font-weight:500;transition:.3s}
+nav ul li a:hover{color:#f59e0b}
+.nav-btn{padding:12px 28px;background:#f59e0b;color:#0a0a1e;border-radius:6px;font-weight:700;text-decoration:none;transition:.3s;font-size:.9rem}
+.nav-btn:hover{background:#d97706}
+.hero{background:linear-gradient(135deg,#0a0a1e 0%,#1a1a3e 50%,#0d0d2e 100%);min-height:85vh;padding:120px 5%;display:flex;gap:60px;align-items:center;flex-wrap:wrap;position:relative}
+.hero-text{flex:1;min-width:300px;position:relative;z-index:1}
+.hero-badge{display:inline-block;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#f59e0b;font-size:.8rem;font-weight:700;padding:8px 20px;border-radius:4px;margin-bottom:28px;letter-spacing:2px;text-transform:uppercase}
+.hero-text h1{font-size:3.5rem;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-2px;margin-bottom:24px}
+.hero-text h1 span{color:#f59e0b}
+.hero-text p{color:rgba(255,255,255,.65);font-size:1.15rem;line-height:1.75;max-width:580px;margin-bottom:40px}
+.btn{display:inline-block;padding:16px 40px;background:#f59e0b;color:#0a0a1e;border-radius:6px;text-decoration:none;font-weight:700;transition:.3s;margin-right:16px;font-size:1rem}
+.btn:hover{background:#d97706;}
+.metrics{background:#f8fafc;padding:60px 5%;display:flex;justify-content:space-around;flex-wrap:wrap;gap:30px;border-bottom:1px solid #e2e8f0}
+.metric{text-align:center}
+.metric h3{font-size:3rem;font-weight:800;color:#0a0a1e}
+.metric p{color:#64748b;font-weight:600;font-size:1rem;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.services{padding:100px 5%;}
+.tag{text-align:center;color:#f59e0b;font-size:.85rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.services h2{text-align:center;font-size:2.8rem;font-weight:800;color:#0a0a1e;margin-bottom:16px;letter-spacing:-1px}
+.subtitle{text-align:center;color:#64748b;margin-bottom:60px;font-size:1.1rem}
+.serv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px}
+.serv-card{background:#fff;border-radius:12px;padding:40px 32px;box-shadow:0 10px 40px rgba(0,0,0,.04);border:1px solid #f1f5f9;transition:.3s}
+.serv-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,.08);border-color:#e2e8f0}
+.serv-num{width:60px;height:60px;background:rgba(245,158,11,.1);color:#f59e0b;font-size:1.5rem;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:12px;margin-bottom:24px}
+.serv-card h3{font-weight:800;color:#0a0a1e;margin-bottom:16px;font-size:1.3rem}
+.serv-card p{color:#64748b;font-size:.95rem;line-height:1.7}
+.testimonial{padding:100px 5%;background:#0a0a1e;color:#fff;text-align:center}
+.testimonial .stars{color:#f59e0b;font-size:1.8rem;margin-bottom:24px;letter-spacing:6px}
+.testi-text{font-size:1.6rem;font-weight:500;line-height:1.6;max-width:800px;margin:0 auto 32px;color:#f8fafc;font-style:italic}
+.contact{padding:100px 5%;background:linear-gradient(135deg,#f59e0b,#d97706);text-align:center}
+.contact h2{font-size:2.8rem;font-weight:800;color:#0a0a1e;margin-bottom:16px;letter-spacing:-1px}
+.contact-row{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:48px}
+.contact-box{background:#0a0a1e;border-radius:12px;padding:32px 40px;text-align:center;min-width:280px}
+.contact-box h4{color:rgba(255,255,255,.5);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.contact-box p{color:#f59e0b;font-weight:700;font-size:1.15rem}
+footer{background:#050510;color:#64748b;text-align:center;padding:32px;font-size:.95rem}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">{{business.name}}<span>.</span></div>
+  <ul><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a href="#contact" class="nav-btn">Get Started</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">Professional {{business.category}}</div>
+    <h1>Elevating <span>{{business.name}}</span> to the Next Level</h1>
+    <p>We provide enterprise-grade {{business.category}} solutions engineered to dramatically accelerate your growth and firmly establish your market dominance long-term.</p>
+    <a href="#contact" class="btn">Partner With Us</a>
+  </div>
+</section>
+
+<div class="metrics">
+  <div class="metric"><h3>{{rating}}/5</h3><p>Average Rating</p></div>
+  <div class="metric"><h3>{{count}}+</h3><p>Successful Projects</p></div>
+  <div class="metric"><h3>100%</h3><p>Custom Solutions</p></div>
+</div>
+
+<section class="services" id="services">
+  <div class="tag">What We Deliver</div>
+  <h2>Core Competencies</h2>
+  <p class="subtitle">Actionable strategies and reliable execution for modern businesses.</p>
+  <div class="serv-grid">
+    <div class="serv-card"><div class="serv-num">01</div><h3>Strategic Consulting</h3><p>Comprehensive industry analysis and actionable roadmaps to completely optimize your direct operations and strictly maximize your ROI.</p></div>
+    <div class="serv-card"><div class="serv-num">02</div><h3>Business Execution</h3><p>Highly seamless deployment of proven strategies by our deeply experienced specialists to ensure measurable, highly impactful results.</p></div>
+    <div class="serv-card"><div class="serv-num">03</div><h3>Growth Management</h3><p>Ongoing dedicated support, continuous active monitoring, and relentless agile refinement to strictly guarantee sustainable long-term scale.</p></div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="tag" style="margin-bottom:24px">Client Feedback</div>
+  <div class="stars">★★★★★</div>
+  <p class="testi-text">"{{review}}"</p>
+  <p style="color:#94a3b8;font-weight:600;letter-spacing:1px;text-transform:uppercase">Trusted By {{count}} Corporate Partners</p>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Ready to Start?</h2>
+  <div class="contact-row">
+    <div class="contact-box"><h4>Direct Contact</h4><p>📞 {{business.phone}}</p></div>
+    <div class="contact-box"><h4>Headquarters</h4><p>📍 {{business.address}}</p></div>
+    <div class="contact-box"><h4>Industry</h4><p>💼 {{business.category}}</p></div>
+  </div>
+</section>
+
+<footer><p>© 2025 {{business.name}} · All Rights Reserved · Powered by Webze</p></footer>
+</body>
+</html>

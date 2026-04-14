@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{business.name}} | Real Estate Experts</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',sans-serif;color:#1a1a2e;background:#f8f9ff}
+nav{background:#1a1a2e;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{font-size:1.5rem;font-weight:800;color:#e94560;letter-spacing:-1px}
+nav ul{list-style:none;display:flex;gap:24px}
+nav ul li a{text-decoration:none;color:#ccc;font-size:.9rem;transition:.3s}
+nav ul li a:hover{color:#e94560}
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);padding:110px 5%;color:#fff;display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.hero-text{flex:1;min-width:280px}
+.hero-text span{color:#e94560;font-size:.85rem;font-weight:600;letter-spacing:3px;text-transform:uppercase}
+.hero-text h1{font-size:3.2rem;font-weight:800;line-height:1.15;margin:16px 0;letter-spacing:-1px}
+.hero-text p{color:#aab2c8;font-size:1.1rem;margin-bottom:32px;line-height:1.7}
+.btn{display:inline-block;padding:14px 36px;background:#e94560;color:#fff;border-radius:4px;text-decoration:none;font-weight:700;transition:.3s;margin-right:12px}
+.btn:hover{background:#c73652}
+.hero-stats{flex:0 0 auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:32px 40px;backdrop-filter:blur(10px)}
+.stat{text-align:center;padding:16px 24px}
+.stat h3{font-size:2.2rem;font-weight:800;color:#e94560}
+.stat p{color:#aab2c8;font-size:.85rem;margin-top:4px}
+.divider{height:1px;background:rgba(255,255,255,.1);margin:8px 0}
+.features{padding:80px 5%;background:#fff}
+.features h2{text-align:center;font-size:2.4rem;font-weight:800;color:#1a1a2e;margin-bottom:12px}
+.subtitle{text-align:center;color:#888;margin-bottom:48px}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.feat-card{background:#f8f9ff;border-radius:16px;padding:32px 24px;text-align:center;box-shadow:0 2px 20px rgba(0,0,0,.04);transition:.3s;border-bottom:3px solid transparent}
+.feat-card:hover{transform:translateY(-6px);border-bottom-color:#e94560;box-shadow:0 12px 30px rgba(233,69,96,.12)}
+.feat-card .icon{width:64px;height:64px;background:linear-gradient(135deg,#e94560,#c73652);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 20px;color:#fff}
+.feat-card h3{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin-bottom:12px}
+.feat-card p{color:#666;font-size:.9rem;line-height:1.6}
+.reviews{padding:80px 5%;background:linear-gradient(135deg,#e94560,#c73652);color:#fff;text-align:center}
+.reviews h2{font-size:2.4rem;font-weight:800;margin-bottom:20px}
+.review-stats{font-size:1.2rem;margin-bottom:30px;font-weight:600;opacity:.9}
+.review-block{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:40px;border-radius:16px;max-width:800px;margin:0 auto}
+.review-block p{font-size:1.3rem;font-style:italic;line-height:1.6}
+.contact{padding:80px 5%;background:#1a1a2e;color:#fff;text-align:center}
+.contact h2{font-size:2.4rem;font-weight:800;margin-bottom:40px}
+.contact-row{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.contact-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px;min-width:260px}
+.contact-box h4{color:#e94560;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.contact-box p{font-size:1.15rem;font-weight:600;color:#e2e8f0}
+footer{background:#0d1117;color:#555;text-align:center;padding:24px;font-size:.9rem}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">🏢 {{business.name}}</div>
+  <ul><li><a href="#services">Services</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li></ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <span>Trusted Real Estate Partner</span>
+    <h1>Your Trusted Partner in {{business.category}}</h1>
+    <p>Welcome to {{business.name}}. We deliver professional real estate guidance, property solutions, and unmatched market expertise tailored perfectly to your unique needs.</p>
+    <a href="#contact" class="btn">Get Immediate Consultation</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><h3>{{rating}}</h3><p>Star Rating</p></div>
+    <div class="divider"></div>
+    <div class="stat"><h3>{{count}}</h3><p>Happy Clients</p></div>
+  </div>
+</section>
+
+<section class="features" id="services">
+  <h2>Our Core Services</h2>
+  <p class="subtitle">Comprehensive real estate solutions designed for success.</p>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="icon">🔍</div><h3>Property Buying</h3><p>End-to-end guidance to help you find and secure the perfect property at the right price.</p></div>
+    <div class="feat-card"><div class="icon">📈</div><h3>Property Selling</h3><p>Strategic marketing and negotiation to maximize the value of your property sale.</p></div>
+    <div class="feat-card"><div class="icon">💼</div><h3>Investment Advice</h3><p>Expert market analysis and consulting to build a highly profitable real estate portfolio.</p></div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <h2>Client Testimonials</h2>
+  <p class="review-stats">⭐ Rated {{rating}}/5 by {{count}} Clients</p>
+  <div class="review-block">
+    <p>"{{review}}"</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Talk To Our Experts</h2>
+  <div class="contact-row">
+    <div class="contact-box"><h4>Call Us Directly</h4><p>📞 {{business.phone}}</p></div>
+    <div class="contact-box"><h4>Visit Our Office</h4><p>📍 {{business.address}}</p></div>
+    <div class="contact-box"><h4>Expertise</h4><p>🏢 {{business.category}}</p></div>
+  </div>
+</section>
+
+<footer><p>© 2025 {{business.name}} · All Rights Reserved · Powered by Webze</p></footer>
+</body>
+</html>

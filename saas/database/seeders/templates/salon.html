@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{business.name}} | Beauty & Care</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Lato',sans-serif;color:#333;background:#fafafa}
+nav{background:#fff;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.04);position:sticky;top:0;z-index:100}
+.logo{font-family:'Playfair Display',serif;font-size:1.6rem;color:#c8597a}
+nav ul{list-style:none;display:flex;gap:24px}
+nav ul li a{text-decoration:none;color:#555;font-size:.95rem;transition:.3s}
+nav ul li a:hover{color:#c8597a}
+.hero{background:linear-gradient(135deg,#fce4ec 0%,#f8bbd9 50%,#fce4ec 100%);padding:100px 5%;text-align:center}
+.hero h1{font-family:'Playfair Display',serif;font-size:3.2rem;color:#880e4f;line-height:1.2;margin-bottom:16px}
+.hero p{font-size:1.2rem;color:#ad1457;max-width:600px;margin:0 auto 32px}
+.btn{display:inline-block;padding:14px 36px;background:#c8597a;color:#fff;border-radius:30px;text-decoration:none;font-weight:700;transition:.3s;font-size:1rem}
+.btn:hover{background:#880e4f;transform:translateY(-2px)}
+.reviews-banner{background:#fff;padding:24px 5%;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.03);margin-top:-20px;border-radius:12px;max-width:800px;margin-left:auto;margin-right:auto;position:relative;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.stars{color:#f59e0b;font-size:1.2rem;letter-spacing:2px}
+.rating-text{font-weight:700;color:#333}
+.services{padding:80px 5%;background:#fff;margin-top:40px}
+.services h2{font-family:'Playfair Display',serif;text-align:center;font-size:2.2rem;color:#880e4f;margin-bottom:12px}
+.subtitle{text-align:center;color:#888;margin-bottom:48px;font-size:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
+.card{background:#fce4ec;border-radius:16px;padding:32px 24px;text-align:center;transition:.3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(200,89,122,.2)}
+.card .icon{font-size:2.4rem;margin-bottom:14px}
+.card h3{font-family:'Playfair Display',serif;color:#880e4f;margin-bottom:8px}
+.card p{color:#777;font-size:.9rem}
+.testimonial{padding:80px 5%;background:#fff9fb;text-align:center}
+.quote-icon{font-size:3rem;color:#c8597a;opacity:.3;margin-bottom:10px}
+.review-text{font-size:1.4rem;font-family:'Playfair Display',serif;color:#555;font-style:italic;max-width:800px;margin:0 auto 20px;line-height:1.6}
+.contact{padding:80px 5%;background:linear-gradient(135deg,#880e4f,#c8597a);color:#fff;text-align:center}
+.contact h2{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:32px}
+.contact-info{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.contact-info div{background:rgba(255,255,255,.15);border-radius:16px;padding:24px 32px;min-width:240px}
+.contact-info h4{margin-bottom:8px;font-size:1rem;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+.contact-info p{font-size:1.1rem;font-weight:700}
+footer{background:#3e0019;color:#f8bbd9;text-align:center;padding:20px;font-size:.9rem}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">{{business.name}}</div>
+  <ul><li><a href="#services">Services</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li></ul>
+</nav>
+<section class="hero">
+  <h1>Welcome to {{business.name}}</h1>
+  <p>Experience the finest {{business.category}} services tailored specifically for you. Let our experts bring out your natural beauty in a relaxing, luxurious environment.</p>
+  <a href="#contact" class="btn">Book Appointment</a>
+</section>
+
+<div class="reviews-banner" id="reviews">
+  <div class="stars">★★★★★</div>
+  <div class="rating-text">{{rating}} / 5.0 Rating based on {{count}} Reviews</div>
+</div>
+
+<section class="services" id="services">
+  <h2>Premium Services</h2>
+  <p class="subtitle">Indulge in our carefully curated beauty treatments.</p>
+  <div class="grid">
+    <div class="card"><div class="icon">💇‍♀️</div><h3>Hair Styling</h3><p>Precision cuts, vibrant coloring, and styling for any occasion.</p></div>
+    <div class="card"><div class="icon">💅</div><h3>Nail Care</h3><p>Luxurious manicures and pedicures with premium polishes.</p></div>
+    <div class="card"><div class="icon">💆‍♀️</div><h3>Spa Treatments</h3><p>Relaxing massages and rejuvenating facials for your glow.</p></div>
+    <div class="card"><div class="icon">✨</div><h3>Bridal Packages</h3><p>Complete beauty preparation for your special day.</p></div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="quote-icon">❝</div>
+  <p class="review-text">"{{review}}"</p>
+  <p>— Verified Customer</p>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Visit Us Today</h2>
+  <div class="contact-info">
+    <div><h4>Call to Book</h4><p>📞 {{business.phone}}</p></div>
+    <div><h4>Location</h4><p>📍 {{business.address}}</p></div>
+    <div><h4>Specialty</h4><p>🌸 {{business.category}}</p></div>
+  </div>
+</section>
+<footer><p>© 2025 {{business.name}} · All rights reserved · Powered by Webze</p></footer>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{business.name}} | Catering & Dining</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Open Sans',sans-serif;color:#333;background:#fdfcfb}
+nav{background:#1a0a00;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{font-family:'Merriweather',serif;font-size:1.5rem;color:#f4a261;font-weight:700}
+nav ul{list-style:none;display:flex;gap:24px}
+nav ul li a{text-decoration:none;color:#f4d9c0;font-size:.95rem;transition:.3s}
+nav ul li a:hover{color:#f4a261}
+.hero{background:linear-gradient(rgba(26,10,0,.7),rgba(26,10,0,.7)),url('https://images.unsplash.com/photo-1555244162-803834f70033?w=1400') center/cover;padding:120px 5%;text-align:center;color:#fff;min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.hero h1{font-family:'Merriweather',serif;font-size:3.5rem;line-height:1.2;margin-bottom:20px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.hero p{font-size:1.15rem;opacity:.9;max-width:700px;margin:0 auto 36px;line-height:1.6}
+.btn{display:inline-block;padding:14px 38px;background:#f4a261;color:#1a0a00;border-radius:4px;text-decoration:none;font-weight:700;transition:.3s;font-size:1rem}
+.btn:hover{background:#e76f51;color:#fff}
+.reputation-bar{background:#e76f51;color:#fff;padding:16px;text-align:center;font-weight:600;font-size:1rem;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.menu{padding:80px 5%;}
+.menu h2{font-family:'Merriweather',serif;text-align:center;font-size:2.4rem;color:#1a0a00;margin-bottom:12px}
+.subtitle{text-align:center;color:#666;margin-bottom:48px;font-size:1.1rem}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px}
+.menu-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.06);transition:.3s;border:1px solid #f0f0f0}
+.menu-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(244,162,97,.15)}
+.menu-body{padding:30px}
+.menu-icon{font-size:2.5rem;margin-bottom:16px}
+.menu-body h3{font-family:'Merriweather',serif;color:#1a0a00;margin-bottom:12px;font-size:1.3rem}
+.menu-body p{color:#666;line-height:1.6}
+.review-section{background:#1a0a00;padding:80px 5%;color:#fff;text-align:center}
+.review-section h2{font-family:'Merriweather',serif;font-size:2rem;color:#f4a261;margin-bottom:30px}
+.review-box{background:rgba(255,255,255,.05);border:1px solid rgba(244,162,97,.3);border-radius:12px;padding:40px;max-width:800px;margin:0 auto}
+.stars{color:#f4a261;font-size:1.5rem;margin-bottom:16px;letter-spacing:4px}
+.review-box p{font-size:1.2rem;line-height:1.7;font-style:italic;color:#f4d9c0}
+.contact{padding:80px 5%;background:#fff;text-align:center}
+.contact h2{font-family:'Merriweather',serif;font-size:2.4rem;color:#1a0a00;margin-bottom:40px}
+.contact-cards{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.contact-card{background:#fdfcfb;border-radius:12px;padding:32px 40px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid #f0f0f0;min-width:260px}
+.contact-card h4{color:#888;font-size:.9rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.contact-card p{color:#1a0a00;font-weight:700;font-size:1.15rem}
+footer{background:#1a0a00;color:#d4b896;text-align:center;padding:24px;font-size:.9rem}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">{{business.name}}</div>
+  <ul><li><a href="#services">Services</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li></ul>
+</nav>
+
+<section class="hero">
+  <h1>Exceptional Food & Service</h1>
+  <p>Welcome to {{business.name}}. We specialize in premium {{business.category}} offering memorable culinary experiences with the finest ingredients and authentic flavors.</p>
+  <a href="#contact" class="btn">Order / Inquire Now</a>
+</section>
+
+<div class="reputation-bar">
+  <span>⭐ Trusted by {{count}} customers</span>
+  <span>•</span>
+  <span>Outstanding {{rating}}/5.0 Rating</span>
+</div>
+
+<section class="menu" id="services">
+  <h2>What We Offer</h2>
+  <p class="subtitle">Crafted with passion and served with perfection.</p>
+  <div class="menu-grid">
+    <div class="menu-card"><div class="menu-body"><div class="menu-icon">🍽️</div><h3>Corporate Events</h3><p>Professional catering solutions designed to impress your guests and colleagues.</p></div></div>
+    <div class="menu-card"><div class="menu-body"><div class="menu-icon">🎉</div><h3>Weddings & Parties</h3><p>Custom menus to make your special celebrations totally unforgettable.</p></div></div>
+    <div class="menu-card"><div class="menu-body"><div class="menu-icon">🍱</div><h3>Personalized Menu</h3><p>Tailored dietary options and custom dishes prepared by our expert chefs.</p></div></div>
+  </div>
+</section>
+
+<section class="review-section" id="reviews">
+  <h2>What Our Clients Say</h2>
+  <div class="review-box">
+    <div class="stars">★★★★★</div>
+    <p>"{{review}}"</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Get In Touch</h2>
+  <div class="contact-cards">
+    <div class="contact-card"><h4>Call / WhatsApp</h4><p>📞 {{business.phone}}</p></div>
+    <div class="contact-card"><h4>Location</h4><p>📍 {{business.address}}</p></div>
+    <div class="contact-card"><h4>Specialty</h4><p>🍽 {{business.category}}</p></div>
+  </div>
+</section>
+<footer><p>© 2025 {{business.name}} · Powered by Webze</p></footer>
+</body>
+</html>

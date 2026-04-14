@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{business.name}} | Healthcare & Clinic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      background: #f8fafc
+    }
+
+    nav {
+      background: #fff;
+      padding: 16px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 12px rgba(0, 0, 0, .06);
+      position: sticky;
+      top: 0;
+      z-index: 100
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0ea5e9
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #64748b;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: .3s
+    }
+
+    nav ul li a:hover {
+      color: #0ea5e9
+    }
+
+    .nav-btn {
+      padding: 12px 28px;
+      background: #0ea5e9;
+      color: #fff;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: .3s
+    }
+
+    .nav-btn:hover {
+      background: #0284c7
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      padding: 100px 5%;
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 280px
+    }
+
+    .badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: .85rem;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 20px;
+      margin-bottom: 24px
+    }
+
+    .hero-text h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #0f172a;
+      margin-bottom: 20px;
+      letter-spacing: -1px
+    }
+
+    .hero-text p {
+      color: #475569;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 600px
+    }
+
+    .hero-card {
+      flex: 0 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 12px 40px rgba(14, 165, 233, .12);
+      min-width: 320px
+    }
+
+    .score-box {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e2e8f0
+    }
+
+    .score-box h3 {
+      font-size: 3rem;
+      color: #0ea5e9;
+      margin-bottom: 4px
+    }
+
+    .score-box p {
+      color: #64748b;
+      font-weight: 500
+    }
+
+    .services {
+      padding: 80px 5%;
+      background: #fff
+    }
+
+    .services h2 {
+      text-align: center;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 12px
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 56px;
+      font-size: 1.1rem
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px
+    }
+
+    .service-card {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 36px;
+      transition: .3s;
+      border: 1px solid #e2e8f0
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: #0ea5e9;
+      box-shadow: 0 12px 30px rgba(14, 165, 233, .12)
+    }
+
+    .service-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #fff
+    }
+
+    .service-card h3 {
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+      font-size: 1.25rem
+    }
+
+    .service-card p {
+      color: #64748b;
+      line-height: 1.6
+    }
+
+    .reviews {
+      padding: 80px 5%;
+      background: #0f172a;
+      color: #fff;
+      text-align: center
+    }
+
+    .reviews h2 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 12px
+    }
+
+    .reviews p.sub {
+      color: #94a3b8;
+      margin-bottom: 48px;
+      font-size: 1.1rem
+    }
+
+    .review-card {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 20px;
+      padding: 48px;
+      max-width: 800px;
+      margin: 0 auto
+    }
+
+    .review-card p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: #f1f5f9;
+      font-style: italic
+    }
+
+    .contact {
+      padding: 80px 5%;
+      background: #fff;
+      text-align: center
+    }
+
+    .contact h2 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 40px
+    }
+
+    .contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap
+    }
+
+    .contact-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 32px 40px;
+      min-width: 280px;
+      text-align: left
+    }
+
+    .contact-box h4 {
+      color: #0ea5e9;
+      font-size: .85rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700
+    }
+
+    .contact-box p {
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #1e293b
+    }
+
+    footer {
+      background: #020617;
+      color: #64748b;
+      text-align: center;
+      padding: 24px;
+      font-size: .9rem
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">🏥 {{business.name}}</div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#reviews">Testimonials</a></li>
+    </ul>
+    <a href="#contact" class="nav-btn">Book Appointment</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">🩺 Compassionate Healthcare</span>
+      <h1>Professional Care at {{business.name}}</h1>
+      <p>We are a dedicated {{business.category}} facility utilizing modern medical technology and experienced
+        professionals to provide the superior care you and your family absolutely deserve.</p>
+      <a href="#contact" class="nav-btn" style="display:inline-block">Book an Appointment Now</a>
+    </div>
+    <div class="hero-card">
+      <div class="score-box">
+        <h3>{{rating}}⭐</h3>
+        <p>Based on {{count}} trusted reviews</p>
+      </div>
+      <div style="text-align:center; color:#64748b; font-weight:500">
+        <p>Providing exceptional</p>
+        <p style="color:#0ea5e9;font-weight:700">{{business.category}}</p>
+        <p>services locally.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <h2>World-Class Healthcare</h2>
+    <p class="subtitle">Complete medical and wellness solutions under one roof.</p>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="service-icon">👨‍⚕️</div>
+        <h3>Specialized Consultation</h3>
+        <p>Thorough medical analysis and personalized treatment plans strictly prioritizing your total wellbeing.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔬</div>
+        <h3>Advanced Diagnostics</h3>
+        <p>State-of-the-art laboratory testing and accurate diagnostic services for prompt diagnosis.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💊</div>
+        <h3>Complete Wellness</h3>
+        <p>Holistic healthcare services encompassing preventative care and dedicated chronic management.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews">
+    <h2>Patient Testimonials</h2>
+    <p class="sub">Trusted by {{count}} patients in our community.</p>
+    <div class="review-card">
+      <div style="font-size:2rem;color:#0ea5e9;margin-bottom:16px">★★★★★</div>
+      <p>"{{review}}"</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Schedule Your Visit</h2>
+    <div class="contact-row">
+      <div class="contact-box">
+        <h4>Direct Phone</h4>
+        <p>📞 {{business.phone}}</p>
+      </div>
+      <div class="contact-box">
+        <h4>Clinic Address</h4>
+        <p>📍 {{business.address}}</p>
+      </div>
+      <div class="contact-box">
+        <h4>Primary Service</h4>
+        <p>🩺 {{business.category}}</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 {{business.name}} · All Rights Reserved · Powered by Webze</p>
+  </footer>
+</body>
+
+</html>
