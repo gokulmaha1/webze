@@ -22,6 +22,21 @@ class Website extends Model
         return $this->belongsTo(Template::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function whatsappLogs()
+    {
+        return $this->hasMany(WhatsappLog::class);
+    }
+
+    public function analyticsLogs()
+    {
+        return $this->hasMany(AnalyticsLog::class);
+    }
+
     protected static function booted()
     {
         static::creating(function ($website) {
@@ -46,7 +61,7 @@ class Website extends Model
         
         $map = [
             'salon' => ['salon', 'beauty', 'spa', 'hair', 'barber', 'nails', 'massage', 'wellness', 'makeup', 'style'],
-            'restaurant' => ['restaurant', 'food', 'cafe', 'dining', 'bistro', 'eatery', 'pizza', 'burger', 'bakery', 'pub', 'bar', 'grill'],
+            'restaurant' => ['Restaurant supply store','restaurant', 'food', 'cafe', 'dining', 'bistro', 'eatery', 'pizza', 'burger', 'bakery', 'pub', 'bar', 'grill'],
             'catering' => ['catering', 'caterer', 'banquet', 'event', 'wedding', 'party', 'venue', 'planner'],
             'clinic' => ['clinic', 'health', 'medical', 'hospital', 'doctor', 'dental', 'care', 'therapy', 'pharmacy', 'vet', 'gym', 'fitness'],
             'real-estate' => ['real estate', 'property', 'realtor', 'broker', 'housing', 'estate', 'homes', 'hotel', 'resort', 'inn', 'hostel', 'airbnb', 'accommodation'],
@@ -94,6 +109,7 @@ class Website extends Model
                 $payload = array_merge($contentConfig, [
                     'business' => [
                         'name' => $this->business_name,
+                        'slug' => $this->slug,
                         'category' => $this->category ?? '',
                         'address' => $this->address ?? '',
                         'phone' => $this->phone ?? '',

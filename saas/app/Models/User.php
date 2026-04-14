@@ -55,4 +55,14 @@ class User extends Authenticatable implements FilamentUser
     {
         return true;
     }
+
+    public function websites()
+    {
+        return $this->hasMany(Website::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

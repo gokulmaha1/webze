@@ -18,6 +18,8 @@ class WebsiteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
 
+    protected static ?string $navigationGroup = 'Management';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -108,11 +110,15 @@ class WebsiteResource extends Resource
                     ->label('Business Name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('owner_name')
-                    ->label('Owner')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('category')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Phone'),
+                Tables\Columns\TextColumn::make('whatsappLogs_count')
+                    ->counts('whatsappLogs')
+                    ->label('Clicks')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -126,7 +132,7 @@ class WebsiteResource extends Resource
                     ->url(fn ($record) => $record->url)
                     ->openUrlInNewTab()
                     ->copyable()
-                    ->limit(40),
+                    ->limit(30),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -140,8 +146,17 @@ class WebsiteResource extends Resource
                         'live'  => 'Live',
                         'paid'  => 'Paid',
                     ]),
+                Tables\Filters\SelectFilter::make('template_id')
+                    ->label('Template')
+                    ->relationship('template', 'name'),
             ])
             ->actions([
+                Tables\Actions\Action::make('regenerate')
+                    ->label('Regenerate')
+                    ->icon('heroicon-o-arrow-path')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->action(fn (Website $record) => $record->generateStaticSite()),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
