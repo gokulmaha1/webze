@@ -24,9 +24,45 @@ class Website extends Model
 
     protected static function booted()
     {
+        static::creating(function ($website) {
+            if (!$website->template_id && $website->category) {
+                $website->template_id = self::guessTemplateId($website->category);
+            }
+            // Absolute fallback
+            if (!$website->template_id) {
+                $template = Template::first();
+                $website->template_id = $template ? $template->id : null;
+            }
+        });
+
         static::saved(function ($website) {
             $website->generateStaticSite();
         });
+    }
+
+    protected static function guessTemplateId($category)
+    {
+        $cat = strtolower($category);
+        
+        $map = [
+            'salon' => ['salon', 'beauty', 'spa', 'hair', 'barber', 'nails', 'massage'],
+            'restaurant' => ['restaurant', 'food', 'cafe', 'dining', 'bistro', 'eatery', 'pizza', 'burger'],
+            'catering' => ['catering', 'banquet', 'event', 'wedding', 'party'],
+            'clinic' => ['clinic', 'health', 'medical', 'hospital', 'doctor', 'dental', 'care', 'therapy'],
+            'real-estate' => ['real estate', 'property', 'realtor', 'broker', 'housing', 'estate', 'homes'],
+            'corporate' => ['corporate', 'business', 'agency', 'consulting', 'tech', 'software', 'enterprise', 'finance', 'marketing']
+        ];
+
+        foreach ($map as $slug => $keywords) {
+            foreach ($keywords as $keyword) {
+                if (str_contains($cat, $keyword)) {
+                    $template = Template::where('slug', $slug)->first();
+                    if ($template) return $template->id;
+                }
+            }
+        }
+
+        return null;
     }
 
     public function generateStaticSite()
@@ -35,7 +71,8 @@ class Website extends Model
             return;
         }
 
-        $template = $this->template;
+        // Must reload relation if we just set template_id in creating hook
+        $template = $this->template()->first();
         if (!$template) {
             $template = Template::first();
         }
