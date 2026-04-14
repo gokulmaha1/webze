@@ -165,14 +165,25 @@ class WebsiteResource extends Resource
                     ->color('warning')
                     ->requiresConfirmation()
                     ->action(function (Website $record) {
-                        // Re-guess the template before regenerating, in case the category changed or logic was updated
+                        // 1. Try to recover category if missing in DB but present in JSON
+                        if (!$record->category && isset($record->ai_content)) {
+                            $cat = $record->ai_content['category'] ?? null;
+                            if ($cat) {
+                                $record->category = $cat;
+                                $record->save();
+                            }
+                        }
+
+                        // 2. Re-guess the template before regenerating
                         if ($record->category) {
                             $guessedId = $record->guessTemplateId($record->category);
                             if ($guessedId && $record->template_id != $guessedId) {
                                 $record->template_id = $guessedId;
                                 $record->save();
+                                $record->refresh(); // Ensure relations are reloaded
                             }
                         }
+                        
                         $record->generateStaticSite();
                     }),
                 Tables\Actions\EditAction::make(),
