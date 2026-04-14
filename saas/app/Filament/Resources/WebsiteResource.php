@@ -3,27 +3,91 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WebsiteResource\Pages;
-use App\Filament\Resources\WebsiteResource\RelationManagers;
+use App\Models\Template;
 use App\Models\Website;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class WebsiteResource extends Resource
 {
     protected static ?string $model = Website::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Section::make('Business Info')
+                    ->schema([
+                        Forms\Components\TextInput::make('business_name')
+                            ->required()
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn ($state, Forms\Set $set) =>
+                                $set('slug', Str::slug($state) . '-' . time())
+                            ),
+
+                        Forms\Components\TextInput::make('owner_name')
+                            ->nullable()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('category')
+                            ->nullable()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('phone')
+                            ->nullable()
+                            ->tel()
+                            ->maxLength(20),
+
+                        Forms\Components\Textarea::make('address')
+                            ->nullable()
+                            ->rows(2)
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Site Settings')
+                    ->schema([
+                        Forms\Components\TextInput::make('slug')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255),
+
+                        Forms\Components\Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'live'  => 'Live',
+                                'paid'  => 'Paid',
+                            ])
+                            ->default('draft')
+                            ->required(),
+
+                        Forms\Components\Select::make('template_id')
+                            ->label('Template')
+                            ->options(Template::pluck('name', 'id'))
+                            ->nullable()
+                            ->searchable(),
+
+                        Forms\Components\TextInput::make('url')
+                            ->nullable()
+                            ->url()
+                            ->maxLength(500),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('AI Content')
+                    ->schema([
+                        Forms\Components\KeyValue::make('ai_content')
+                            ->label('Content Key-Value Pairs')
+                            ->nullable()
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 
@@ -31,29 +95,46 @@ class WebsiteResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('owner_name')->label('Name')->searchable(),
-                Tables\Columns\TextColumn::make('phone')->label('Phone')->searchable(),
-                Tables\Columns\TextColumn::make('business_name')->label('Business Name')->searchable(),
+                Tables\Columns\TextColumn::make('business_name')
+                    ->label('Business Name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('owner_name')
+                    ->label('Owner')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('Phone'),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Site Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'draft' => 'warning',
-                        'live' => 'success',
-                        'paid' => 'primary',
-                        default => 'gray',
+                        'draft'  => 'warning',
+                        'live'   => 'success',
+                        'paid'   => 'primary',
+                        default  => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('url')
-                    ->label('Preview URL')
+                    ->label('Live URL')
                     ->url(fn ($record) => $record->url)
                     ->openUrlInNewTab()
-                    ->copyable(),
+                    ->copyable()
+                    ->limit(40),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'live'  => 'Live',
+                        'paid'  => 'Paid',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -64,17 +145,15 @@ class WebsiteResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWebsites::route('/'),
+            'index'  => Pages\ListWebsites::route('/'),
             'create' => Pages\CreateWebsite::route('/create'),
-            'edit' => Pages\EditWebsite::route('/{record}/edit'),
+            'edit'   => Pages\EditWebsite::route('/{record}/edit'),
         ];
     }
 }
