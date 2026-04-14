@@ -47,13 +47,13 @@ class Website extends Model
         $map = [
             'salon' => ['salon', 'beauty', 'spa', 'hair', 'barber', 'nails', 'massage', 'wellness', 'makeup', 'style'],
             'restaurant' => ['restaurant', 'food', 'cafe', 'dining', 'bistro', 'eatery', 'pizza', 'burger', 'bakery', 'pub', 'bar', 'grill'],
-            'catering' => ['catering', 'banquet', 'event', 'wedding', 'party', 'venue'],
+            'catering' => ['catering', 'caterer', 'banquet', 'event', 'wedding', 'party', 'venue', 'planner'],
             'clinic' => ['clinic', 'health', 'medical', 'hospital', 'doctor', 'dental', 'care', 'therapy', 'pharmacy', 'vet', 'gym', 'fitness'],
             'real-estate' => ['real estate', 'property', 'realtor', 'broker', 'housing', 'estate', 'homes', 'hotel', 'resort', 'inn', 'hostel', 'airbnb', 'accommodation'],
             'corporate' => [
                 'corporate', 'business', 'agency', 'consulting', 'tech', 'software', 'enterprise', 'finance', 'marketing', 
                 'design', 'graphic', 'portfolio', 'freelance', 'studio', 'creative', 'art', 
-                'plumbing', 'cleaning', 'electrician', 'contractor', 'repair', 'mechanic', 'logistics', 'b2b', 'retail', 'shop', 'store'
+                'plumbing', 'cleaning', 'electrician', 'contractor', 'repair', 'mechanic', 'logistics', 'b2b', 'retail', 'shop', 'store', 'supplier'
             ]
         ];
 
