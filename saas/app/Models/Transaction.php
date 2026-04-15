@@ -6,7 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'amount',
+        'status',
+        'plan',
+        'currency',
+        'cashfree_order_id',
+        'cashfree_payment_id',
+        'cashfree_payment_status',
+        'cashfree_raw_response',
+        'cashfree_link_id',
+        'cashfree_link_url',
+    ];
 
     protected function casts(): array
     {

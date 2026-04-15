@@ -79,6 +79,22 @@ nav ul li a:hover::after{width:100%}
 .c-item p{font-family:'Bodoni Moda',serif;font-size:1.5rem}
 
 footer{background:var(--darker);padding:40px;text-align:center;border-top:1px solid rgba(255,255,255,0.05);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--grey);position:relative;z-index:2}
+  @media(max-width:768px){
+    nav ul{display:none}
+    .hero h1{font-size:3.5rem}
+    .info-bar{position:static;flex-direction:column}
+    .info-item{border-right:none;border-bottom:1px solid rgba(226,168,86,0.1)}
+    .about{flex-direction:column;padding:80px 6%;text-align:center}
+    .about-img img{height:400px}
+    .about-badge{width:140px;height:140px;padding:20px;bottom:-10px;right:0}
+    .section-title{font-size:2.8rem}
+    .about-text ul li{justify-content:center}
+    .gallery-grid{grid-template-columns:1fr 1fr}
+    .p-review{font-size:1.8rem}
+    .contact{grid-template-columns:1fr;gap:50px}
+    .c-box{padding:40px 20px;text-align:center}
+    .c-item{flex-direction:column;text-align:center}
+  }
 </style>
 </head>
 <body>

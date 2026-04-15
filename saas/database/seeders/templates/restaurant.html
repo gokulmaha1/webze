@@ -79,6 +79,21 @@ nav ul li a:hover{color:var(--gold)}
 .r-item p{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold)}
 
 footer{text-align:center;padding:40px;background:var(--dark);color:var(--grey);font-size:.75rem;letter-spacing:3px;text-transform:uppercase;border-top:1px solid rgba(255,255,255,0.05)}
+  @media(max-width:768px){
+    nav ul{display:none}
+    .hero h1{font-size:3.5rem}
+    .divider::before,.divider::after{width:50px}
+    .dish-sec{flex-direction:column;text-align:center}
+    .dish-sec.reverse{flex-direction:column}
+    .d-img{height:40vh}
+    .d-text p{max-width:100%}
+    .menu-grid{grid-template-columns:1fr;gap:30px}
+    .menu-preview h2{font-size:3rem}
+    .t-quote{font-size:2rem}
+    .r-box{padding:40px 20px}
+    .r-info{flex-direction:column;gap:30px}
+    .r-box h2{font-size:3rem}
+  }
 </style>
 </head>
 <body>

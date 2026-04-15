@@ -139,6 +139,51 @@ class CashfreeService
     }
 
     /**
+     * Create a new Cashfree shareable payment link.
+     */
+    public function createPaymentLink(
+        string $linkId,
+        float  $amount,
+        string $customerName,
+        string $customerEmail,
+        string $customerPhone,
+        string $purpose
+    ): array {
+        $payload = [
+            'link_id'       => $linkId,
+            'link_amount'   => round($amount, 2),
+            'link_currency' => 'INR',
+            'link_purpose'  => $purpose,
+            'customer_details' => [
+                'customer_phone' => $customerPhone,
+                'customer_email' => $customerEmail,
+                'customer_name'  => $customerName,
+            ],
+            'link_notify' => [
+                'send_sms'   => false,
+                'send_email' => false,
+            ],
+            'link_meta' => [
+                'return_url' => route('payment.callback') . '?link_id={link_id}',
+            ],
+        ];
+
+        $response = Http::withHeaders($this->headers())
+            ->post("{$this->baseUrl}/links", $payload);
+
+        if ($response->failed()) {
+            Log::error('Cashfree createPaymentLink failed', [
+                'status' => $response->status(),
+                'body'   => $response->body(),
+                'link_id'=> $linkId,
+            ]);
+            throw new \Exception('Cashfree link creation failed: ' . $response->body());
+        }
+
+        return $response->json();
+    }
+
+    /**
      * Helper: generate a unique Webze order ID.
      */
     public static function generateOrderId(int $transactionId): string

@@ -79,6 +79,23 @@ nav ul li a{text-decoration:none;color:var(--primary);font-size:.9rem;font-weigh
 .cta-box p{color:#666;margin-bottom:40px;font-size:1.1rem}
 
 footer{background:var(--primary);padding:30px;text-align:center;color:var(--white);font-size:.9rem;letter-spacing:2px;text-transform:uppercase}
+  @media(max-width:768px){
+    nav ul{display:none}
+    .hero{flex-direction:column;padding-top:100px;text-align:center;height:auto;min-height:100vh}
+    .hero-content{width:100%;margin-bottom:40px}
+    .hero h1{font-size:3.5rem}
+    .hero-img{position:static;width:100%;height:300px;clip-path:none;margin-top:40px}
+    .hero-img::before{background:linear-gradient(0deg, var(--bg) 0%, transparent 100%)}
+    .stats-banner{justify-content:center}
+    .sec-title{font-size:2.8rem}
+    .grid{grid-template-columns:1fr}
+    .trust{flex-direction:column;padding:80px 5%}
+    .t-content{width:100%;margin-bottom:40px;text-align:center}
+    .t-img{position:static;width:100%;height:300px;transform:none}
+    .contact{flex-direction:column;gap:50px;text-align:center}
+    .c-info, .cta-box{width:100%}
+    .info-row{flex-direction:column;text-align:center}
+  }
 </style>
 </head>
 <body>

@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Services\CashfreeService;
+use Filament\Notifications\Notification;
 
 class TransactionResource extends Resource
 {
@@ -139,6 +141,55 @@ class TransactionResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\Action::make('sendWhatsApp')
+                    ->label('Send WhatsApp')
+                    ->icon('heroicon-o-chat-bubble-left-right')
+                    ->color('success')
+                    ->visible(fn (Transaction $record) => $record->status === 'pending')
+                    ->action(function (Transaction $record) {
+                        $user = $record->user;
+                        $phone = $user->phone ?? '9999999999'; // fallback or validation
+                        
+                        if (!$record->cashfree_link_url) {
+                            try {
+                                $cashfree = app(CashfreeService::class);
+                                $linkId = 'LNK_' . $record->id . '_' . time();
+                                
+                                $result = $cashfree->createPaymentLink(
+                                    linkId:        $linkId,
+                                    amount:        $record->amount,
+                                    customerName:  $user->name,
+                                    customerEmail: $user->email,
+                                    customerPhone: $phone,
+                                    purpose:       "Payment for Webze " . ucfirst($record->plan ?? 'Site')
+                                );
+                                
+                                $record->update([
+                                    'cashfree_link_id'  => $result['link_id'],
+                                    'cashfree_link_url' => $result['link_url'],
+                                ]);
+                                
+                                Notification::make()
+                                    ->title('Payment Link Generated')
+                                    ->success()
+                                    ->send();
+                                    
+                            } catch (\Exception $e) {
+                                Notification::make()
+                                    ->title('Failed to generate link')
+                                    ->body($e->getMessage())
+                                    ->danger()
+                                    ->send();
+                                return;
+                            }
+                        }
+
+                        $message = urlencode("Hi *{$user->name}*! Here is your payment link for the *" . ($record->plan ?? 'Standard') . "* plan on Webze: {$record->cashfree_link_url}");
+                        $waUrl = "https://wa.me/{$phone}?text={$message}";
+                        
+                        return redirect()->away($waUrl);
+                    })
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

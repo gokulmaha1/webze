@@ -81,6 +81,26 @@ nav ul li a:hover{color:var(--gold)}
 .c-info p{color:#666;margin-bottom:10px;font-size:1.1rem}
 
 footer{padding:40px 5%;background:var(--dark);color:#666;text-align:center;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;border-top:1px solid rgba(255,255,255,0.05)}
+  @media(max-width:768px){
+    nav ul{display:none}
+    .hero h1{font-size:3rem}
+    .search-bar{position:static;transform:none;width:100%;flex-direction:column;margin-top:40px}
+    .sb-item{border-right:none;border-bottom:1px solid var(--sand);padding:20px}
+    .about{padding:80px 5% 60px;flex-direction:column;text-align:center}
+    .a-img{width:100%;height:300px;margin-top:40px}
+    .a-img::after{display:none}
+    .am-grid{grid-template-columns:1fr 1fr;gap:20px}
+    .am-card{padding:30px 20px}
+    .experiences{padding:60px 5%}
+    .exp-grid{grid-template-columns:1fr}
+    .exp-card{height:300px}
+    .c-wrap{flex-direction:column;padding:40px 20px;text-align:center;gap:30px}
+    .c-info h2{font-size:2.5rem}
+  }
+  @media(max-width:480px){
+    .am-grid{grid-template-columns:1fr}
+    .hero h1{font-size:2.5rem}
+  }
 </style>
 </head>
 <body>
