@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title') | Webze</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0D1117;
+            --surface: #161B22;
+            --border: #30363D;
+            --text: #C9D1D9;
+            --text-bright: #F0F6FC;
+            --primary: #58a6ff;
+            --grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #0EA5E9 100%);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .nav {
+            padding: 20px 6%;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.5rem;
+            color: var(--text-bright);
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: var(--text-bright);
+            margin-top: 40px;
+            font-size: 1.5rem;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        ul {
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 6%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #8b949e;
+            margin-top: 120px;
+        }
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="https://webze.site" class="logo">webze</a>
+    </div>
+
+    <div class="container">
+        @yield('content')
+    </div>
+
+    <div class="footer">
+        © 2025 Webze · Made in India 🇮🇳
+    </div>
+</body>
+</html>

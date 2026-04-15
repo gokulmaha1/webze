@@ -29,7 +29,6 @@ Route::get('/preview/{slug}', function($slug) {
 
     $engine = new \App\Services\TemplateEngine();
     
-    // Merge ai_content and business info into a single cohesive data payload for the engine
     $data = array_merge($website->ai_content ?? [], [
         'business' => [
             'name' => $website->business_name,
@@ -41,3 +40,11 @@ Route::get('/preview/{slug}', function($slug) {
 
     return $engine->render($template->html_structure, $data);
 });
+
+// ─── Legal & Compliance Pages ──────────────────────────────────────────────
+Route::view('/contact', 'legal.contact')->name('legal.contact');
+Route::view('/terms',   'legal.terms')->name('legal.terms');
+Route::view('/privacy', 'legal.privacy')->name('legal.privacy');
+Route::view('/refund',  'legal.refund')->name('legal.refund');
+
+require __DIR__.'/auth.php';
