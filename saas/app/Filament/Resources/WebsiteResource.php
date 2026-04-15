@@ -11,6 +11,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\HtmlString;
 
 class WebsiteResource extends Resource
 {
@@ -118,40 +120,25 @@ class WebsiteResource extends Resource
                     ->label('Phone')
                     ->searchable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('total_clicks')
-                    ->counts('analyticsLogs')
-                    ->label('Total')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('insights')
+                    ->label('Insights')
+                    ->html()
+                    ->getStateUsing(function (Website $record): HtmlString {
+                        $user = $record->user_clicks_count ?? 0;
+                        $admin = $record->admin_clicks_count ?? 0;
+                        $google = $record->google_clicks_count ?? 0;
+                        $wa = $record->whatsapp_clicks_count ?? 0;
 
-                Tables\Columns\TextColumn::make('user_clicks')
-                    ->counts('analyticsLogs', fn ($query) => $query->where('is_admin_visit', false))
-                    ->label('User Clicks')
-                    ->description('Real Visitors')
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('admin_clicks')
-                    ->counts('analyticsLogs', fn ($query) => $query->where('is_admin_visit', true))
-                    ->label('Admin')
-                    ->color('gray')
-                    ->sortable()
-                    ->toggleable(),
-
-                Tables\Columns\TextColumn::make('organic_clicks')
-                    ->counts('analyticsLogs', fn ($query) => $query->where('metadata->source', 'google'))
-                    ->label('Google')
-                    ->icon('heroicon-o-magnifying-glass')
-                    ->color('info')
-                    ->sortable()
-                    ->toggleable(),
-
-                Tables\Columns\TextColumn::make('wa_clicks')
-                    ->counts('analyticsLogs', fn ($query) => $query->whereIn('metadata->source', ['whatsapp_share', 'whatsapp_notification']))
-                    ->label('WhatsApp')
-                    ->icon('heroicon-o-chat-bubble-left-right')
-                    ->color('success')
-                    ->sortable()
-                    ->toggleable(),
+                        return new HtmlString("
+                            <div class='flex items-center gap-3 text-xs'>
+                                <div class='flex items-center gap-1' title='User Clicks'><span class='text-primary-500'>👤</span> <b>{$user}</b></div>
+                                <div class='flex items-center gap-1 opacity-50' title='Admin Clicks'><span>🛠️</span> {$admin}</div>
+                                <div class='flex items-center gap-1' title='Google Traffic'><span class='text-info-500'>🔍</span> <b>{$google}</b></div>
+                                <div class='flex items-center gap-1' title='WhatsApp Traffic'><span class='text-success-500'>📱</span> <b>{$wa}</b></div>
+                            </div>
+                        ");
+                    })
+                    ->sortable(['user_clicks_count']),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -221,6 +208,17 @@ class WebsiteResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withCount([
+                'analyticsLogs as user_clicks_count' => fn (Builder $query) => $query->where('is_admin_visit', false),
+                'analyticsLogs as admin_clicks_count' => fn (Builder $query) => $query->where('is_admin_visit', true),
+                'analyticsLogs as google_clicks_count' => fn (Builder $query) => $query->where('metadata->source', 'google'),
+                'analyticsLogs as whatsapp_clicks_count' => fn (Builder $query) => $query->whereIn('metadata->source', ['whatsapp_share', 'whatsapp_notification']),
             ]);
     }
 
