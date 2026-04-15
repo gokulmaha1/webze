@@ -120,7 +120,11 @@ class WebsiteResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('analyticsLogs_count')
                     ->counts('analyticsLogs')
-                    ->label('Clicks')
+                    ->label('Total Clicks')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('whatsapp_clicks_count')
+                    ->counts('analyticsLogs', fn ($query) => $query->where('metadata->source', 'whatsapp_share'))
+                    ->label('WA Clicks')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
@@ -159,7 +163,7 @@ class WebsiteResource extends Resource
                     ->label('Notify')
                     ->icon('heroicon-o-chat-bubble-oval-left-ellipsis')
                     ->color('success')
-                    ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready!\n\nCheck it out here: https://app.webze.site/visit/{$record->slug}\n\nLet us know what you think!"))
+                    ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready!\n\nCheck it out here: https://app.webze.site/visit/{$record->slug}?source=whatsapp_share\n\nLet us know what you think!"))
                     ->openUrlInNewTab(),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('regenerate')

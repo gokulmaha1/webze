@@ -40,7 +40,12 @@ class TrackingController extends Controller
      */
     public function trackVisit($slug, Request $request)
     {
-        $website = Website::where('slug', $slug)->firstOrFail();
+        $website = Website::where('slug', $slug)->withCount('analyticsLogs')->firstOrFail();
+
+        // Trial Limit Check: > 20 visits and NOT paid
+        if ($website->analytics_logs_count >= 20 && $website->status !== 'paid') {
+            return response()->view('errors.trial-expired');
+        }
 
         \App\Models\AnalyticsLog::create([
             'website_id' => $website->id,
