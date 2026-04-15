@@ -116,8 +116,8 @@ class WebsiteResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('whatsappLogs_count')
-                    ->counts('whatsappLogs')
+                Tables\Columns\TextColumn::make('analyticsLogs_count')
+                    ->counts('analyticsLogs')
                     ->label('Clicks')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
