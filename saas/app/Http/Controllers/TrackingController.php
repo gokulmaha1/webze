@@ -44,6 +44,7 @@ class TrackingController extends Controller
 
         \App\Models\AnalyticsLog::create([
             'website_id' => $website->id,
+            'event_type' => 'visit',
             'page_url' => $website->url,
             'is_admin_visit' => auth()->check(),
             'metadata' => [
