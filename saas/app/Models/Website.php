@@ -125,6 +125,28 @@ class Website extends Model
 
                 $html = $engine->render($template->html_structure, $payload);
                 
+                // Inject Analytics Tracking Script
+                $appUrl = config('app.url', 'https://app.webze.site');
+                $trackingScript = "
+<script>
+(function() {
+    const data = {
+        slug: '{$this->slug}',
+        url: window.location.href,
+        referrer: document.referrer,
+        is_admin: " . (auth()->check() ? 'true' : 'false') . ",
+        screen_res: window.screen.width + 'x' + window.screen.height
+    };
+    fetch('{$appUrl}/api/analytics/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+    }).catch(err => console.error('Tracking failed', err));
+})();
+</script>
+";
+                $html = str_replace('</body>', $trackingScript . '</body>', $html);
+
                 // Store in the correct location for nginx to serve
                 $siteDir = '/var/www/webze/' . $this->slug;
 

@@ -14,5 +14,8 @@ Route::get('/analytics/revenue',  [\App\Http\Controllers\DashboardApiController:
 Route::get('/analytics/templates',[\App\Http\Controllers\DashboardApiController::class, 'templates']);
 Route::get('/analytics/users',    [\App\Http\Controllers\DashboardApiController::class, 'users']);
 
+// ─── Analytics Tracker (Static Sites) ───────────────────────────────────
+Route::post('/analytics/track', [\App\Http\Controllers\AnalyticsController::class, 'track']);
+
 // ─── Landing Page: Scrape social profile → Generate website ───────────────
 Route::post('/scrape-and-generate', [\App\Http\Controllers\ScrapeSiteController::class, 'handle']);

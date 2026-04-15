@@ -118,14 +118,40 @@ class WebsiteResource extends Resource
                     ->label('Phone')
                     ->searchable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('analyticsLogs_count')
+                Tables\Columns\TextColumn::make('total_clicks')
                     ->counts('analyticsLogs')
-                    ->label('Total Clicks')
+                    ->label('Total')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('user_clicks')
+                    ->counts('analyticsLogs', fn ($query) => $query->where('is_admin_visit', false))
+                    ->label('User Clicks')
+                    ->description('Real Visitors')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('whatsapp_clicks_count')
-                    ->counts('analyticsLogs', fn ($query) => $query->where('metadata->source', 'whatsapp_share'))
-                    ->label('WA Clicks')
-                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('admin_clicks')
+                    ->counts('analyticsLogs', fn ($query) => $query->where('is_admin_visit', true))
+                    ->label('Admin')
+                    ->color('gray')
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('organic_clicks')
+                    ->counts('analyticsLogs', fn ($query) => $query->where('metadata->source', 'google'))
+                    ->label('Google')
+                    ->icon('heroicon-o-magnifying-glass')
+                    ->color('info')
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('wa_clicks')
+                    ->counts('analyticsLogs', fn ($query) => $query->whereIn('metadata->source', ['whatsapp_share', 'whatsapp_notification']))
+                    ->label('WhatsApp')
+                    ->icon('heroicon-o-chat-bubble-left-right')
+                    ->color('success')
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
