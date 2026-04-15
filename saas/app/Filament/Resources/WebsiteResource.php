@@ -112,10 +112,12 @@ class WebsiteResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('category')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Phone')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('analyticsLogs_count')
                     ->counts('analyticsLogs')
                     ->label('Clicks')
@@ -159,33 +161,31 @@ class WebsiteResource extends Resource
                     ->color('success')
                     ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready!\n\nCheck it out here: https://app.webze.site/visit/{$record->slug}\n\nLet us know what you think!"))
                     ->openUrlInNewTab(),
-                Tables\Actions\Action::make('regenerate')
-                    ->label('Regenerate')
-                    ->icon('heroicon-o-arrow-path')
-                    ->color('warning')
-                    ->requiresConfirmation()
-                    ->action(function (Website $record) {
-                        // 1. Try to recover category if missing in DB but present in JSON
-                        if (!$record->category && isset($record->ai_content)) {
-                            $cat = $record->ai_content['category'] ?? null;
-                            if ($cat) {
-                                $record->category = $cat;
-                                $record->save();
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('regenerate')
+                        ->label('Regenerate')
+                        ->icon('heroicon-o-arrow-path')
+                        ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(function (Website $record) {
+                            if (!$record->category && isset($record->ai_content)) {
+                                $cat = $record->ai_content['category'] ?? null;
+                                if ($cat) {
+                                    $record->category = $cat;
+                                    $record->save();
+                                }
                             }
-                        }
-
-                        // 2. Re-guess the template before regenerating
-                        $guessedId = $record->guessTemplateId($record->category, $record->business_name, $record->ai_content);
-                        if ($guessedId && $record->template_id != $guessedId) {
-                            $record->template_id = $guessedId;
-                            $record->save();
-                            $record->refresh(); // Ensure relations are reloaded
-                        }
-                        
-                        $record->generateStaticSite();
-                    }),
+                            $guessedId = $record->guessTemplateId($record->category, $record->business_name, $record->ai_content);
+                            if ($guessedId && $record->template_id != $guessedId) {
+                                $record->template_id = $guessedId;
+                                $record->save();
+                                $record->refresh();
+                            }
+                            $record->generateStaticSite();
+                        }),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
