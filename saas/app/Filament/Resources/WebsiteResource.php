@@ -204,27 +204,28 @@ class WebsiteResource extends Resource
                             'currency'   => 'INR',
                         ]);
 
-                        // 2. Generate a unique Link ID
-                        $linkId = 'webze-link-' . $transaction->id . '-' . time();
+                        // 2. Generate a unique Cashfree Order ID
+                        $cashfreeOrderId = \App\Services\CashfreeService::generateOrderId($transaction->id);
 
-                        // 3. Create Payment Link via Cashfree
-                        $linkResponse = $cashfree->createPaymentLink(
-                            linkId: $linkId,
-                            amount: (float) $data['amount'],
-                            customerName: $record->business_name,
-                            customerEmail: 'customer@webze.site', // Generic or from user
+                        // 3. Create Order via Cashfree (standard PG)
+                        $orderResponse = $cashfree->createOrder(
+                            orderId:       $cashfreeOrderId,
+                            amount:        (float) $data['amount'],
+                            customerName:  $record->business_name,
+                            customerEmail: 'customer@webze.site',
                             customerPhone: preg_replace('/[^0-9]/', '', $record->phone),
-                            purpose: $data['purpose']
+                            returnUrl:     route('payment.callback')
                         );
 
-                        // 4. Update transaction with link details
+                        // 4. Update transaction with order details
                         $transaction->update([
-                            'cashfree_link_id'  => $linkId,
-                            'cashfree_link_url' => $linkResponse['link_url'],
+                            'cashfree_order_id'           => $cashfreeOrderId,
+                            'cashfree_payment_session_id' => $orderResponse['payment_session_id'],
                         ]);
 
-                        // 5. Send to WhatsApp
-                        $waMessage = urlencode("Hi {$record->business_name},\n\nTo officially activate your website and remove trial limits, please complete the one-time payment of ₹{$data['amount']} using this secure link:\n\n{$linkResponse['link_url']}\n\nOnce paid, your site will be activated automatically!");
+                        // 5. Send to WhatsApp (pointing to our CUSTOM checkout page)
+                        $checkoutUrl = route('payment.pay', ['order_id' => $cashfreeOrderId]);
+                        $waMessage = urlencode("Hi {$record->business_name},\n\nTo officially activate your website and remove trial limits, please complete the payment of ₹{$data['amount']} here:\n\n{$checkoutUrl}\n\nOnce paid, your site will be activated automatically!");
                         $waUrl = "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text={$waMessage}";
 
                         return redirect()->away($waUrl);

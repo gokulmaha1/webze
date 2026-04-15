@@ -19,6 +19,7 @@ class Transaction extends Model
         'cashfree_link_id',
         'cashfree_link_url',
         'website_id',
+        'cashfree_payment_session_id',
     ];
 
     protected function casts(): array

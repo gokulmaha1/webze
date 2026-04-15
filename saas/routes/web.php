@@ -16,6 +16,7 @@ Route::get('/visit/{slug}', [\App\Http\Controllers\TrackingController::class, 't
 Route::post('/payment/create-order', [PaymentController::class, 'createOrder'])->name('payment.create-order');
 Route::get('/payment/callback',      [PaymentController::class, 'callback'])->name('payment.callback');
 Route::post('/payment/webhook',      [PaymentController::class, 'webhook'])->name('payment.webhook');
+Route::get('/pay/{order_id}',        [PaymentController::class, 'showCheckout'])->name('payment.pay');
 
 Route::get('/preview/{slug}', function($slug) {
     $website = \App\Models\Website::where('slug', $slug)->firstOrFail();

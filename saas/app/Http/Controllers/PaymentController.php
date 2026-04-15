@@ -212,4 +212,21 @@ class PaymentController extends Controller
 
         return response()->json(['message' => 'OK']);
     }
+
+    /**
+     * 4. CUSTOM CHECKOUT PAGE
+     *    Displays a branded page to open the Cashfree modal.
+     *    GET /pay/{order_id}
+     */
+    public function showCheckout($cashfreeOrderId)
+    {
+        $transaction = Transaction::where('cashfree_order_id', $cashfreeOrderId)
+            ->with('website')
+            ->firstOrFail();
+
+        return view('payment.checkout', [
+            'transaction' => $transaction,
+            'website'     => $transaction->website,
+        ]);
+    }
 }
