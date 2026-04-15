@@ -178,6 +178,57 @@ class WebsiteResource extends Resource
                     ->color('success')
                     ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready!\n\nCheck it out here: https://app.webze.site/visit/{$record->slug}?source=whatsapp_share\n\nLet us know what you think!"))
                     ->openUrlInNewTab(),
+                Tables\Actions\Action::make('request_payment')
+                    ->label('Request Payment')
+                    ->icon('heroicon-o-currency-rupee')
+                    ->color('primary')
+                    ->form([
+                        Forms\Components\TextInput::make('amount')
+                            ->label('Invoice Amount (INR)')
+                            ->numeric()
+                            ->default(1999)
+                            ->required(),
+                        Forms\Components\TextInput::make('purpose')
+                            ->label('Purpose')
+                            ->default('One-time website activation fee')
+                            ->required(),
+                    ])
+                    ->action(function (Website $record, array $data, \App\Services\CashfreeService $cashfree) {
+                        // 1. Create a transaction record
+                        $transaction = \App\Models\Transaction::create([
+                            'user_id'    => $record->user_id ?? \App\Models\User::first()->id,
+                            'website_id' => $record->id,
+                            'amount'     => $data['amount'],
+                            'status'     => 'pending',
+                            'plan'       => 'one_time',
+                            'currency'   => 'INR',
+                        ]);
+
+                        // 2. Generate a unique Link ID
+                        $linkId = 'webze-link-' . $transaction->id . '-' . time();
+
+                        // 3. Create Payment Link via Cashfree
+                        $linkResponse = $cashfree->createPaymentLink(
+                            linkId: $linkId,
+                            amount: (float) $data['amount'],
+                            customerName: $record->business_name,
+                            customerEmail: 'customer@webze.site', // Generic or from user
+                            customerPhone: preg_replace('/[^0-9]/', '', $record->phone),
+                            purpose: $data['purpose']
+                        );
+
+                        // 4. Update transaction with link details
+                        $transaction->update([
+                            'cashfree_link_id'  => $linkId,
+                            'cashfree_link_url' => $linkResponse['link_url'],
+                        ]);
+
+                        // 5. Send to WhatsApp
+                        $waMessage = urlencode("Hi {$record->business_name},\n\nTo officially activate your website and remove trial limits, please complete the one-time payment of ₹{$data['amount']} using this secure link:\n\n{$linkResponse['link_url']}\n\nOnce paid, your site will be activated automatically!");
+                        $waUrl = "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text={$waMessage}";
+
+                        return redirect()->away($waUrl);
+                    }),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('regenerate')
                         ->label('Regenerate')

@@ -160,20 +160,19 @@ class PaymentController extends Controller
         Log::info('Cashfree webhook received', ['type' => $type]);
 
         // Handle payment events
-        if (in_array($type, ['PAYMENT_SUCCESS_WEBHOOK', 'PAYMENT_FAILED_WEBHOOK', 'PAYMENT_USER_DROPPED_WEBHOOK'])) {
+        if (in_array($type, ['PAYMENT_SUCCESS_WEBHOOK', 'PAYMENT_FAILED_WEBHOOK', 'LINK_PAID_WEBHOOK'])) {
             $cashfreeOrderId  = $payload['order']['order_id'] ?? null;
-            $cfPaymentId      = $payload['payment']['cf_payment_id'] ?? null;
-            $cfPaymentStatus  = $payload['payment']['payment_status'] ?? null;
-            $cfOrderStatus    = strtoupper($payload['order']['order_status'] ?? '');
+            $cashfreeLinkId   = $payload['link_id'] ?? null;
 
-            if (!$cashfreeOrderId) {
-                return response()->json(['error' => 'Missing order_id'], 400);
+            $transaction = null;
+            if ($cashfreeOrderId) {
+                $transaction = Transaction::where('cashfree_order_id', $cashfreeOrderId)->first();
+            } elseif ($cashfreeLinkId) {
+                $transaction = Transaction::where('cashfree_link_id', $cashfreeLinkId)->first();
             }
 
-            $transaction = Transaction::where('cashfree_order_id', $cashfreeOrderId)->first();
-
             if (!$transaction) {
-                Log::error('Cashfree webhook: transaction not found', ['order_id' => $cashfreeOrderId]);
+                Log::error('Cashfree webhook: transaction not found', ['order_id' => $cashfreeOrderId, 'link_id' => $cashfreeLinkId]);
                 return response()->json(['error' => 'Transaction not found'], 404);
             }
 
@@ -184,16 +183,26 @@ class PaymentController extends Controller
 
             $newStatus = match ($type) {
                 'PAYMENT_SUCCESS_WEBHOOK' => 'paid',
+                'LINK_PAID_WEBHOOK'       => 'paid',
                 'PAYMENT_FAILED_WEBHOOK'  => 'failed',
                 default                   => 'pending',
             };
 
             $transaction->update([
                 'status'                  => $newStatus,
-                'cashfree_payment_id'     => $cfPaymentId,
-                'cashfree_payment_status' => $cfPaymentStatus,
+                'cashfree_payment_id'     => $payload['payment']['cf_payment_id'] ?? null,
+                'cashfree_payment_status' => $payload['payment']['payment_status'] ?? null,
                 'cashfree_raw_response'   => $rawBody,
             ]);
+
+            // AUTOMATIC WEBSITE ACTIVATION
+            if ($newStatus === 'paid' && $transaction->website_id) {
+                $website = \App\Models\Website::find($transaction->website_id);
+                if ($website) {
+                    $website->update(['status' => 'paid']);
+                    Log::info('Website automatically activated via payment', ['website_id' => $website->id]);
+                }
+            }
 
             Log::info('Cashfree webhook: transaction updated', [
                 'transaction_id' => $transaction->id,

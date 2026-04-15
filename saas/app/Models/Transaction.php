@@ -18,6 +18,7 @@ class Transaction extends Model
         'cashfree_raw_response',
         'cashfree_link_id',
         'cashfree_link_url',
+        'website_id',
     ];
 
     protected function casts(): array
@@ -30,6 +31,11 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function website()
+    {
+        return $this->belongsTo(Website::class);
     }
 
     public function isPaid(): bool
