@@ -42,7 +42,7 @@ Route::get('/preview/{slug}', function($slug) {
 });
 
 // ─── Legal & Compliance Pages ──────────────────────────────────────────────
-Route::view('/contact', 'legal.contact')->name('legal.contact');
-Route::view('/terms',   'legal.terms')->name('legal.terms');
+Route::get('/contact', function() { return view('legal.contact'); });
+Route::get('/terms', function() { return 'TERMS PAGE IS WORKING'; });
 Route::view('/privacy', 'legal.privacy')->name('legal.privacy');
 Route::view('/refund',  'legal.refund')->name('legal.refund');
