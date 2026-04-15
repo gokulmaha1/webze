@@ -60,25 +60,29 @@ class ScrapeSiteController extends Controller
         $siteUrl      = 'https://' . $slug . '.webze.site';
 
         // 3. Build the ai_content payload that our TemplateEngine understands
+        $desc        = $extracted['description'] ?? 'Professional services you can trust.';
+        $tagline     = $extracted['tagline']     ?? "Professional {$category} Services";
+        $aboutDesc   = $extracted['description'] ?? "Professional {$category} services.";
+
         $aiContent = [
             'category'   => $category,
             'rating'     => $extracted['rating'] ?? '4.8',
-            'count'      => $extracted['count'] ?? '200+',
+            'count'      => $extracted['count']  ?? '200+',
             'review'     => "Absolutely impressive! {$businessName} delivered far beyond our expectations.",
             'hero' => [
                 'headline'    => $businessName,
-                'subheadline' => $extracted['tagline'] ?? "Professional {$category} Services",
+                'subheadline' => $tagline,
             ],
             'about' => [
-                'description' => $extracted['description'] ?? "Professional {$category} services."
+                'description' => $aboutDesc,
             ],
             'contact' => [
-                'phone'   => $extracted['phone'] ?? '',
+                'phone'   => $extracted['phone']   ?? '',
                 'address' => $extracted['address'] ?? '',
             ],
             'seo' => [
                 'title'       => "{$businessName} | {$category}",
-                'description' => "Welcome to {$businessName} — {$extracted['description'] ?? 'Professional services you can trust.'}",
+                'description' => "Welcome to {$businessName} — {$desc}",
             ],
         ];
 

@@ -5,45 +5,54 @@ namespace App\Filament\Widgets;
 use App\Models\Website;
 use App\Models\Transaction;
 use App\Models\User;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Widgets\TableWidget as BaseWidget;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
 
-class ActivityFeed extends BaseWidget
+class CategoryBreakdownChart extends ChartWidget
 {
-    protected static ?int $sort = 5;
-    protected static ?string $heading = 'Real-Time Activity Feed';
-    protected int | string | array $columnSpan = 'full';
+    protected static ?string $heading = 'Top Business Categories';
+    protected static ?string $description = 'Distribution of websites by business category';
+    protected static ?int $sort = 3;
 
-    public function table(Table $table): Table
+    protected function getData(): array
     {
-        // For a true feed, we'd use a unified log or spatie/activitylog. 
-        // For now, we simulate a feed by merging recent items from different models 
-        // into a single collection, mapping them, and wrapping it in a simple array-based table
-        // Or simply display the 5 most recently created Websites in real-time.
+        $categories = Website::selectRaw('category, COUNT(*) as count')
+            ->groupBy('category')
+            ->orderByDesc('count')
+            ->limit(8)
+            ->pluck('count', 'category')
+            ->toArray();
 
-        return $table
-            ->query(
-                Website::query()->latest()->limit(5)
-            )
-            ->columns([
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Time')
-                    ->dateTime()
-                    ->description(fn (Website $record): string => $record->created_at->diffForHumans()),
-                Tables\Columns\TextColumn::make('business_name')
-                    ->label('Event')
-                    ->formatStateUsing(fn ($state) => "New website generated for {$state}")
-                    ->icon('heroicon-o-globe-alt')
-                    ->color('success'),
-                Tables\Columns\TextColumn::make('category')
-                    ->label('Category')
-                    ->badge(),
-                Tables\Columns\TextColumn::make('template.name')
-                    ->label('Assigned Template'),
-            ])
-            ->paginated(false);
+        if (empty($categories)) {
+            return [
+                'datasets' => [[
+                    'label' => 'Websites',
+                    'data'  => [1],
+                    'backgroundColor' => ['#e2e8f0'],
+                ]],
+                'labels' => ['No Data Yet'],
+            ];
+        }
+
+        $palette = [
+            '#6366f1', '#f43f5e', '#10b981', '#f59e0b',
+            '#3b82f6', '#a855f7', '#14b8a6', '#f97316',
+        ];
+
+        return [
+            'datasets' => [[
+                'label'           => 'Websites',
+                'data'            => array_values($categories),
+                'backgroundColor' => array_slice($palette, 0, count($categories)),
+                'borderWidth'     => 0,
+                'hoverOffset'     => 8,
+            ]],
+            'labels' => array_keys($categories),
+        ];
+    }
+
+    protected function getType(): string
+    {
+        return 'doughnut';
     }
 }

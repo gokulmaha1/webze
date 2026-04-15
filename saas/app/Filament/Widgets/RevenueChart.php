@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 class RevenueChart extends ChartWidget
 {
     protected static ?string $heading = 'Revenue Tracking';
-    protected static ?int $sort = 4;
+    protected static ?int $sort = 3;
     public ?string $filter = 'week';
 
     protected function getFilters(): ?array

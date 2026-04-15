@@ -9,7 +9,7 @@ use Filament\Widgets\ChartWidget;
 class TemplateDistributionChart extends ChartWidget
 {
     protected static ?string $heading = 'Template Distribution';
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 2;
 
     protected function getData(): array
     {
