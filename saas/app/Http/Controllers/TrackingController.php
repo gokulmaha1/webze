@@ -53,7 +53,7 @@ class TrackingController extends Controller
             'page_url' => $website->url,
             'is_admin_visit' => auth()->check(),
             'metadata' => [
-                'source' => $request->query('source', 'whatsapp_notification'),
+                'source' => $request->query('source', 'whatsapp_share'),
                 'ip' => $request->ip(),
                 'user_agent' => $request->userAgent()
             ]

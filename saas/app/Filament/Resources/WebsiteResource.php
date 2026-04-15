@@ -176,7 +176,7 @@ class WebsiteResource extends Resource
                     ->label('Notify')
                     ->icon('heroicon-o-chat-bubble-oval-left-ellipsis')
                     ->color('success')
-                    ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready!\n\nCheck it out here: https://app.webze.site/visit/{$record->slug}?source=whatsapp_share\n\nLet us know what you think!"))
+                    ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready! 🚀\n\nCheck it out here: https://app.webze.site/v/{$record->slug}\n\nLet us know what you think!"))
                     ->openUrlInNewTab(),
                 Tables\Actions\Action::make('request_payment')
                     ->label('Request Payment')
@@ -223,12 +223,13 @@ class WebsiteResource extends Resource
                             'cashfree_payment_session_id' => $orderResponse['payment_session_id'],
                         ]);
 
-                        // 5. Send to WhatsApp (pointing to our CUSTOM checkout page)
-                        $checkoutUrl = route('payment.pay', ['order_id' => $cashfreeOrderId]);
-                        $waMessage = urlencode("Hi {$record->business_name},\n\nTo officially activate your website and remove trial limits, please complete the payment of ₹{$data['amount']} here:\n\n{$checkoutUrl}\n\nOnce paid, your site will be activated automatically!");
-                        $waUrl = "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text={$waMessage}";
+                        // 5. Send to WhatsApp (UNIFIED MESSAGE with SHORT LINKS)
+                        $shortVisitUrl = "https://app.webze.site/v/{$record->slug}";
+                        $shortPayUrl   = "https://app.webze.site/p/{$cashfreeOrderId}";
 
-                        return redirect()->away($waUrl);
+                        $waMessage = urlencode("Hi {$record->business_name}, your professional website is live! 🚀\n\n🌐 Preview: {$shortVisitUrl}\n💳 Activate: {$shortPayUrl}\n\nActivate now to remove trial limits and keep your site live forever!");
+
+                        return redirect()->away("https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text={$waMessage}");
                     }),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('regenerate')

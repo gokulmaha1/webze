@@ -9,14 +9,16 @@ Route::get('/', function () {
 
 Route::post('/api/generate-site', [\App\Http\Controllers\GenerateSiteController::class, 'generate']);
 Route::get('/track/whatsapp/{slug}', [\App\Http\Controllers\TrackingController::class, 'trackWhatsapp'])->name('track.whatsapp');
-Route::get('/visit/{slug}', [\App\Http\Controllers\TrackingController::class, 'trackVisit'])->name('track.visit');
+Route::get('/v/{slug}',            [\App\Http\Controllers\TrackingController::class, 'trackVisit'])->name('track.visit.short');
+Route::get('/visit/{slug}',        [\App\Http\Controllers\TrackingController::class, 'trackVisit'])->name('track.visit');
 
 // ─── Cashfree Payment Routes ───────────────────────────────────────────────
 // createOrder and callback require auth; webhook is public (CSRF exempt in bootstrap/app.php)
 Route::post('/payment/create-order', [PaymentController::class, 'createOrder'])->name('payment.create-order');
 Route::get('/payment/callback',      [PaymentController::class, 'callback'])->name('payment.callback');
 Route::post('/payment/webhook',      [PaymentController::class, 'webhook'])->name('payment.webhook');
-Route::get('/pay/{order_id}',        [PaymentController::class, 'showCheckout'])->name('payment.pay');
+Route::get('/p/{order_id}',          [PaymentController::class, 'showCheckout'])->name('payment.pay');
+Route::get('/pay/{order_id}',        [PaymentController::class, 'showCheckout']);
 
 Route::get('/preview/{slug}', function($slug) {
     $website = \App\Models\Website::where('slug', $slug)->firstOrFail();
