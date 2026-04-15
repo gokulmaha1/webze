@@ -46,5 +46,3 @@ Route::view('/contact', 'legal.contact')->name('legal.contact');
 Route::view('/terms',   'legal.terms')->name('legal.terms');
 Route::view('/privacy', 'legal.privacy')->name('legal.privacy');
 Route::view('/refund',  'legal.refund')->name('legal.refund');
-
-require __DIR__.'/auth.php';
