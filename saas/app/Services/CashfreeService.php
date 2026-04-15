@@ -71,8 +71,11 @@ class CashfreeService
                 'return_url'   => $returnUrl . '?order_id={order_id}',
                 'notify_url'   => route('payment.webhook'),
             ],
-            'order_tags' => $meta,
         ];
+
+        if (!empty($meta)) {
+            $payload['order_tags'] = $meta;
+        }
 
         $response = Http::withHeaders($this->headers())
             ->post("{$this->baseUrl}/orders", $payload);

@@ -172,17 +172,11 @@ class WebsiteResource extends Resource
                     ->relationship('template', 'name'),
             ])
             ->actions([
-                Tables\Actions\Action::make('notify')
-                    ->label('Notify')
-                    ->icon('heroicon-o-chat-bubble-oval-left-ellipsis')
-                    ->color('success')
-                    ->url(fn (Website $record): string => "https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text=" . urlencode("Hi {$record->business_name},\n\nYour new professional website is live and ready! 🚀\n\nCheck it out here: https://app.webze.site/v/{$record->slug}\n\nLet us know what you think!"))
-                    ->openUrlInNewTab(),
-                Tables\Actions\Action::make('request_payment')
-                    ->label('Request Payment')
-                    ->icon('heroicon-o-currency-rupee')
-                    ->color('primary')
-                    ->form([
+                Tables\Actions\Action::make('launch_and_share')
+                    ->label(fn (Website $record) => $record->status === 'paid' ? 'Share Site' : 'Launch & Invoice')
+                    ->icon(fn (Website $record) => $record->status === 'paid' ? 'heroicon-o-share' : 'heroicon-o-rocket-launch')
+                    ->color(fn (Website $record) => $record->status === 'paid' ? 'success' : 'primary')
+                    ->form(fn (Website $record) => $record->status === 'paid' ? [] : [
                         Forms\Components\TextInput::make('amount')
                             ->label('Invoice Amount (INR)')
                             ->numeric()
@@ -194,6 +188,15 @@ class WebsiteResource extends Resource
                             ->required(),
                     ])
                     ->action(function (Website $record, array $data, \App\Services\CashfreeService $cashfree) {
+                        $shortVisitUrl = "https://app.webze.site/v/{$record->slug}";
+                        
+                        // IF ALREADY PAID: Just share the link
+                        if ($record->status === 'paid') {
+                            $waMessage = urlencode("Hi {$record->business_name},\n\nYour professional website is active and live! 🚀\n\nYou can access it anytime here: {$shortVisitUrl}\n\nThank you for choosing Webze!");
+                            return redirect()->away("https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text={$waMessage}");
+                        }
+
+                        // IF NOT PAID: Invoice + Launch logic
                         // 1. Create a transaction record
                         $transaction = \App\Models\Transaction::create([
                             'user_id'    => $record->user_id ?? \App\Models\User::first()->id,
@@ -207,7 +210,7 @@ class WebsiteResource extends Resource
                         // 2. Generate a unique Cashfree Order ID
                         $cashfreeOrderId = \App\Services\CashfreeService::generateOrderId($transaction->id);
 
-                        // 3. Create Order via Cashfree (standard PG)
+                        // 3. Create Order via Cashfree
                         $orderResponse = $cashfree->createOrder(
                             orderId:       $cashfreeOrderId,
                             amount:        (float) $data['amount'],
@@ -217,17 +220,15 @@ class WebsiteResource extends Resource
                             returnUrl:     route('payment.callback')
                         );
 
-                        // 4. Update transaction with order details
+                        // 4. Update transaction
                         $transaction->update([
                             'cashfree_order_id'           => $cashfreeOrderId,
                             'cashfree_payment_session_id' => $orderResponse['payment_session_id'],
                         ]);
 
-                        // 5. Send to WhatsApp (UNIFIED MESSAGE with SHORT LINKS)
-                        $shortVisitUrl = "https://app.webze.site/v/{$record->slug}";
-                        $shortPayUrl   = "https://app.webze.site/p/{$cashfreeOrderId}";
-
-                        $waMessage = urlencode("Hi {$record->business_name}, your professional website is live! 🚀\n\n🌐 Preview: {$shortVisitUrl}\n💳 Activate: {$shortPayUrl}\n\nActivate now to remove trial limits and keep your site live forever!");
+                        // 5. Send UNIFIED MESSAGE
+                        $shortPayUrl = "https://app.webze.site/p/{$cashfreeOrderId}";
+                        $waMessage   = urlencode("Hi {$record->business_name}, your professional website is live! 🚀\n\n🌐 Preview: {$shortVisitUrl}\n💳 Activate: {$shortPayUrl}\n\nActivate now to remove trial limits and keep your site live forever!");
 
                         return redirect()->away("https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text={$waMessage}");
                     }),
