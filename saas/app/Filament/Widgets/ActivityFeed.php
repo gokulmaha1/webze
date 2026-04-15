@@ -8,7 +8,7 @@ use App\Models\User;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
 
-class CategoryBreakdownChart extends ChartWidget
+class ActivityFeed extends ChartWidget
 {
     protected static ?string $heading = 'Top Business Categories';
     protected static ?string $description = 'Distribution of websites by business category';
