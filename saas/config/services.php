@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    // ─── Webze AI & Payment Services ────────────────────────────────────────
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY', ''),
+    ],
+
+    'google_places' => [
+        'key' => env('GOOGLE_PLACES_API_KEY', ''),
+    ],
+
 ];

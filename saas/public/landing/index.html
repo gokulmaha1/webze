@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Webze — Turn Your Social Profile Into a Professional Website in 60 Seconds</title>
+  <meta name="description"
+    content="Paste your Instagram, Google Business, Facebook or LinkedIn URL and Webze auto-generates a stunning professional website for your business — instantly and for free.">
+  <meta property="og:title" content="Webze — Instant Business Websites from Social Profiles">
+  <meta property="og:description" content="Paste your social page URL. Get a live website in 60 seconds.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ── Reset & Tokens ────────────────────────────────────────────── */
+    :root {
+      --bg: #F6F8FF;
+      --surface: #FFFFFF;
+      --border: #E4E9F2;
+      --text: #0D1117;
+      --muted: #637085;
+      --primary: #4F46E5;
+      --primary-light: #EEF2FF;
+      --primary-glow: rgba(79, 70, 229, 0.18);
+      --accent: #F59E0B;
+      --success: #10B981;
+      --danger: #EF4444;
+      --grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #0EA5E9 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden
+    }
+
+    /* ── Animations ────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.04)
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0
+      }
+
+      100% {
+        background-position: 200% 0
+      }
+    }
+
+    @keyframes floatBadge {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-3deg)
+      }
+
+      50% {
+        transform: translateY(-10px) rotate(-3deg)
+      }
+    }
+
+    .anim-up {
+      animation: fadeUp 0.8s ease both
+    }
+
+    .d1 {
+      animation-delay: .1s
+    }
+
+    .d2 {
+      animation-delay: .2s
+    }
+
+    .d3 {
+      animation-delay: .3s
+    }
+
+    .d4 {
+      animation-delay: .4s
+    }
+
+    /* ── Nav ───────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(246, 248, 255, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all .3s
+    }
+
+    .nav-logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 500;
+      transition: color .2s
+    }
+
+    .nav-links a:hover {
+      color: var(--primary)
+    }
+
+    .nav-cta {
+      padding: 10px 22px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .3s;
+      box-shadow: 0 4px 14px var(--primary-glow)
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px var(--primary-glow)
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 6% 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero-blob {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-light);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      padding: 7px 18px;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 28px
+    }
+
+    .hero-tag-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite
+    }
+
+    h2.hero-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      max-width: 860px;
+      margin-bottom: 24px
+    }
+
+    h2.hero-title .grad {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 640px;
+      margin-bottom: 56px;
+      font-weight: 400
+    }
+
+    /* ── URL Input Box ─────────────────────────────────────────────── */
+    .input-box {
+      width: 100%;
+      max-width: 720px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 10px 10px 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.07);
+      transition: border-color .3s
+    }
+
+    .input-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 8px 40px var(--primary-glow)
+    }
+
+    .input-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0
+    }
+
+    #url-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      min-width: 0
+    }
+
+    #url-input::placeholder {
+      color: #A0A9B8
+    }
+
+    #generate-btn {
+      padding: 14px 28px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .3s;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px var(--primary-glow)
+    }
+
+    #generate-btn:hover {
+      background: #4338CA;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px var(--primary-glow)
+    }
+
+    #generate-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    /* ── Source Chips ──────────────────────────────────────────────── */
+    .source-chips {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: center
+    }
+
+    .chip-label {
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 500
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all .25s;
+      text-decoration: none
+    }
+
+    .chip:hover,
+    .chip.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary)
+    }
+
+    .chip img {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px
+    }
+
+    /* ── Progress ──────────────────────────────────────────────────── */
+    #progress-wrap {
+      display: none;
+      width: 100%;
+      max-width: 520px;
+      margin-top: 24px;
+      text-align: center
+    }
+
+    .prog-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 50px;
+      overflow: hidden;
+      margin-bottom: 16px
+    }
+
+    .prog-fill {
+      height: 100%;
+      width: 0;
+      background: var(--grad);
+      border-radius: 50px;
+      transition: width 0.5s ease;
+      background-size: 200% 100%;
+      animation: shimmer 2s linear infinite
+    }
+
+    .prog-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .prog-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .85rem;
+      color: var(--muted);
+      transition: color .3s
+    }
+
+    .prog-step.active {
+      color: var(--primary);
+      font-weight: 600
+    }
+
+    .prog-step.done {
+      color: var(--success)
+    }
+
+    .step-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .65rem;
+      flex-shrink: 0;
+      transition: all .3s
+    }
+
+    .prog-step.active .step-dot {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      animation: pulse 1s infinite
+    }
+
+    .prog-step.done .step-dot {
+      border-color: var(--success);
+      background: var(--success);
+      color: #fff
+    }
+
+    /* ── Success Result ────────────────────────────────────────────── */
+    #result-wrap {
+      display: none;
+      width: 100%;
+      max-width: 560px;
+      margin-top: 24px
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 2px solid var(--success);
+      border-radius: 18px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(16, 185, 129, 0.12);
+      animation: fadeUp .6s ease both
+    }
+
+    .result-icon {
+      font-size: 3rem;
+      margin-bottom: 12px
+    }
+
+    .result-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px
+    }
+
+    .result-card p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 20px
+    }
+
+    .result-url {
+      display: block;
+      padding: 12px 20px;
+      background: var(--primary-light);
+      border: 1.5px solid rgba(79, 70, 229, 0.2);
+      border-radius: 10px;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: .9rem;
+      word-break: break-all;
+      margin-bottom: 16px;
+      transition: all .3s
+    }
+
+    .result-url:hover {
+      background: var(--primary);
+      color: #fff
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .btn-visit {
+      padding: 12px 24px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .3s
+    }
+
+    .btn-visit:hover {
+      background: #4338CA
+    }
+
+    .btn-new {
+      padding: 12px 24px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .btn-new:hover {
+      border-color: var(--primary);
+      color: var(--primary)
+    }
+
+    /* ── Error ─────────────────────────────────────────────────────── */
+    #error-wrap {
+      display: none;
+      width: 100%;
+      max-width: 560px;
+      margin-top: 16px
+    }
+
+    .error-card {
+      background: #FFF5F5;
+      border: 1.5px solid #FCA5A5;
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px
+    }
+
+    .error-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0
+    }
+
+    .error-card p {
+      font-size: .9rem;
+      color: #DC2626;
+      line-height: 1.6
+    }
+
+    /* ── Social proof ──────────────────────────────────────────────── */
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      justify-content: center
+    }
+
+    .proof-avatars {
+      display: flex
+    }
+
+    .proof-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 700;
+      color: #fff;
+      margin-left: -10px
+    }
+
+    .proof-avatar:first-child {
+      margin-left: 0
+    }
+
+    .proof-text {
+      font-size: .85rem;
+      color: var(--muted)
+    }
+
+    .proof-text strong {
+      color: var(--text)
+    }
+
+    /* ── How It Works ──────────────────────────────────────────────── */
+    .section {
+      padding: 100px 6%
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    .section-label {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 14px;
+      text-align: center
+    }
+
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 64px;
+      line-height: 1.75
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      position: relative
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 48px;
+      left: calc(16.5% + 36px);
+      right: calc(16.5% + 36px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), #7C3AED, #0EA5E9);
+      opacity: .3;
+      border-radius: 4px
+    }
+
+    .step-card {
+      text-align: center;
+      padding: 36px 24px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      transition: all .35s
+    }
+
+    .step-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px var(--primary-glow)
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      background: var(--grad);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 auto 24px;
+      box-shadow: 0 6px 20px var(--primary-glow)
+    }
+
+    .step-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px
+    }
+
+    .step-card p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.7
+    }
+
+    /* ── Sources Section ───────────────────────────────────────────── */
+    .sources {
+      background: var(--surface);
+      padding: 100px 6%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    .source-card {
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 36px 24px;
+      text-align: center;
+      background: var(--bg);
+      transition: all .35s;
+      cursor: default
+    }
+
+    .source-card:hover {
+      border-color: var(--primary);
+      background: var(--surface);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--primary-glow)
+    }
+
+    .source-logo {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      display: block
+    }
+
+    .source-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px
+    }
+
+    .source-card p {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65
+    }
+
+    .source-badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: .75rem;
+      font-weight: 600
+    }
+
+    .badge-live {
+      background: #DCFCE7;
+      color: #16A34A
+    }
+
+    .badge-ai {
+      background: #FEF3C7;
+      color: #D97706
+    }
+
+    /* ── Templates Preview ─────────────────────────────────────────── */
+    .templates-section {
+      padding: 100px 6%;
+      background: var(--bg)
+    }
+
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    .template-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      transition: all .35s;
+      cursor: default
+    }
+
+    .template-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary)
+    }
+
+    .template-thumb {
+      height: 180px;
+      background-size: cover;
+      background-position: center top;
+      position: relative
+    }
+
+    .template-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5))
+    }
+
+    .template-info {
+      padding: 18px 20px
+    }
+
+    .template-info h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px
+    }
+
+    .template-info p {
+      font-size: .82rem;
+      color: var(--muted)
+    }
+
+    .template-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 50px;
+      font-size: .72rem;
+      font-weight: 600;
+      margin-top: 10px
+    }
+
+    /* ── Pricing ───────────────────────────────────────────────────── */
+    .pricing {
+      padding: 100px 6%;
+      background: var(--surface);
+      border-top: 1px solid var(--border)
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto
+    }
+
+    .plan-card {
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 30px;
+      background: var(--bg);
+      transition: all .35s;
+      position: relative
+    }
+
+    .plan-card.popular {
+      border-color: var(--primary);
+      background: var(--surface);
+      box-shadow: 0 16px 48px var(--primary-glow)
+    }
+
+    .plan-popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--grad);
+      color: #fff;
+      padding: 5px 18px;
+      border-radius: 50px;
+      font-size: .75rem;
+      font-weight: 700;
+      white-space: nowrap
+    }
+
+    .plan-name {
+      font-size: .85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 16px
+    }
+
+    .plan-price {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1
+    }
+
+    .plan-price sup {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--muted);
+      vertical-align: super;
+      margin-right: 2px
+    }
+
+    .plan-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted)
+    }
+
+    .plan-desc {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 16px 0 24px
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin-bottom: 32px
+    }
+
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .88rem;
+      color: var(--text)
+    }
+
+    .plan-features li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    .plan-features li.no::before {
+      content: '✕';
+      color: #CBD5E1
+    }
+
+    .plan-features li.no {
+      color: var(--muted)
+    }
+
+    .plan-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .plan-btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text)
+    }
+
+    .plan-btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary)
+    }
+
+    .plan-btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 14px var(--primary-glow)
+    }
+
+    .plan-btn-primary:hover {
+      background: #4338CA;
+      transform: translateY(-1px)
+    }
+
+    /* ── FAQ ───────────────────────────────────────────────────────── */
+    .faq {
+      padding: 100px 6%;
+      background: var(--bg)
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden
+    }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      gap: 16px;
+      transition: color .2s
+    }
+
+    .faq-q:hover {
+      color: var(--primary)
+    }
+
+    .faq-arrow {
+      flex-shrink: 0;
+      transition: transform .3s;
+      color: var(--muted);
+      font-size: 1.2rem
+    }
+
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg)
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease, padding .3s;
+      padding: 0 24px
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding: 0 24px 20px
+    }
+
+    .faq-a p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.75
+    }
+
+    /* ── CTA Banner ────────────────────────────────────────────────── */
+    .cta-banner {
+      padding: 80px 6%;
+      background: var(--grad);
+      text-align: center
+    }
+
+    .cta-banner h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px
+    }
+
+    .cta-banner p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.05rem;
+      margin-bottom: 36px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .cta-banner-btn {
+      padding: 16px 40px;
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .3s;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15)
+    }
+
+    .cta-banner-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2)
+    }
+
+    /* ── Footer ────────────────────────────────────────────────────── */
+    footer {
+      background: var(--text);
+      color: rgba(255, 255, 255, 0.5);
+      padding: 40px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: .85rem
+    }
+
+    .footer-logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .footer-links a:hover {
+      color: #fff
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────── */
+    @media(max-width:900px) {
+      .steps {
+        grid-template-columns: 1fr
+      }
+
+      .steps::before {
+        display: none
+      }
+
+      .sources-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .templates-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr
+      }
+
+      nav .nav-links {
+        display: none
+      }
+    }
+
+    @media(max-width:620px) {
+
+      .sources-grid,
+      .templates-grid {
+        grid-template-columns: 1fr
+      }
+
+      .input-box {
+        flex-direction: column;
+        padding: 16px
+      }
+
+      #url-input {
+        width: 100%;
+        text-align: center
+      }
+
+      #generate-btn {
+        width: 100%
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="/" class="nav-logo">webze</a>
+    <div class="nav-links">
+      <a href="#how">How it Works</a>
+      <a href="#sources">Sources</a>
+      <a href="#pricing">Pricing</a>
+      <a href="https://app.webze.site/admin" target="_blank">Dashboard</a>
+      <a href="https://app.webze.site/admin/login" class="nav-cta">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-blob"></div>
+
+    <div class="hero-tag anim-up">
+      <span class="hero-tag-dot"></span>
+      AI-Powered Website Generator
+    </div>
+
+    <h2 class="hero-title anim-up d1">
+      Your Social Profile.<br>
+      A <span class="grad">Professional Website</span>.<br>
+      In 60 Seconds.
+    </h2>
+
+    <p class="hero-sub anim-up d2">
+      Paste your Instagram, Google Business, Facebook or LinkedIn page URL.
+      Webze reads your business info and builds a stunning, live website — automatically.
+    </p>
+
+    <!-- URL Input -->
+    <div class="input-box anim-up d3">
+      <span class="input-icon">🔗</span>
+      <input type="url" id="url-input" placeholder="Paste your Instagram, GMB, Facebook or LinkedIn URL…"
+        autocomplete="off">
+      <button id="generate-btn" onclick="generateSite()">Generate Free ✨</button>
+    </div>
+
+    <!-- Source chips -->
+    <div class="source-chips anim-up d3">
+      <span class="chip-label">Works with:</span>
+      <span class="chip" onclick="setExample('instagram')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/240px-Instagram_icon.png"
+          alt=""> Instagram
+      </span>
+      <span class="chip" onclick="setExample('gmb')">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/320px-Google_2015_logo.svg.png"
+          alt=""> Google Business
+      </span>
+      <span class="chip" onclick="setExample('facebook')">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/240px-Facebook_Logo_%282019%29.png"
+          alt=""> Facebook
+      </span>
+      <span class="chip" onclick="setExample('linkedin')">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/240px-LinkedIn_logo_initials.png"
+          alt=""> LinkedIn
+      </span>
+    </div>
+
+    <!-- Progress -->
+    <div id="progress-wrap">
+      <div class="prog-bar">
+        <div class="prog-fill" id="prog-fill"></div>
+      </div>
+      <div class="prog-steps">
+        <div class="prog-step" id="step-1">
+          <div class="step-dot" id="dot-1">1</div>Analyzing your social page…
+        </div>
+        <div class="prog-step" id="step-2">
+          <div class="step-dot" id="dot-2">2</div>Extracting business information…
+        </div>
+        <div class="prog-step" id="step-3">
+          <div class="step-dot" id="dot-3">3</div>Choosing the best template…
+        </div>
+        <div class="prog-step" id="step-4">
+          <div class="step-dot" id="dot-4">4</div>Building your website…
+        </div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="result-wrap">
+      <div class="result-card">
+        <div class="result-icon">🎉</div>
+        <h3>Your website is live!</h3>
+        <p>Share it with your customers instantly. No setup required.</p>
+        <a id="result-link" href="#" class="result-url" target="_blank"></a>
+        <div class="result-actions">
+          <a id="result-visit-btn" href="#" target="_blank" class="btn-visit">Visit Website →</a>
+          <button class="btn-new" onclick="resetForm()">Generate Another</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div id="error-wrap">
+      <div class="error-card">
+        <span class="error-icon">⚠️</span>
+        <p id="error-msg">Something went wrong. Please try again with a different URL.</p>
+      </div>
+    </div>
+
+    <!-- Social proof -->
+    <div class="hero-proof anim-up d4">
+      <div class="proof-avatars">
+        <div class="proof-avatar">R</div>
+        <div class="proof-avatar" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">A</div>
+        <div class="proof-avatar" style="background:linear-gradient(135deg,#10B981,#0EA5E9)">P</div>
+        <div class="proof-avatar" style="background:linear-gradient(135deg,#EC4899,#8B5CF6)">S</div>
+      </div>
+      <p class="proof-text"><strong>2,400+ businesses</strong> already have their website</p>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section" id="how">
+    <div class="section-inner">
+      <p class="section-label">Simple Process</p>
+      <h2 class="section-title">Three Steps to Your Website</h2>
+      <p class="section-sub">No technical knowledge. No designers. No waiting. Just your social URL.</p>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Paste Your URL</h3>
+          <p>Copy the URL of your Instagram profile, Google Business page, Facebook page, or LinkedIn company page and
+            paste it above.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>AI Reads Your Business</h3>
+          <p>Our AI engine automatically extracts your business name, category, phone number, address, and description
+            from your public profile.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Get a Live Website</h3>
+          <p>Webze picks the right template, fills it with your content, and publishes a live website at
+            your-business.webze.site — instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOURCES ── -->
+  <section class="sources" id="sources">
+    <div class="section-inner">
+      <p class="section-label">Supported Sources</p>
+      <h2 class="section-title">Works With Your Existing Presence</h2>
+      <p class="section-sub">We extract your business data from the platforms you're already on.</p>
+      <div class="sources-grid">
+        <div class="source-card">
+          <span class="source-logo">📸</span>
+          <h3>Instagram</h3>
+          <p>We read your public Instagram profile — bio, business name, and contact info — to build your site.</p>
+          <span class="source-badge badge-live">Live Extraction</span>
+        </div>
+        <div class="source-card">
+          <span class="source-logo">🗺️</span>
+          <h3>Google Business</h3>
+          <p>Google Places gives us your exact name, address, phone, hours, rating, and category with high accuracy.</p>
+          <span class="source-badge badge-live">Most Accurate</span>
+        </div>
+        <div class="source-card">
+          <span class="source-logo">📘</span>
+          <h3>Facebook Page</h3>
+          <p>From your public Facebook business page we extract name, category, and contact details automatically.</p>
+          <span class="source-badge badge-live">Live Extraction</span>
+        </div>
+        <div class="source-card">
+          <span class="source-logo">💼</span>
+          <h3>LinkedIn Company</h3>
+          <p>Our AI reads your LinkedIn company page to extract your business identity, tagline, and industry.</p>
+          <span class="source-badge badge-ai">AI Powered</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEMPLATES PREVIEW ── -->
+  <section class="templates-section" id="templates">
+    <div class="section-inner">
+      <p class="section-label">Ready-made Templates</p>
+      <h2 class="section-title">Beautiful Designs for Every Business</h2>
+      <p class="section-sub">Webze automatically selects the perfect template based on your business category.</p>
+      <div class="templates-grid">
+        <div class="template-card">
+          <div class="template-thumb"
+            style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format&fit=crop')">
+          </div>
+          <div class="template-info">
+            <h3>Restaurant & Catering</h3>
+            <p>Rich dark theme with gallery, menus and reservation CTA</p>
+            <span class="template-tag">Food & Dining</span>
+          </div>
+        </div>
+        <div class="template-card">
+          <div class="template-thumb"
+            style="background-image:url('https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&q=80&auto=format&fit=crop')">
+          </div>
+          <div class="template-info">
+            <h3>Salon & Beauty</h3>
+            <p>Elegant layout with service grid, gallery and booking section</p>
+            <span class="template-tag">Beauty & Wellness</span>
+          </div>
+        </div>
+        <div class="template-card">
+          <div class="template-thumb"
+            style="background-image:url('https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=600&q=80&auto=format&fit=crop')">
+          </div>
+          <div class="template-info">
+            <h3>Clinic & Healthcare</h3>
+            <p>Clean, trustworthy design with doctor profile and contact info</p>
+            <span class="template-tag">Healthcare</span>
+          </div>
+        </div>
+        <div class="template-card">
+          <div class="template-thumb"
+            style="background-image:url('https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=600&q=80&auto=format&fit=crop')">
+          </div>
+          <div class="template-info">
+            <h3>Real Estate</h3>
+            <p>Property showcase with listings, agent profile and inquiry form</p>
+            <span class="template-tag">Real Estate</span>
+          </div>
+        </div>
+        <div class="template-card">
+          <div class="template-thumb"
+            style="background-image:url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600&q=80&auto=format&fit=crop')">
+          </div>
+          <div class="template-info">
+            <h3>Corporate & Business</h3>
+            <p>Premium dark corporate template with services and team section</p>
+            <span class="template-tag">Corporate</span>
+          </div>
+        </div>
+        <div class="template-card">
+          <div class="template-thumb"
+            style="background-image:url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80&auto=format&fit=crop')">
+          </div>
+          <div class="template-info">
+            <h3>Hotel & Resort</h3>
+            <p>Luxury layout with rooms showcase, amenities and booking CTA</p>
+            <span class="template-tag">Hospitality</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ── -->
+  <section class="pricing" id="pricing">
+    <div class="section-inner">
+      <p class="section-label">Simple Pricing</p>
+      <h2 class="section-title">Start Free, Grow As You Go</h2>
+      <p class="section-sub">No credit card required to generate your first website. Upgrade when you're ready.</p>
+      <div class="pricing-grid">
+        <div class="plan-card">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price"><sup>₹</sup>0<span>/free</span></div>
+          <p class="plan-desc">Perfect for getting your business online for the first time.</p>
+          <ul class="plan-features">
+            <li>1 Website</li>
+            <li>Auto-generated from social URL</li>
+            <li>yourname.webze.site subdomain</li>
+            <li>WhatsApp button included</li>
+            <li class="no">Custom domain</li>
+            <li class="no">Analytics dashboard</li>
+            <li class="no">Priority support</li>
+          </ul>
+          <button class="plan-btn plan-btn-outline"
+            onclick="document.getElementById('url-input').focus();window.scrollTo({top:0,behavior:'smooth'})">Get
+            Started Free</button>
+        </div>
+
+        <div class="plan-card popular">
+          <div class="plan-popular-badge">⚡ Most Popular</div>
+          <div class="plan-name">Professional</div>
+          <div class="plan-price"><sup>₹</sup>499<span>/month</span></div>
+          <p class="plan-desc">Everything a growing local business needs to stand out online.</p>
+          <ul class="plan-features">
+            <li>3 Websites</li>
+            <li>Auto-generated from social URL</li>
+            <li>Custom domain connection</li>
+            <li>WhatsApp & Call tracking</li>
+            <li>Analytics dashboard</li>
+            <li>AI content regeneration</li>
+            <li class="no">White-label</li>
+          </ul>
+          <button class="plan-btn plan-btn-primary" onclick="initPayment(499,'monthly')">Subscribe Now</button>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-name">Business</div>
+          <div class="plan-price"><sup>₹</sup>999<span>/month</span></div>
+          <p class="plan-desc">For agencies and businesses managing multiple locations.</p>
+          <ul class="plan-features">
+            <li>Unlimited Websites</li>
+            <li>Auto-generated from social URL</li>
+            <li>Custom domain connection</li>
+            <li>Full analytics & heatmaps</li>
+            <li>Priority AI regeneration</li>
+            <li>White-label option</li>
+            <li>Dedicated support</li>
+          </ul>
+          <button class="plan-btn plan-btn-outline" onclick="initPayment(999,'monthly')">Get Business</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="faq" id="faq">
+    <div class="section-inner">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Common Questions</h2>
+      <p class="section-sub">Everything you need to know about Webze.</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Does it really work with any social media URL?
+            <span class="faq-arrow">▾</span>
+          </button>
+          <div class="faq-a">
+            <p>Yes! Webze supports Instagram profiles, Google My Business pages (paste the Google Maps URL for best
+              results), Facebook business pages, and LinkedIn company pages. Google Business gives the most accurate
+              data since we use the official Google Places API.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How long does it take to generate a website?
+            <span class="faq-arrow">▾</span>
+          </button>
+          <div class="faq-a">
+            <p>Typically 20–40 seconds. Our AI reads your social page, extracts business data, picks the best template,
+              and publishes the site — all automatically.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can I customize my website after it's generated?
+            <span class="faq-arrow">▾</span>
+          </button>
+          <div class="faq-a">
+            <p>You can log in to the Webze dashboard and update your business information, regenerate content, or switch
+              templates. Full visual editing is coming soon.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What happens to my website URL?
+            <span class="faq-arrow">▾</span>
+          </button>
+          <div class="faq-a">
+            <p>Your site is published at yourname.webze.site instantly. On the Professional plan you can connect your
+              own custom domain (e.g. www.yourbusiness.com) within minutes.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is my payment secure?
+            <span class="faq-arrow">▾</span>
+          </button>
+          <div class="faq-a">
+            <p>All payments are processed by Cashfree, a leading PCI-DSS compliant payment gateway trusted by thousands
+              of Indian businesses. We never store your card details.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA BANNER ── -->
+  <section class="cta-banner">
+    <h2>Ready to Go Live in 60 Seconds?</h2>
+    <p>Join 2,400+ businesses who already have a professional website powered by Webze.</p>
+    <button class="cta-banner-btn"
+      onclick="document.getElementById('url-input').focus();window.scrollTo({top:0,behavior:'smooth'})">
+      Generate My Website Free →
+    </button>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-logo">webze</span>
+    <div class="footer-links">
+      <a href="#how">How it Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="https://app.webze.site/admin" target="_blank">Dashboard</a>
+      <a href="mailto:hello@webze.site">Contact</a>
+    </div>
+    <span>© 2025 Webze · Made in India 🇮🇳</span>
+  </footer>
+
+  <!-- ── CASHFREE JS SDK ── -->
+  <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+  <script>
+    // ── Config ──────────────────────────────────────────────────────
+    const API_BASE = 'https://app.webze.site/api';
+
+    // ── Helpers ──────────────────────────────────────────────────────
+    function setExample(source) {
+      const examples = {
+        instagram: 'https://www.instagram.com/yourpage/',
+        gmb: 'https://maps.app.goo.gl/example',
+        facebook: 'https://www.facebook.com/yourpage',
+        linkedin: 'https://www.linkedin.com/company/yourcompany',
+      };
+      document.getElementById('url-input').value = examples[source] || '';
+      document.getElementById('url-input').focus();
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('open');
+    }
+
+    function resetForm() {
+      document.getElementById('result-wrap').style.display = 'none';
+      document.getElementById('error-wrap').style.display = 'none';
+      document.getElementById('progress-wrap').style.display = 'none';
+      document.getElementById('url-input').value = '';
+      document.getElementById('generate-btn').disabled = false;
+      document.getElementById('generate-btn').textContent = 'Generate Free ✨';
+      document.getElementById('prog-fill').style.width = '0';
+      ['step-1', 'step-2', 'step-3', 'step-4'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove('active', 'done');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── Progress Simulation ──────────────────────────────────────────
+    let progressTimer;
+    function startProgress() {
+      const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
+      const delays = [0, 5000, 12000, 20000];
+      const widths = ['25%', '50%', '75%', '92%'];
+      const fill = document.getElementById('prog-fill');
+
+      document.getElementById('progress-wrap').style.display = 'block';
+      document.getElementById('error-wrap').style.display = 'none';
+      document.getElementById('result-wrap').style.display = 'none';
+
+      delays.forEach((delay, i) => {
+        setTimeout(() => {
+          if (i > 0) {
+            document.getElementById(steps[i - 1]).classList.remove('active');
+            document.getElementById(steps[i - 1]).classList.add('done');
+            document.getElementById('dot-' + i).textContent = '✓';
+          }
+          document.getElementById(steps[i]).classList.add('active');
+          fill.style.width = widths[i];
+        }, delay);
+      });
+    }
+
+    function completeProgress() {
+      document.getElementById('prog-fill').style.width = '100%';
+      ['step-1', 'step-2', 'step-3', 'step-4'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.classList.remove('active');
+        el.classList.add('done');
+        document.getElementById('dot-' + (i + 1)).textContent = '✓';
+      });
+    }
+
+    // ── Generate Site ────────────────────────────────────────────────
+    async function generateSite() {
+      const urlInput = document.getElementById('url-input');
+      const url = urlInput.value.trim();
+
+      if (!url) {
+        urlInput.focus();
+        urlInput.parentElement.style.borderColor = '#EF4444';
+        setTimeout(() => { urlInput.parentElement.style.borderColor = ''; }, 2000);
+        return;
+      }
+
+      // Basic URL validation
+      try { new URL(url); } catch {
+        showError('Please enter a valid URL (starting with https://).');
+        return;
+      }
+
+      const btn = document.getElementById('generate-btn');
+      btn.disabled = true;
+      btn.textContent = '⏳ Generating…';
+
+      startProgress();
+
+      try {
+        const response = await fetch(`${API_BASE}/scrape-and-generate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ url }),
+        });
+
+        const data = await response.json();
+
+        completeProgress();
+
+        if (data.success && data.url) {
+          setTimeout(() => showResult(data), 600);
+        } else {
+          showError(data.message || 'Could not extract business data. Try a different URL or paste your Google Business URL for best results.');
+        }
+      } catch (err) {
+        showError('Network error. Please check your connection and try again.');
+        console.error(err);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Generate Free ✨';
+      }
+    }
+
+    function showResult(data) {
+      document.getElementById('progress-wrap').style.display = 'none';
+      const link = data.url;
+      document.getElementById('result-link').href = link;
+      document.getElementById('result-link').textContent = link;
+      document.getElementById('result-visit-btn').href = link;
+      document.getElementById('result-wrap').style.display = 'block';
+    }
+
+    function showError(msg) {
+      document.getElementById('progress-wrap').style.display = 'none';
+      document.getElementById('error-msg').textContent = msg;
+      document.getElementById('error-wrap').style.display = 'block';
+    }
+
+    // ── Cashfree Payment ─────────────────────────────────────────────
+    async function initPayment(amount, plan) {
+      try {
+        const res = await fetch(`${API_BASE.replace('/api', '')}payment/create-order`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ amount, plan }),
+        });
+
+        const data = await res.json();
+
+        if (!data.success || !data.payment_session_id) {
+          if (data.message && data.message.includes('Unauthenticated')) {
+            window.location.href = 'https://app.webze.site/admin/login?redirect_to=pricing';
+          } else {
+            alert('Could not initiate payment. Please try again.');
+          }
+          return;
+        }
+
+        const cashfree = Cashfree({ mode: 'production' });
+        cashfree.checkout({
+          paymentSessionId: data.payment_session_id,
+          redirectTarget: '_self',
+        });
+
+      } catch (err) {
+        console.error('Payment error:', err);
+        alert('Payment initiation failed. Please try again.');
+      }
+    }
+
+    // ── Enter key support ────────────────────────────────────────────
+    document.getElementById('url-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') generateSite();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{business.name}} | Professional Catering Services</title>
+<meta name="description" content="{{business.name}} — Premier catering and food service for weddings, corporate events, and private celebrations. Contact us today.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0EA5E9;
+  --primary-dark:#0284C7;
+  --accent:#F97316;
+  --accent-dark:#EA6C0A;
+  --text:#1E293B;
+  --text-light:#64748B;
+  --bg:#FFFFFF;
+  --bg-alt:#F8FAFC;
+  --bg-card:#FFFFFF;
+  --border:#E2E8F0;
+  --success:#10B981;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:1000;padding:18px 6%;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s;background:rgba(255,255,255,0)}
+nav.scrolled{background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);box-shadow:0 1px 20px rgba(0,0,0,0.08);padding:14px 6%}
+.logo{font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:800;color:var(--bg);text-decoration:none;display:flex;align-items:center;gap:4px}
+nav.scrolled .logo{color:var(--text)}
+.logo span{color:var(--accent)}
+nav ul{list-style:none;display:flex;gap:32px}
+nav ul li a{text-decoration:none;font-size:0.9rem;font-weight:500;color:rgba(255,255,255,0.9);transition:color 0.3s}
+nav.scrolled ul li a{color:var(--text-light)}
+nav ul li a:hover{color:var(--accent)}
+.nav-cta{padding:10px 24px;background:var(--accent);color:#fff!important;border-radius:8px;font-weight:600;font-size:0.85rem;text-decoration:none;transition:all 0.3s;box-shadow:0 4px 14px rgba(249,115,22,0.35)}
+.nav-cta:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(249,115,22,0.45)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;background:url('https://images.unsplash.com/photo-1555244162-803834f70033?w=1800&q=85&auto=format&fit=crop') center/cover no-repeat;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,165,233,0.85) 0%,rgba(14,36,56,0.8) 60%,rgba(249,115,22,0.6) 100%)}
+.hero-content{position:relative;z-index:2;max-width:680px;padding:0 6%;animation:fadeUp 1s ease both}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);backdrop-filter:blur(8px);padding:7px 16px;border-radius:50px;font-size:0.8rem;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px}
+.hero-badge::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(2.6rem,5vw,4.2rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:22px}
+.hero h1 em{font-style:normal;color:#FDE68A}
+.hero p{font-size:1.1rem;color:rgba(255,255,255,0.9);line-height:1.75;margin-bottom:38px;font-weight:300}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{padding:15px 34px;background:var(--accent);color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;transition:all 0.3s;box-shadow:0 6px 20px rgba(249,115,22,0.4)}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(249,115,22,0.5)}
+.btn-outline{padding:15px 34px;border:2px solid rgba(255,255,255,0.7);color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:0.95rem;transition:all 0.3s;backdrop-filter:blur(8px)}
+.btn-outline:hover{background:rgba(255,255,255,0.15);border-color:#fff}
+
+/* STATS BAR */
+.stats-bar{background:var(--bg-alt);border-bottom:1px solid var(--border);padding:28px 6%;display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px}
+.stat-item{text-align:center}
+.stat-num{font-family:'Poppins',sans-serif;font-size:2rem;font-weight:800;color:var(--primary);display:block}
+.stat-label{font-size:0.8rem;font-weight:500;color:var(--text-light);text-transform:uppercase;letter-spacing:1px}
+
+/* SECTION COMMONS */
+section{padding:90px 6%}
+.section-label{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--primary);margin-bottom:12px}
+.section-title{font-family:'Poppins',sans-serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;color:var(--text);line-height:1.25;margin-bottom:16px}
+.section-title em{font-style:normal;color:var(--accent)}
+.section-sub{font-size:1.05rem;color:var(--text-light);line-height:1.75;max-width:560px}
+
+/* ABOUT */
+.about{background:var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-img-wrap{position:relative}
+.about-img-wrap img{width:100%;height:520px;object-fit:cover;border-radius:20px;box-shadow:0 24px 60px rgba(14,165,233,0.15)}
+.about-float-badge{position:absolute;bottom:-24px;right:-24px;background:var(--primary);color:#fff;padding:24px 28px;border-radius:16px;text-align:center;box-shadow:0 12px 32px rgba(14,165,233,0.35)}
+.about-float-badge h3{font-family:'Poppins',sans-serif;font-size:2.2rem;font-weight:800;line-height:1}
+.about-float-badge p{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;opacity:0.85;margin-top:4px}
+.features-list{list-style:none;display:flex;flex-direction:column;gap:16px;margin-top:32px}
+.features-list li{display:flex;align-items:flex-start;gap:14px;font-size:0.95rem;color:var(--text-light);line-height:1.6}
+.feature-icon{width:32px;height:32px;min-width:32px;background:rgba(14,165,233,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1rem}
+
+/* SERVICES */
+.services{background:var(--bg-alt)}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;gap:32px;flex-wrap:wrap}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.service-card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:36px 30px;transition:all 0.4s;cursor:default;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--primary),#38BDF8);opacity:0;transition:opacity 0.4s}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(14,165,233,0.18);border-color:var(--primary)}
+.service-card:hover::before{opacity:0.06}
+.service-icon{width:56px;height:56px;background:linear-gradient(135deg,var(--primary),#38BDF8);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:22px;box-shadow:0 6px 18px rgba(14,165,233,0.3)}
+.service-card h3{font-family:'Poppins',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:10px}
+.service-card p{font-size:0.9rem;color:var(--text-light);line-height:1.7}
+
+/* GALLERY */
+.gallery{background:var(--bg);overflow:hidden}
+.gallery-header{text-align:center;margin-bottom:52px}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:16px}
+.gallery-item{border-radius:14px;overflow:hidden;position:relative;cursor:pointer}
+.gallery-item:first-child{grid-column:span 2;grid-row:span 2}
+.gallery-item img{width:100%;height:100%;object-fit:cover;min-height:200px;transition:transform 0.5s ease}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-item .g-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(14,165,233,0.8) 0%,transparent 60%);opacity:0;transition:opacity 0.4s;display:flex;align-items:flex-end;padding:20px}
+.gallery-item:hover .g-overlay{opacity:1}
+.g-overlay span{color:#fff;font-weight:600;font-size:0.95rem}
+
+/* TESTIMONIAL */
+.testimonial{background:linear-gradient(135deg,var(--primary-dark) 0%,#0C4A6E 100%);padding:90px 6%}
+.testimonial-inner{max-width:800px;margin:0 auto;text-align:center}
+.stars{color:#FDE68A;font-size:1.5rem;letter-spacing:6px;margin-bottom:28px}
+.testimonial blockquote{font-size:clamp(1.2rem,2.5vw,1.7rem);color:#fff;font-weight:300;line-height:1.75;font-style:italic;margin-bottom:32px}
+.testimonial cite{font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.65)}
+
+/* CONTACT */
+.contact-strip{background:var(--bg-alt);border-top:1px solid var(--border)}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:90px 6%}
+.contact-info h2{font-family:'Poppins',sans-serif;font-size:2.2rem;font-weight:800;color:var(--text);margin-bottom:16px}
+.contact-info p{color:var(--text-light);line-height:1.75;margin-bottom:36px}
+.contact-cards{display:flex;flex-direction:column;gap:18px}
+.contact-card{display:flex;align-items:center;gap:16px;background:var(--bg-card);border:1px solid var(--border);padding:18px 22px;border-radius:12px;transition:border-color 0.3s}
+.contact-card:hover{border-color:var(--primary)}
+.cc-icon{width:44px;height:44px;min-width:44px;background:linear-gradient(135deg,var(--primary),#38BDF8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff}
+.cc-label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-light)}
+.cc-value{font-weight:600;color:var(--text);font-size:0.95rem;margin-top:2px}
+.contact-form-area{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:44px;box-shadow:0 8px 40px rgba(0,0,0,0.05)}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:8px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--text);background:var(--bg-alt);transition:border-color 0.3s;outline:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--primary)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-submit{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 16px rgba(249,115,22,0.35)}
+.form-submit:hover{background:var(--accent-dark);transform:translateY(-1px)}
+
+/* FOOTER */
+footer{background:var(--text);color:rgba(255,255,255,0.5);text-align:center;padding:30px 6%;font-size:0.82rem}
+footer strong{color:#fff}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about,.contact-inner{grid-template-columns:1fr;gap:40px}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .gallery-item:first-child{grid-column:span 2;grid-row:auto}
+  .about-float-badge{right:12px;bottom:-12px}
+  nav ul{display:none}
+}
+@media(max-width:600px){
+  .services-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .gallery-item:first-child{grid-column:auto}
+  .stats-bar{flex-direction:column;gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="logo">{{business.name}}<span>.</span></a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">✦ {{business.category}}</div>
+    <h1>Catering That <em>Elevates</em> Every Event</h1>
+    <p>{{business.name}} brings exceptional food and seamless service to your weddings, corporate events, and private celebrations. Every detail, handled with expertise.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Plan My Event</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <span class="stat-num">{{rating}}★</span>
+    <span class="stat-label">Average Rating</span>
+  </div>
+  <div class="stat-item reveal delay-1">
+    <span class="stat-num">{{count}}+</span>
+    <span class="stat-label">Events Catered</span>
+  </div>
+  <div class="stat-item reveal delay-2">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Customer Satisfaction</span>
+  </div>
+  <div class="stat-item reveal delay-3">
+    <span class="stat-num">15+</span>
+    <span class="stat-label">Cuisine Types</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img-wrap reveal">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=85&auto=format&fit=crop" alt="Catering preparation at {{business.name}}">
+    <div class="about-float-badge">
+      <h3>{{rating}}</h3>
+      <p>Rated by Guests</p>
+    </div>
+  </div>
+  <div class="reveal delay-2">
+    <p class="section-label">Who We Are</p>
+    <h2 class="section-title">Crafted with <em>Passion</em>, Served with Precision</h2>
+    <p class="section-sub">At {{business.name}}, we believe great catering is more than food — it's the experience. We combine culinary artistry with flawless logistics to make your event unforgettable.</p>
+    <ul class="features-list">
+      <li><span class="feature-icon">🍽</span>Custom menus tailored to your event theme and dietary needs</li>
+      <li><span class="feature-icon">👨‍🍳</span>Experienced professional chefs with diverse culinary expertise</li>
+      <li><span class="feature-icon">✅</span>End-to-end coordination — from setup to clean-up</li>
+      <li><span class="feature-icon">🌿</span>Fresh, locally-sourced ingredients for superior quality</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <p class="section-label reveal">What We Offer</p>
+      <h2 class="section-title reveal delay-1">Our <em>Catering</em> Services</h2>
+    </div>
+    <p class="section-sub reveal delay-2" style="text-align:right">Professional {{business.category}} services for every occasion, delivered with care.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">💍</div>
+      <h3>Wedding Catering</h3>
+      <p>Your perfect day deserves perfect food. We craft bespoke wedding menus that delight every guest and reflect your love story.</p>
+    </div>
+    <div class="service-card reveal delay-1">
+      <div class="service-icon">🏢</div>
+      <h3>Corporate Events</h3>
+      <p>From board lunches to full conferences, we deliver punctual, professional catering that keeps your team energized and impressed.</p>
+    </div>
+    <div class="service-card reveal delay-2">
+      <div class="service-icon">🎉</div>
+      <h3>Private Celebrations</h3>
+      <p>Birthdays, anniversaries, and milestone moments — we turn gatherings into memories with extraordinary food and presentation.</p>
+    </div>
+    <div class="service-card reveal delay-1">
+      <div class="service-icon">🎪</div>
+      <h3>Outdoor & Tent Events</h3>
+      <p>We're fully equipped for outdoor catering with complete setup, service staff, and weather-ready infrastructure.</p>
+    </div>
+    <div class="service-card reveal delay-2">
+      <div class="service-icon">🍱</div>
+      <h3>Bulk Tiffin & Box Meals</h3>
+      <p>Nutritious, hygienic, and timely bulk meal deliveries for offices, factories, and institutions across the region.</p>
+    </div>
+    <div class="service-card reveal delay-3">
+      <div class="service-icon">🌮</div>
+      <h3>Live Food Counters</h3>
+      <p>Interactive live counters — chaat, pasta, barbecue, and more — that entertain guests while serving freshly made food.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <p class="section-label reveal">Our Work</p>
+    <h2 class="section-title reveal delay-1">A Taste of <em>Excellence</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=700&q=80&auto=format&fit=crop" alt="Wedding catering spread">
+      <div class="g-overlay"><span>Wedding Banquet</span></div>
+    </div>
+    <div class="gallery-item reveal delay-1">
+      <img src="https://images.unsplash.com/photo-1551218808-94e220e084d1?w=500&q=80&auto=format&fit=crop" alt="Dessert display">
+      <div class="g-overlay"><span>Dessert Station</span></div>
+    </div>
+    <div class="gallery-item reveal delay-2">
+      <img src="https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?w=500&q=80&auto=format&fit=crop" alt="Elegant plating">
+      <div class="g-overlay"><span>Fine Plating</span></div>
+    </div>
+    <div class="gallery-item reveal delay-3">
+      <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=500&q=80&auto=format&fit=crop" alt="Chef at work">
+      <div class="g-overlay"><span>Live Counter</span></div>
+    </div>
+    <div class="gallery-item reveal delay-1">
+      <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&q=80&auto=format&fit=crop" alt="Grilled dishes">
+      <div class="g-overlay"><span>Grills & BBQ</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <div class="testimonial-inner">
+    <div class="stars reveal">★★★★★</div>
+    <blockquote class="reveal delay-1">"{{review}}"</blockquote>
+    <cite class="reveal delay-2">— Trusted by {{count}}+ happy clients across the region</cite>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-strip" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <p class="section-label">Get in Touch</p>
+      <h2>Let's Plan Your <em style="color:var(--accent);font-style:normal">Event</em> Together</h2>
+      <p>Reach out to discuss your catering needs. We respond within 2 hours and offer free consultations for all events.</p>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="cc-icon">📞</div>
+          <div><div class="cc-label">Call Us</div><div class="cc-value">{{business.phone}}</div></div>
+        </div>
+        <div class="contact-card">
+          <div class="cc-icon">📍</div>
+          <div><div class="cc-label">Location</div><div class="cc-value">{{business.address}}</div></div>
+        </div>
+        <div class="contact-card">
+          <div class="cc-icon">🍽</div>
+          <div><div class="cc-label">Specialty</div><div class="cc-value">{{business.category}}</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-area reveal delay-2">
+      <h3 style="font-family:'Poppins',sans-serif;font-weight:700;font-size:1.3rem;color:var(--text);margin-bottom:24px">Quick Inquiry</h3>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="e.g. Rahul Sharma" id="cf-name">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 98765 43210" id="cf-phone">
+      </div>
+      <div class="form-group">
+        <label>Event Type</label>
+        <select id="cf-type">
+          <option value="">Select Event</option>
+          <option>Wedding</option>
+          <option>Corporate Event</option>
+          <option>Birthday Party</option>
+          <option>Anniversary</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message (optional)</label>
+        <textarea placeholder="Tell us about your event — date, guest count, cuisine preferences..." id="cf-msg"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitInquiry()">Send Inquiry →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 <strong>{{business.name}}</strong> · All Rights Reserved · Powered by <strong>Webze</strong>
+</footer>
+
+<script>
+// Scroll spy for nav
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Reveal on scroll
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// Simple WhatsApp inquiry
+function submitInquiry() {
+  const name = document.getElementById('cf-name').value || 'Customer';
+  const phone = document.getElementById('cf-phone').value || '';
+  const type = document.getElementById('cf-type').value || 'Event';
+  const msg = document.getElementById('cf-msg').value || '';
+  const text = encodeURIComponent(`Hi {{business.name}}! I'm ${name} (${phone}). I'm interested in catering for a ${type}. ${msg}`);
+  window.open(`https://wa.me/91${('{{business.phone}}').replace(/\D/g,'')}?text=${text}`, '_blank');
+}
+</script>
+</body>
+</html>

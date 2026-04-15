@@ -26,6 +26,13 @@ class TemplateSeeder extends Seeder
                 'file'        => 'catering.html',
             ],
             [
+                'name'        => 'Catering & Cafe (Professional)',
+                'slug'        => 'catering-pro',
+                'description' => 'Bright, professional light-theme template for caterers and cafes',
+                'is_premium'  => false,
+                'file'        => 'catering-pro.html',
+            ],
+            [
                 'name'        => 'Real Estate',
                 'slug'        => 'real-estate',
                 'description' => 'Professional template for real estate agencies',
@@ -91,6 +98,6 @@ class TemplateSeeder extends Seeder
             );
         }
 
-        $this->command->info('✅ 9 templates seeded successfully!');
+        $this->command->info('✅ 10 templates seeded successfully!');
     }
 }
