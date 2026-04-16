@@ -232,6 +232,88 @@ class WebsiteResource extends Resource
 
                         return redirect()->away("https://wa.me/" . preg_replace('/[^0-9]/', '', $record->phone) . "?text={$waMessage}");
                     }),
+                Tables\Actions\Action::make('manual_share')
+                    ->label('Manual Share (GPAY)')
+                    ->icon('heroicon-o-chat-bubble-left-right')
+                    ->color('success')
+                    ->form([
+                        Forms\Components\Select::make('tier')
+                            ->label('Select Strategy Tier')
+                            ->options([
+                                'small'     => 'Small (Tea shops, salons...) - ₹1,999',
+                                'growing'   => 'Growing (Clinics, hotels...) - ₹3,999',
+                                'premium'   => 'Premium (Builders, real estate...) - ₹10,000',
+                                'ecommerce' => 'Ecommerce (Wholesalers, sellers...) - ₹15,000',
+                            ])
+                            ->default('small')
+                            ->required()
+                            ->live()
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                $prices = [
+                                    'small'     => 2999,
+                                    'growing'   => 3999,
+                                    'premium'   => 9999,
+                                    'ecommerce' => 14999,
+                                ];
+                                $set('price', $prices[$state] ?? 2999);
+                            }),
+                        Forms\Components\TextInput::make('price')
+                            ->label('Quoted Price (INR)')
+                            ->numeric()
+                            ->default(1999)
+                            ->required(),
+                    ])
+                    ->action(function (Website $record, array $data) {
+                        $visitUrl = "https://app.webze.site/visit/{$record->slug}?source=whatsapp_share";
+                        $price    = $data['price'];
+                        $tier     = $data['tier'];
+
+                        // Define strategy-based messages
+                        $templates = [
+                            'small' => [
+                                'intro'   => "Your professional 1-page business website is now LIVE 🚀",
+                                'offers'  => "✅ Online presence\n✅ WhatsApp button for customers\n✅ Easy sharing on social media",
+                                'benefit' => "Build trust with a branded site and get more customers online.",
+                                'cta'     => "Activate now for ₹{$price}!",
+                            ],
+                            'growing' => [
+                                'intro'   => "Your professional multi-page business website is now LIVE 🚀",
+                                'offers'  => "✅ 3–5 pages with custom content\n✅ Your own domain (yourname.com)\n✅ Direct WhatsApp leads from customers\n✅ Google Search visibility",
+                                'benefit' => "Take your business to the next level with professional web presence and more enquiries.",
+                                'cta'     => "Get more enquiries now! Activate for ₹{$price}.",
+                            ],
+                            'premium' => [
+                                'intro'   => "Your premium business portal and lead system is now LIVE 🚀",
+                                'offers'  => "✅ Full professional website\n✅ Advanced lead generation system\n✅ Professional branding & SEO\n✅ Custom features & integrations",
+                                'benefit' => "Establish market authority and generate high-quality business leads daily.",
+                                'cta'     => "Start generating leads now! Activate for ₹{$price}.",
+                            ],
+                            'ecommerce' => [
+                                'intro'   => "Your professional Ecommerce store is now LIVE 🚀",
+                                'offers'  => "✅ Complete product catalog\n✅ Integrated payments & order tracking\n✅ Inventory management\n✅ Optimized for selling online",
+                                'benefit' => "Start selling your products globally and automate your sales process today.",
+                                'cta'     => "Start selling online! Activate for ₹{$price}.",
+                            ],
+                        ];
+
+                        $tpl = $templates[$tier] ?? $templates['small'];
+
+                        $message = "Hi {$record->business_name} 👋\n\n" .
+                                   "{$tpl['intro']}\n\n" .
+                                   "🌐 View your site:\n" .
+                                   "{$visitUrl}\n\n" .
+                                   "{$tpl['offers']}\n\n" .
+                                   "⚡ Right now, this is a FREE demo version\n\n" .
+                                   "👉 {$tpl['cta']}\n" .
+                                   "{$tpl['benefit']}\n\n" .
+                                   "GPAY: 9629759769 and share the screenshot, your site will go live permanently.\n\n" .
+                                   "Let me know if you want any changes 👍";
+
+                        $waMessage = urlencode($message);
+                        $phone = preg_replace('/[^0-9]/', '', $record->phone);
+                        
+                        return redirect()->away("https://wa.me/{$phone}?text={$waMessage}");
+                    }),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('regenerate')
                         ->label('Regenerate')

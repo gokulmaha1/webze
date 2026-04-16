@@ -33,6 +33,13 @@ class TemplateSeeder extends Seeder
                 'file'        => 'catering-pro.html',
             ],
             [
+                'name'        => 'Catering & Events (Modern)',
+                'slug'        => 'catering-modern',
+                'description' => 'Ultra-modern, bright and clear design based on contemporary catering landing pages',
+                'is_premium'  => true,
+                'file'        => 'catering-modern.html',
+            ],
+            [
                 'name'        => 'Real Estate',
                 'slug'        => 'real-estate',
                 'description' => 'Professional template for real estate agencies',
