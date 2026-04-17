@@ -21,7 +21,6 @@ class RecentWebsites extends BaseWidget
             ->query(
                 Website::query()->latest()->limit(5)
             )
-            ->isCompact()
             ->columns([
                 Tables\Columns\TextColumn::make('business_name')
                     ->label('Business')
