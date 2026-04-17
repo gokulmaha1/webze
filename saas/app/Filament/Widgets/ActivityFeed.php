@@ -13,6 +13,7 @@ class ActivityFeed extends ChartWidget
     protected static ?string $heading = 'Top Business Categories';
     protected static ?string $description = 'Distribution of websites by business category';
     protected static ?int $sort = 3;
+    protected int | string | array $columnSpan = 1;
 
     protected function getData(): array
     {

@@ -20,7 +20,7 @@ class RecentTransactions extends BaseWidget
             ->heading('Recent Transactions')
             ->description('Latest payment activity across all plans')
             ->query(
-                Transaction::query()->latest()->limit(10)
+                Transaction::query()->latest()->limit(5)
             )
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')

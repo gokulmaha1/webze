@@ -10,6 +10,7 @@ class WebsiteTrendChart extends ChartWidget
 {
     protected static ?string $heading = 'Websites Generated Over Time';
     protected static ?int $sort = 2;
+    protected int | string | array $columnSpan = 1;
     public ?string $filter = 'week';
 
     protected function getFilters(): ?array

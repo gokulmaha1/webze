@@ -240,10 +240,10 @@ class WebsiteResource extends Resource
                         Forms\Components\Select::make('tier')
                             ->label('Select Strategy Tier')
                             ->options([
-                                'small'     => 'Small (Tea shops, salons...) - ₹1,999',
+                                'small'     => 'Small (Tea shops, salons...) - ₹2,999',
                                 'growing'   => 'Growing (Clinics, hotels...) - ₹3,999',
-                                'premium'   => 'Premium (Builders, real estate...) - ₹10,000',
-                                'ecommerce' => 'Ecommerce (Wholesalers, sellers...) - ₹15,000',
+                                'premium'   => 'Premium (Builders, real estate...) - ₹9,999',
+                                'ecommerce' => 'Ecommerce (Wholesalers, sellers...) - ₹14,999',
                             ])
                             ->default('small')
                             ->required()
@@ -260,7 +260,7 @@ class WebsiteResource extends Resource
                         Forms\Components\TextInput::make('price')
                             ->label('Quoted Price (INR)')
                             ->numeric()
-                            ->default(1999)
+                            ->default(2999)
                             ->required(),
                     ])
                     ->action(function (Website $record, array $data) {
@@ -309,7 +309,7 @@ class WebsiteResource extends Resource
                                    "GPAY: 9629759769 and share the screenshot, your site will go live permanently.\n\n" .
                                    "Let me know if you want any changes 👍";
 
-                        $waMessage = urlencode($message);
+                        $waMessage = rawurlencode($message);
                         $phone = preg_replace('/[^0-9]/', '', $record->phone);
                         
                         return redirect()->away("https://wa.me/{$phone}?text={$waMessage}");

@@ -20,7 +20,7 @@ class RecentWebsites extends BaseWidget
             ->heading('Recently Generated Websites')
             ->description('Last 10 websites created on the platform')
             ->query(
-                Website::query()->latest()->limit(10)
+                Website::query()->latest()->limit(5)
             )
             ->columns([
                 Tables\Columns\TextColumn::make('business_name')

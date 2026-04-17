@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\TemplateEngine;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 
 class Website extends Model
 {
@@ -52,6 +53,29 @@ class Website extends Model
 
         static::saved(function ($website) {
             $website->generateStaticSite();
+        });
+
+        static::updated(function ($website) {
+            if ($website->wasChanged('slug')) {
+                $oldSlug = $website->getOriginal('slug');
+                if ($oldSlug) {
+                    $oldPath = '/var/www/webze/' . $oldSlug;
+                    if (File::isDirectory($oldPath)) {
+                        File::deleteDirectory($oldPath);
+                        Log::info("Deleted old website folder after slug change: {$oldPath}");
+                    }
+                }
+            }
+        });
+
+        static::deleted(function ($website) {
+            if ($website->slug) {
+                $path = '/var/www/webze/' . $website->slug;
+                if (File::isDirectory($path)) {
+                    File::deleteDirectory($path);
+                    Log::info("Deleted website folder after record deletion: {$path}");
+                }
+            }
         });
     }
 
