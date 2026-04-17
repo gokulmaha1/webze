@@ -13,7 +13,7 @@ class OverviewStats extends BaseWidget
 {
     protected static ?int $sort = 1;
     protected int | string | array $columnSpan = 'full';
-    protected int | string | array $columns = 4;
+    protected int | string | array $columns = 6;
 
     protected function getStats(): array
     {
@@ -67,34 +67,38 @@ class OverviewStats extends BaseWidget
 
         return [
             Stat::make('Total Websites', number_format($totalSites))
-                ->description($todaySites . ' today · ' . $sitesThisWeek . ' this week')
+                ->icon('heroicon-m-globe-alt')
+                ->description($todaySites . ' today · ' . $sitesThisWeek . ' weekly')
                 ->descriptionIcon($siteTrend === 'up' ? 'heroicon-m-arrow-trending-up' : 'heroicon-m-arrow-trending-down')
-                ->chart($sitesDailyChart)
                 ->color($siteTrend === 'up' ? 'success' : 'warning'),
 
             Stat::make('Live Sites', number_format($liveSites))
-                ->description(number_format($totalSites - $liveSites) . ' inactive · ' . $liveSites . ' published')
+                ->icon('heroicon-m-check-circle')
+                ->description(number_format($totalSites - $liveSites) . ' off · ' . $liveSites . ' live')
                 ->descriptionIcon('heroicon-m-globe-alt')
                 ->color('primary'),
 
             Stat::make('Total Revenue', '₹' . number_format($totalRevenue))
-                ->description('₹' . number_format($thisMonthRev) . ' this month · ' . ($revGrowth >= 0 ? '+' : '') . $revGrowth . '% MoM')
+                ->icon('heroicon-m-banknotes')
+                ->description('₹' . number_format($thisMonthRev) . ' MoM · ' . ($revGrowth >= 0 ? '+' : '') . $revGrowth . '%')
                 ->descriptionIcon($revGrowth >= 0 ? 'heroicon-m-banknotes' : 'heroicon-m-arrow-trending-down')
-                ->chart($revDailyChart)
                 ->color($revGrowth >= 0 ? 'success' : 'danger'),
 
             Stat::make('Total Users', number_format($totalUsers))
-                ->description($newThisWeek . ' new this week · ' . $paidUsers . ' paid')
+                ->icon('heroicon-m-user-group')
+                ->description($newThisWeek . ' new · ' . $paidUsers . ' paid')
                 ->descriptionIcon('heroicon-m-user-group')
                 ->color('info'),
 
             Stat::make('Paid Users', number_format($paidUsers))
-                ->description("Conversion rate: {$convRate}%")
+                ->icon('heroicon-m-credit-card')
+                ->description("Conv. rate: {$convRate}%")
                 ->descriptionIcon('heroicon-m-currency-rupee')
                 ->color('success'),
 
             Stat::make('Pending / Failed', $pendingCount . ' / ' . $failedCount)
-                ->description('Transactions needing attention')
+                ->icon('heroicon-m-exclamation-circle')
+                ->description('Task priority')
                 ->descriptionIcon('heroicon-m-exclamation-triangle')
                 ->color($pendingCount + $failedCount > 0 ? 'warning' : 'success'),
         ];

@@ -20,7 +20,7 @@ class WebsiteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
 
-    protected static ?string $navigationGroup = 'Management';
+    protected static ?string $navigationGroup = 'MANAGEMENT';
 
     public static function form(Form $form): Form
     {
