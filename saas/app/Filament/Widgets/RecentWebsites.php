@@ -12,13 +12,12 @@ class RecentWebsites extends BaseWidget
 {
     protected static ?int $sort = 4;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 1;
 
     public function table(Table $table): Table
     {
         return $table
             ->heading('Recently Generated Websites')
-            ->description('Last 10 websites created on the platform')
             ->query(
                 Website::query()->latest()->limit(5)
             )
