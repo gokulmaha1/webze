@@ -22,6 +22,7 @@ class RecentTransactions extends BaseWidget
             ->query(
                 Transaction::query()->latest()->limit(5)
             )
+            ->isCompact()
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('User')

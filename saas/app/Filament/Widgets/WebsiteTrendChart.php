@@ -11,6 +11,7 @@ class WebsiteTrendChart extends ChartWidget
     protected static ?string $heading = 'Websites Generated Over Time';
     protected static ?int $sort = 2;
     protected int | string | array $columnSpan = 1;
+    protected static ?string $maxHeight = '200px';
     public ?string $filter = 'week';
 
     protected function getFilters(): ?array
@@ -55,7 +56,7 @@ class WebsiteTrendChart extends ChartWidget
                     'data' => $data,
                     'borderColor' => '#0ea5e9',
                     'backgroundColor' => 'rgba(14, 165, 233, 0.2)',
-                    'fill' => true,
+                    'fill' => false,
                     'tension' => 0.4,
                 ],
             ],
