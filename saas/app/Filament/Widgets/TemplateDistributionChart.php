@@ -11,7 +11,7 @@ class TemplateDistributionChart extends ChartWidget
     protected static ?string $heading = 'Template Distribution';
     protected static ?int $sort = 3;
     protected int | string | array $columnSpan = 1;
-    protected static ?string $maxHeight = '180px';
+    protected static ?string $maxHeight = '140px';
 
     protected function getData(): array
     {
