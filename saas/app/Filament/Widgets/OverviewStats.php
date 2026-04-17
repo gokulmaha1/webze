@@ -15,9 +15,7 @@ class OverviewStats extends BaseWidget
 
     protected int | string | array $columnSpan = 'full';
 
-    protected int | string | array $columns = 6;
-
-    protected function getColumns(): int
+    public function getColumns(): int | string | array
     {
         return 6;
     }
